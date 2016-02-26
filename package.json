@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "wiki",
   "main": "app.es6",
+  "engines": {
+    "node": "5.x",
+    "npm": "3.x"
+  },
   "scripts": {
     "start": "babel-node server/app.es6",
     "test": "npm run eslint",
@@ -32,5 +36,13 @@
     "eslint-plugin-if-in-test": "^0.2.0",
     "mocha": "^2.4.5",
     "parallelshell": "^2.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shokai/semirara.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shokai/semirara/issues"
+  },
+  "homepage": "https://github.com/shokai/semirara#readme"
 }
