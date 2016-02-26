@@ -7,7 +7,7 @@
     "start": "babel-node server/app.es6",
     "test": "npm run eslint",
     "mocha": "mocha */test/*.es6",
-    "eslint": "eslint */**.es6",
+    "eslint": "eslint */*.es6 */*/*.es6",
     "watch": "parallelshell 'chokidar \"*/**.es6\" -c \"npm run eslint\"'"
   },
   "keywords": [
