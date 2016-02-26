@@ -1,13 +1,17 @@
 /* eslint no-console: 0 */
 
 import Koa from "koa";
+import route from "koa-route";
+import logger from "koa-logger";
+
 const app = new Koa
 
+app.use(logger());
 
 // load components
 const components = {
-  models: [],
-  routes: [ "logger", "main" ]
+  model: [],
+  route: [ "main" ]
 };
 
 for(let type in components){
