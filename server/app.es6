@@ -1,7 +1,6 @@
 /* eslint no-console: 0 */
 
 import Koa from "koa";
-import route from "koa-route";
 import logger from "koa-logger";
 
 const app = new Koa
