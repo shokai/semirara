@@ -3,7 +3,9 @@ const router = new Router();
 export default router;
 
 router.get("/", async (ctx, next) => {
-  ctx.body = "hello";
+  ctx.render("index", {
+    name: ctx.query.name
+  });
 });
 
 import authRouter from "./auth";

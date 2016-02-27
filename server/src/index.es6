@@ -9,5 +9,13 @@ app.use(logger());
 import router from "./route";
 app.use(router.routes());
 
+import Jade from "koa-jade";
+new Jade({
+  app: app,
+  viewPath: "server/view",
+  debug: app.env === 'development',
+  helperPath: [ ]
+});
+
 module.exports = app;
 

@@ -29,6 +29,7 @@
     "debug": "^2.2.0",
     "koa": "^2.0.0-alpha.3",
     "koa-66": "^0.8.4",
+    "koa-jade": "^2.1.0",
     "koa-logger": "^2.0.0"
   },
   "devDependencies": {
