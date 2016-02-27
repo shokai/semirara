@@ -9,8 +9,5 @@ app.use(logger());
 import router from "./route";
 app.use(router.routes());
 
+module.exports = app;
 
-// start server
-const port = process.env.PORT || 3000;
-app.listen(port);
-console.log(`server start => port:${port}`);
