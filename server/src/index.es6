@@ -3,6 +3,9 @@
 import Koa from "koa";
 const app = new Koa
 
+import pkg from "../../package.json";
+app.name = pkg.name;
+
 import logger from "koa-logger";
 app.use(logger());
 

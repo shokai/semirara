@@ -13,7 +13,7 @@
     "mocha": "mocha */test/*.es6",
     "eslint": "eslint */*.es6 */*/*.es6 */*/*/*.es6",
     "build": "babel server/src/ --out-dir server/dist/ --source-maps inline",
-    "watch": "parallelshell 'chokidar \"*/**.es6\" -c \"npm run eslint\"' 'npm run build -- --watch'",
+    "watch": "parallelshell 'chokidar \"*/**.es6\" -c \"npm run eslint\"' 'npm run build -- --watch' 'node-dev server/run.js'",
     "clean": "rm -rf server/dist"
   },
   "keywords": [
@@ -39,6 +39,7 @@
     "eslint": "^2.2.0",
     "eslint-plugin-if-in-test": "^0.2.0",
     "mocha": "^2.4.5",
+    "node-dev": "^3.1.0",
     "parallelshell": "^2.0.0"
   },
   "repository": {
