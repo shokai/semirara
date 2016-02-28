@@ -22,7 +22,7 @@
 ## Develop
 
     % npm run watch
-    % npm start server:dev
+    % npm run start:dev
 
 
 ## Deploy
