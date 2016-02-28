@@ -1,5 +1,6 @@
 const debug = require("debug")("semirara:route");
 
+import pkg from "../../../package.json";
 import Router from "koa-66";
 const router = new Router();
 export default router;
@@ -10,7 +11,12 @@ router.mount("/auth", authRouter);
 router.use(setUserContext);
 
 router.get("/", async (ctx, next) => {
-  let renderParam = { user: null };
+  let renderParam = {
+    user: null,
+    app: {
+      name: pkg.name
+    }
+  };
   if(ctx.user){
     renderParam.user = {
       name: ctx.user.github.login,

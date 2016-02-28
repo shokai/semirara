@@ -1,9 +1,9 @@
 doctype html
 html
   head
-    title semirara
+    title= app.name
   body
-    h1 hello koa
+    h1 hello #{app.name}
     if user
       ul.user
         li
