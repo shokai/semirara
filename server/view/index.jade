@@ -1,6 +1,18 @@
 doctype html
 html
   head
-    title koaaaaa
+    title semirara
   body
-    h1 hello koa #{name}
+    h1 hello koa
+    if user
+      ul.user
+        li
+          img.icon(src=user.icon)
+        li
+          span.name= user.name
+        li
+          a(href="/auth/logout") logout
+    else
+      ul
+        li
+          a(href="/auth/login") login

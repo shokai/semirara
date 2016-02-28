@@ -1,7 +1,10 @@
 /* eslint no-console: 0 */
 
+import model from "./model";
+model.connect().catch(console.error);
+
 import Koa from "koa";
-const app = new Koa
+const app = new Koa;
 
 import pkg from "../../package.json";
 app.name = pkg.name;
@@ -16,9 +19,9 @@ import Jade from "koa-jade";
 new Jade({
   app: app,
   viewPath: "server/view",
-  debug: app.env === 'development',
+  debug: app.env !== "production",
+  noCache: app.env !== "production",
   helperPath: [ ]
 });
 
 module.exports = app;
-
