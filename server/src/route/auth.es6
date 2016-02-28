@@ -73,7 +73,7 @@ router.get("/login/callback", async (ctx, next) => {
   debug("AccessToken: "+ data.access_token);
   const user = await User.createOrFindByGithubToken(data.access_token);
   user.session = md5(ctx.request.ip + Date.now() + data.access_token);
-  ctx.cookies.set('session', user.session);
+  ctx.cookies.set('session', user.session, {maxAge: 1000*60*60*24*14}); // 14 days
   user.save();
   ctx.redirect("/");
 });
