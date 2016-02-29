@@ -1,13 +1,12 @@
-const debug = require("debug")("semirara:route");
-
 import pkg from "../../../package.json";
 import Router from "koa-66";
 const router = new Router();
 export default router;
 
-import authRouter, {setUserContext} from "./auth";
+import authRouter from "./auth";
 router.mount("/auth", authRouter);
 
+import {setUserContext} from "../lib/middleware";
 router.use(setUserContext);
 
 router.get("/", async (ctx, next) => {
