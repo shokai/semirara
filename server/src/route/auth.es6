@@ -72,8 +72,9 @@ router.get("/login/callback", async (ctx, next) => {
   }
   debug("AccessToken: "+ data.access_token);
   const user = await User.createOrFindByGithubToken(data.access_token);
-  user.session = md5(ctx.request.ip + Date.now() + data.access_token);
-  ctx.cookies.set('session', user.session, {maxAge: 1000*60*60*24*14}); // 14 days
+  const session = md5(ctx.request.ip + Date.now() + data.access_token);
+  ctx.cookies.set('session', session, {maxAge: 1000*60*60*24*14}); // 14 days
+  await user.setSession(session);
   user.save();
   ctx.redirect("/");
 });
@@ -83,5 +84,6 @@ export async function setUserContext(ctx, next){
   const session = ctx.cookies.get("session");
   if(!session) return next();
   ctx.user = await User.findBySession(session);
+  if(ctx.user) debug(`ctx.user="${ctx.user.github.login}"`);
   next();
 }

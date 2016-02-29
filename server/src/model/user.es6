@@ -1,6 +1,11 @@
 const debug = require("debug")("semirara:model:user");
 
 import GitHub from "../lib/github";
+import Cache from "../lib/cache";
+const sessionCache = new Cache({
+  prefix: "session",
+  expire: 60*60*24*14 // 14days
+});
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -9,9 +14,6 @@ const userSchema = new mongoose.Schema({
   },
   github: {
     type: Object
-  },
-  session: {
-    type: String
   },
   updatedAt: {
     type: Date,
@@ -44,9 +46,15 @@ userSchema.statics.createOrFindByGithubToken = async function(token){
   return user;
 };
 
+userSchema.methods.setSession = async function(session){
+  return sessionCache.set(session, this.github.id);
+};
+
 userSchema.statics.findBySession = async function(session){
   debug("find user by session: " + session);
-  return User.findOne({session: session});
+  const githubId = await sessionCache.get(session);
+  if(!githubId) return null;
+  return User.findOne({"github.id": githubId});
 };
 
 const User = mongoose.model('User', userSchema);
