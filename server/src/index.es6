@@ -6,6 +6,10 @@ model.connect().catch(console.error);
 import Koa from "koa";
 const app = new Koa;
 
+import convert from "koa-convert";
+import koaStatic from "koa-static";
+app.use(convert(koaStatic("./public")));
+
 import {Server} from "http";
 const server = Server(app.callback());
 
