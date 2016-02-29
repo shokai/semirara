@@ -6,6 +6,12 @@ model.connect().catch(console.error);
 import Koa from "koa";
 const app = new Koa;
 
+import {Server} from "http";
+const server = Server(app.callback());
+
+import SocketIO from "socket.io";
+app.io = SocketIO(server);
+
 import pkg from "../../package.json";
 app.name = pkg.name;
 
@@ -24,4 +30,7 @@ new Jade({
   helperPath: [ ]
 });
 
-module.exports = app;
+module.exports = {
+  app: app,
+  server: server
+};
