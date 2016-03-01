@@ -1,11 +1,12 @@
 {
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "parser": "babel-eslint",
   "env":{
     "node": true,
-    "browser": false
+    "browser": true
   },
   "plugins":[
+    "react",
     "if-in-test"
   ],
   "rules":{
