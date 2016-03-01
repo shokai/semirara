@@ -7,7 +7,7 @@ if(process.env.NODE_ENV !== "production"){
 }
 
 console.log("load " + path);
-var server = require(path).server;
+const server = require(path).server;
 
 // start server
 const port = process.env.PORT || 3000;
