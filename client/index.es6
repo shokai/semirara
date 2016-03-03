@@ -1,16 +1,5 @@
-const debug = require("debug")("semirara");
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./app";
 
-import events from "events";
-
-debug("hello");
-
-class Foo extends events.EventEmitter{
-}
-
-const foo = new Foo();
-
-foo.on("bar", (val) => {
-  debug(`bar: ${val}`)
-});
-
-foo.emit("bar", "fooooooo");
+ReactDOM.render(<App />, document.getElementById("app"));

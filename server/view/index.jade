@@ -2,18 +2,9 @@ doctype html
 html
   head
     title= app.name
+    script.
+      var user = !{JSON.stringify(user)};
+      var app = !{JSON.stringify(app)};
   body
-    h1 hello #{app.name}
-    if user
-      ul.user
-        li
-          img.icon(src=user.icon)
-        li
-          span.name= user.name
-        li
-          a(href="/auth/logout") logout
-    else
-      ul
-        li
-          a(href="/auth/login") login
+    div#app
     script(src="/dist/index.js")
