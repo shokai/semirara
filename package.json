@@ -8,7 +8,7 @@
     "npm": "3.x"
   },
   "scripts": {
-    "prestart": "npm run build",
+    "prestart": "npm run build && npm run browserify",
     "start": "node server/run.js",
     "start:dev": "DEBUG=* node-dev server/run.js",
     "test": "npm run eslint && npm run mocha",
