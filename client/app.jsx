@@ -1,8 +1,7 @@
 const debug = require("debug")("semirara:app");
 
-import React from "react";
-import Login from "./component/login";
-import {Component} from "./store";
+import React, {Component} from "react";
+import Header from "./component/header";
 
 export default class App extends Component{
 
@@ -10,8 +9,7 @@ export default class App extends Component{
     debug("render()");
     return (
       <div>
-        <h1>hello {this.state.app.name}</h1>
-        <Login />
+        <Header />
       </div>
     );
   }
