@@ -5,6 +5,10 @@ import Login from "./login";
 
 export default class Header extends Component{
 
+  mapState(state){
+    return {app: state.app};
+  }
+
   render(){
     return(
       <div>

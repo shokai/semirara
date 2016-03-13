@@ -11,6 +11,10 @@ export function getStore(){
 
 export class Component extends React.Component{
 
+  mapState(state){
+    return state;
+  }
+
   componentWillUnmount(){
     this.debug("componentWillUnmount()");
     this.unsubscribeStore();
@@ -19,7 +23,7 @@ export class Component extends React.Component{
   componentDidMount(){
     this.debug("componentDidMount()");
     this.unsubscribeStore = store.subscribe(() => {
-      this.setState(store.getState());
+      this.setState(this.mapState(store.getState()));
     });
   }
 
@@ -27,6 +31,6 @@ export class Component extends React.Component{
     super();
     this.debug = Debug("semirara:component:" + this.constructor.name.toLowerCase());
     this.debug("constructor()");
-    this.state = store.getState();
+    this.state = this.mapState(store.getState());
   }
 }
