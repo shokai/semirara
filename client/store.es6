@@ -3,7 +3,13 @@ import {createStore} from "redux";
 import reducer from "./reducer/";
 import Debug from "debug";
 
-const store = createStore(reducer, {user: window.user, app: window.app});
+const store = createStore(reducer, {
+  user: window.user,
+  app: window.app,
+  page: {
+    text: ""
+  }
+});
 
 export function getStore(){
   return store;

@@ -2,6 +2,7 @@ const debug = require("debug")("semirara:app");
 
 import React, {Component} from "react";
 import Header from "./component/header";
+import Editor from "./component/editor";
 
 export default class App extends Component{
 
@@ -10,6 +11,7 @@ export default class App extends Component{
     return (
       <div>
         <Header />
+        <Editor />
       </div>
     );
   }
