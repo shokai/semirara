@@ -15,7 +15,7 @@ export default class Login extends Component {
     else{
       return (
         <ul>
-          <li><img src={this.state.user.icon}></img></li>
+          <li><img src={this.state.user.icon+"&s=20"}></img></li>
           <li>{this.state.user.name}</li>
           <li><a href="/auth/logout">logout</a></li>
         </ul>
