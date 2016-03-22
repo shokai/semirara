@@ -15,6 +15,8 @@ const server = Server(app.callback());
 
 import SocketIO from "socket.io";
 app.context.io = SocketIO(server);
+import * as socket from "./socket";
+socket.use(app);
 
 import pkg from "../../package.json";
 app.name = pkg.name;

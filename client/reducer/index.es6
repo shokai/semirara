@@ -1,12 +1,8 @@
-const debug = require("debug")("semirara:reducer");
+import {combineReducers} from "redux";
+import page from "./page";
 
-export default function user(state, action){
-  debug(`action.type = ${action.type}`);
-  switch(action.type){
-  case "editor:text":
-    state.page.text = action.value.toUpperCase();
-    break;
-  }
-  debug(state);
+function echo(state = {}, action){
   return state;
 }
+
+export default combineReducers({page, user: echo, app: echo});

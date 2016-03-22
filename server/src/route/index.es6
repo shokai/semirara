@@ -9,7 +9,7 @@ router.mount("/auth", authRouter);
 import {setUserContext} from "../lib/middleware";
 router.use(setUserContext);
 
-router.get("/", async (ctx, next) => {
+router.get("/*", async (ctx, next) => {
   let renderParam = {
     user: null,
     app: {

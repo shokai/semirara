@@ -10,7 +10,7 @@
   "scripts": {
     "prestart": "npm run build && npm run browserify",
     "start": "node server/run.js",
-    "start:dev": "DEBUG=* node-dev server/run.js",
+    "start:dev": "DEBUG=semirara*,koa* node-dev server/run.js",
     "test": "npm run eslint && npm run mocha",
     "mocha": "mocha */test/*.es6 --compilers js:babel-register",
     "eslint": "eslint server/src/{*,**/*}.es6 client/{*,**/*}.{es6,jsx}",
@@ -46,12 +46,14 @@
     "md5": "^2.0.0",
     "memjs": "^0.9.0",
     "mongoose": "^4.4.5",
+    "mongoose-auto-increment": "^5.0.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "reactify": "^1.1.1",
     "redux": "^3.3.1",
     "socket.io": "^1.4.5",
     "socket.io-client": "^1.4.5",
+    "socket.io-request": "^0.0.4",
     "uglify-js": "^2.6.2"
   },
   "devDependencies": {

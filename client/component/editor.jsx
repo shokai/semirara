@@ -18,13 +18,13 @@ export default class Editor extends Component {
     return (
       <div>
         <h1>editor</h1>
-        <textarea rows="10" cols="100" onChange={this.onChange} value={this.state.page.text} />
+        <textarea rows="10" cols="100" onChange={this.onChange} value={this.state.page.lines.join("\n")} />
       </div>
     );
   }
 
   onChange(e){
-    store.dispatch({type: "editor:text", value: e.target.value});
+    store.dispatch({type: "page:lines", value: e.target.value.split(/[\r\n]/)});
   }
 
 }

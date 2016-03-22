@@ -7,8 +7,12 @@ export default class Login extends Component {
     return {user: state.user};
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    return this.state.user &&
+      this.state.user.name !== nextState.user.name;
+  }
+
   render(){
-    this.debug("render()");
     if(!this.state.user){
         return <ul><li><a href="/auth/login">login</a></li></ul>
       }
