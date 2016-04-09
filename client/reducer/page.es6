@@ -1,6 +1,6 @@
 const debug = require("debug")("semirara:reducer:page");
 
-import {diffpatch, clone} from "../../lib/diffpatch";
+import {diffpatch, clone} from "../../server/src/lib/diffpatch";
 
 export default function pageReducer(state = {}, action){
   debug(`action.type = ${action.type}`);
