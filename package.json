@@ -37,6 +37,7 @@
     "browserify": "^13.0.0",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
+    "jsondiffpatch": "^0.1.43",
     "koa": "^2.0.0-alpha.3",
     "koa-66": "^0.8.4",
     "koa-convert": "^1.2.0",
