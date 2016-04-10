@@ -14,15 +14,27 @@ export default class Login extends Component {
 
   render(){
     if(!this.state.user){
-        return <ul><li><a href="/auth/login">login</a></li></ul>
-      }
+      return (
+        <div className="login">
+          <ul><li><span><a href="/auth/login">login</a></span></li></ul>
+        </div>
+      );
+    }
     else{
       return (
-        <ul>
-          <li><img src={this.state.user.icon+"&s=20"}></img></li>
-          <li>{this.state.user.name}</li>
-          <li><a href="/auth/logout">logout</a></li>
-        </ul>
+        <div className="login">
+          <ul>
+            <li>
+              <span>
+                <a href={"https://github.com/"+this.state.user.name}>
+                  <img src={this.state.user.icon+"&s=20"} />
+                  {this.state.user.name}
+                </a>
+              </span>
+            </li>
+            <li><span><a href="/auth/logout">logout</a></span></li>
+          </ul>
+        </div>
       );
     }
   }

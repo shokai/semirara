@@ -13,8 +13,8 @@ export default class Header extends Component{
   render(){
     return(
       <div>
-        <h1>{this.state.wiki}::{this.state.title}</h1>
         <Login />
+        <h1>{this.state.wiki}::{this.state.title}</h1>
       </div>
     );
   }
