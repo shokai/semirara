@@ -11,7 +11,7 @@ export default class App extends Component{
   render(){
     debug("render()");
     return (
-      <div>
+      <div className="app">
         <Header />
         <Editor />
       </div>
