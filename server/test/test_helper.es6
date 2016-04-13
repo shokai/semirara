@@ -1,5 +1,3 @@
-/* global Promise */
-
 import "babel-polyfill";
 
 export function delay(msec){

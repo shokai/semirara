@@ -1,5 +1,3 @@
-/* global Promise */
-
 const debug = require("debug")("semirara:lib:cache");
 
 import memjs from "memjs";

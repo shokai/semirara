@@ -61,13 +61,13 @@
     "uglify-js": "^2.6.2"
   },
   "devDependencies": {
-    "babel-eslint": "^5.0.0",
+    "babel-eslint": "^6.0.2",
     "babel-register": "^6.5.2",
     "chai": "^3.5.0",
     "chokidar-cli": "^1.2.0",
-    "eslint": "^2.2.0",
+    "eslint": "^2.7.0",
     "eslint-plugin-if-in-test": "^0.2.0",
-    "eslint-plugin-react": "^4.1.0",
+    "eslint-plugin-react": "^4.3.0",
     "mocha": "^2.4.5",
     "node-dev": "^3.1.0",
     "parallelshell": "^2.0.0",
