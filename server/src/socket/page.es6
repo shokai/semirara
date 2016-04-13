@@ -14,10 +14,6 @@ export function use(app){
   io.on("connection", (socket) => {
     const pageRoom = new PageRoom(socket);
 
-    socket.on("disconnect", () => {
-      pageRoom.leave();
-    });
-
     socket.on("page:lines:diff", async (data) => {
       debug("page:lines:diff");
       debug(data);
