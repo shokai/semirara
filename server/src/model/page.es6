@@ -17,7 +17,8 @@ const pageSchema = new mongoose.Schema({
   },
   lines: {
     type: Array,
-    default: [ ]
+    default: [ ],
+    required: true
   },
   updatedAt: {
     type: Date,
@@ -40,8 +41,13 @@ pageSchema.plugin(autoIncrement.plugin, {
   startAt: 1
 });
 
-pageSchema.post("save", function(){
-  debug("save! " + this._id);
+pageSchema.post("save", function(page){
+  debug("save! " + page._id);
+  if(page.lines.length === 1 && page.lines[0] === "")
+    Page.emit("remove", page);
+  else{
+    Page.emit("add", page);
+  }
 });
 
 pageSchema.methods.toHash = function(){
@@ -59,7 +65,7 @@ pageSchema.methods.patchLines = function(diff){
   this.lines = diffpatch.patch(clone(this.lines), diff);
 }
 
-mongoose.model("Page", pageSchema);
+const Page = mongoose.model("Page", pageSchema);
 
 export function isValidPageId(_id){
   return typeof _id === "number" && _id > 0
