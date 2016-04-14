@@ -12,7 +12,7 @@ export default function pageListReducer(state = [], action){
     state = _.uniq(state);
     break;
   case "pagelist:remove":
-    state = state.filter(x => i !== action.value);
+    state = state.filter(x => x !== action.value);
     break;
   }
   debug(state);
