@@ -13,36 +13,29 @@ export default function use(app){
 
     const room = new Room(socket);
 
-    socket.on("disconnect", () => {
-      Page.removeListener("add", onPageAdd);
-      Page.removeListener("remove", onPageRemove);
-    });
-
     ioreq(socket).response("getpagelist", async (req, res) => {
       const {wiki} = req;
       room.join(wiki);
       try{
         const pages = await Page.find({wiki}, 'title');
-        res(pages);
+        res(pages.map(i => i.title));
       }
       catch(err){
         console.error(err.stack || err);
       }
     });
 
-    const onPageAdd = (page) => {
-      debug("add page");
-      debug(page);
-    };
-
-    const onPageRemove = (page) => {
-      debug("remove page");
-      debug(page);
-    };
-
-    Page.on("add", onPageAdd);
-    Page.on("remove", onPageRemove);
-
   });
 
+  Page.on("add", (page) => {
+    const {wiki, title} = page;
+    debug(`add ${wiki}::${title}`);
+    io.to(wiki).emit("pagelist:add", title);
+  });
+
+  Page.on("remove", (page) => {
+    const {wiki, title} = page;
+    debug(`remove ${wiki}::${title}`);
+    io.to(wiki).emit("pagelist:remove", title);
+  });
 }

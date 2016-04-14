@@ -3,6 +3,7 @@ const debug = require("debug")("semirara:app");
 import React, {Component} from "react";
 import Header from "./component/header";
 import Editor from "./component/editor";
+import PageList from "./component/pagelist";
 import "./router";
 import "./socket";
 
@@ -14,6 +15,7 @@ export default class App extends Component{
       <div className="app">
         <Header />
         <Editor />
+        <PageList />
       </div>
     );
   }

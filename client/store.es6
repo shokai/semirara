@@ -8,7 +8,8 @@ const store = createStore(reducer, {
   app: window.app,
   page: {
     lines: [ "" ]
-  }
+  },
+  pagelist: [ ]
 });
 
 export function getStore(){
