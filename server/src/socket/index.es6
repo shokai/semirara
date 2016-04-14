@@ -1,5 +1,3 @@
-const debug = require("debug")("semirara:socket");
-
 import page from "./page";
 import list from "./pagelist";
 
