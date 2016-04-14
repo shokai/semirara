@@ -13,7 +13,7 @@ export default class PageList extends Component {
       return <li>{title}</li>;
     });
     return (
-      <div>
+      <div className="pagelist">
         <h2>pagelist</h2>
         <ul>
           {list}

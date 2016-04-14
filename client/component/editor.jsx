@@ -16,9 +16,9 @@ export default class Editor extends Component {
   render(){
     this.debug("render()");
     return (
-      <div>
+      <div className="editor">
         <h1>editor</h1>
-        <textarea rows="10" cols="100" onChange={this.onChange} value={this.state.page.lines.join("\n")} />
+        <textarea onChange={this.onChange} value={this.state.page.lines.join("\n")} />
       </div>
     );
   }
