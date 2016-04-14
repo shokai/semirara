@@ -5,14 +5,14 @@ import ioreq from "socket.io-request";
 import mongoose from "mongoose";
 const Page = mongoose.model("Page");
 
-import PageRoom from "./pageroom";
+import Room from "./room";
 
 export function use(app){
 
   const io = app.context.io;
 
   io.on("connection", (socket) => {
-    const pageRoom = new PageRoom(socket);
+    const room = new Room(socket);
 
     socket.on("page:lines:diff", async (data) => {
       debug("page:lines:diff");
@@ -20,8 +20,8 @@ export function use(app){
       const {title, wiki, diff} = data;
       if(!title || !wiki || !diff) return;
       try{
-        pageRoom.join({title, wiki});
-        socket.broadcast.to(pageRoom.name).emit("page:lines:diff", {diff});
+        room.join(`${wiki}::${title}`);
+        socket.broadcast.to(room.name).emit("page:lines:diff", {diff});
         const page = await Page.findOne({wiki, title}) || new Page({wiki, title});
         page.patchLines(diff);
         page.save();
@@ -34,7 +34,7 @@ export function use(app){
     ioreq(socket).response("getpage", async (req, res) => {
       const {wiki, title} = req;
       try{
-        pageRoom.join({title, wiki});
+        room.join(`${wiki}::${title}`);
         const page = await Page.findOne({wiki, title}) || new Page({wiki, title});
         res(page);
       }
