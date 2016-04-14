@@ -14,8 +14,8 @@
     "test": "npm run eslint && npm run mocha",
     "mocha": "mocha */test/*.es6 --compilers js:babel-register",
     "eslint": "eslint server/src/{*,**/*}.es6 client/{*,**/*}.{es6,jsx}",
-    "browserify": "browserify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify --presets [es2015 react] ] -t [ stylify ] client/index.es6 | uglifyjs -o public/dist/index.js",
-    "watchify": "watchify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify --presets [es2015 react] ] -t [ stylify ] client/index.es6 -o public/dist/index.js",
+    "browserify": "browserify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify ] -t [ stylify ] client/index.es6 | uglifyjs -o public/dist/index.js",
+    "watchify": "watchify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify ] -t [ stylify ] client/index.es6 -o public/dist/index.js",
     "build": "babel server/src/ --out-dir server/dist/ --source-maps inline",
     "watch": "parallelshell 'chokidar \"*/**.{es6,jsx}\" -c \"npm run test\"' 'npm run build -- --watch' 'npm run watchify'",
     "clean": "rm -rf server/dist public/dist/*"
