@@ -16,9 +16,9 @@ export default class Editor extends Component {
 
   render(){
     this.debug("render()");
+    let key = 0;
     const lines = this.state.page.lines.map((line) => {
-      const __html = compile(line);
-      return <li dangerouslySetInnerHTML={{__html}}></li>; // eslint-disable-line react/no-danger
+      return <li key={key++}>{compile(line)}</li>;
     });
     return (
       <div className="editor">
