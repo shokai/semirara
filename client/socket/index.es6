@@ -8,7 +8,6 @@ import ioreq from "socket.io-request";
 
 const io = SocketIO();
 
-window.io = io;
 io.on("connect", async () => {
   debug("connect");
   const state = store.getState();
@@ -34,6 +33,17 @@ store.subscribe(() => {
   const {title, wiki, diff} = state.page;
   if(!diff) return;
   io.emit("page:lines:diff", {title, wiki, diff});
+});
+
+let lastTitle, lastWiki;
+store.subscribe(async () => {
+  const state = store.getState();
+  const {title, wiki} = state.page;
+  if(lastTitle === title && lastWiki === wiki) return;
+  lastTitle = title;
+  lastWiki = wiki;
+  const page = await ioreq(io).request("getpage", {wiki, title});
+  store.dispatch({type: "page", value: page});
 });
 
 io.on("pagelist:add", (title) => {
