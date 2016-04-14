@@ -1,11 +1,11 @@
-const debug = require("debug")("semirara:socket:list");
+const debug = require("debug")("semirara:socket:pagelist");
 
 import ioreq from "socket.io-request";
 import Room from "./room";
 import mongoose from "mongoose";
 const Page = mongoose.model("Page");
 
-export function use(app){
+export default function use(app){
 
   const io = app.context.io;
 
@@ -18,7 +18,7 @@ export function use(app){
       Page.removeListener("remove", onPageRemove);
     });
 
-    ioreq(socket).response("getlist", async (req, res) => {
+    ioreq(socket).response("getpagelist", async (req, res) => {
       const {wiki} = req;
       room.join(wiki);
       try{

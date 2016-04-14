@@ -7,7 +7,7 @@ const Page = mongoose.model("Page");
 
 import Room from "./room";
 
-export function use(app){
+export default function use(app){
 
   const io = app.context.io;
 

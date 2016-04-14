@@ -1,11 +1,11 @@
 const debug = require("debug")("semirara:socket");
 
-import * as Page from "./page";
-import * as List from "./list";
+import page from "./page";
+import list from "./pagelist";
 
 export function use(app){
 
-  Page.use(app);
-  List.use(app);
+  page(app);
+  list(app);
 
 }
