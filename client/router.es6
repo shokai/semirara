@@ -22,9 +22,13 @@ store.subscribe(() => {
   const {wiki, title} = state.page;
   document.title = `${wiki}::${title}`;
   if(decodeURI(location.pathname+location.search) !== build({wiki, title})){
-    history.pushState(null, null, build({wiki, title}));
+    history.pushState({wiki, title}, document.title, build({wiki, title}));
   }
 });
+
+window.addEventListener("popstate", (e) => {
+  store.dispatch({type: "route", value: e.state});
+}, false);
 
 store.dispatch({
   type:"route",
