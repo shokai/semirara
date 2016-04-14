@@ -26,8 +26,12 @@ store.subscribe(() => {
   }
 });
 
+let popStateTimeout;
 window.addEventListener("popstate", (e) => {
-  store.dispatch({type: "route", value: e.state});
+  clearTimeout(popStateTimeout);
+  popStateTimeout = setTimeout(() => {
+    store.dispatch({type: "route", value: e.state});
+  }, 500);
 }, false);
 
 store.dispatch({
