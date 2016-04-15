@@ -9,14 +9,9 @@ export default class EditorLine extends Component{
       value: React.PropTypes.string.isRequired,
       edit: React.PropTypes.bool.isRequired,
       onStartEdit: React.PropTypes.func,
-      onValueChange: React.PropTypes.func,
+      onChange: React.PropTypes.func,
       onKeyDown: React.PropTypes.func
     };
-  }
-
-  constructor(){
-    super();
-    this.onChange = this.onChange.bind(this);
   }
 
   render(){
@@ -25,7 +20,7 @@ export default class EditorLine extends Component{
         <input
            ref="input"
            onClick={e => e.stopPropagation()}
-           onChange={this.onChange}
+           onChange={e => this.props.onChange(e.target.value)}
            onKeyDown={this.props.onKeyDown}
            value={this.props.value} />
       );
@@ -38,10 +33,6 @@ export default class EditorLine extends Component{
   componentDidUpdate(){
     if(!this.props.edit) return;
     ReactDOM.findDOMNode(this.refs.input).focus();
-  }
-
-  onChange(e){
-    this.props.onValueChange(e.target.value);
   }
 
 }

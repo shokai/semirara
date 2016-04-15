@@ -31,7 +31,7 @@ export default class Editor extends Component {
              value={line}
              edit={this.state.editline === i}
              onStartEdit={e => { e.stopPropagation(); this.startEdit(i); }}
-             onValueChange={value => this.updateLine(i, value)}
+             onChange={value => this.updateLine(i, value)}
              onKeyDown={e => this.onKeyDown(e)}
              />
         </li>
