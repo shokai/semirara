@@ -8,7 +8,8 @@ export default class Editor extends Component {
   constructor(){
     super();
     this.onChange = this.onChange.bind(this);
-    this.editline = this.editline.bind(this);
+    this.stopEdit = this.stopEdit.bind(this);
+    this.startEdit = this.startEdit.bind(this);
   }
 
   mapState(state){
@@ -21,21 +22,22 @@ export default class Editor extends Component {
     const lines = [];
     for(let i = 0; i < this.state.page.lines.length; i++){
       const line = this.state.page.lines[i];
-      const onClick = (e) => {
+      const startEdit = (e) => {
         e.stopPropagation();
-        this.editline(i);
+        this.startEdit(i);
       };
+
       let li;
       if(i === this.state.editline){
-        li = <li key={i}><input value={line} onClick={(e) => e.stopPropagation()} /></li>;
+        li = <li key={i}><input value={line} onClick={e => e.stopPropagation()} /></li>;
       }
       else{
-        li = <li key={i}><span onClick={onClick}>{compile(line)}</span></li>;
+        li = <li key={i}><span onClick={startEdit}>{compile(line)}</span></li>;
       }
       lines.push(li);
     }
     return (
-      <div className="editor" onClick={this.editline}>
+      <div className="editor" onClick={this.stopEdit}>
         <h1>editor</h1>
         <ul>{lines}</ul>
         <textarea onChange={this.onChange} value={this.state.page.lines.join("\n")} />
@@ -50,9 +52,13 @@ export default class Editor extends Component {
     this.setState({editline});
   }
 
-  editline(editline){
-    if(typeof editline !== "number") editline = null;
-    this.debug(`set editline ${editline}`);
+  stopEdit(){
+    this.debug(`stop edit`);
+    this.setState({editline: null});
+  }
+
+  startEdit(editline){
+    this.debug(`start edit line:${editline}`);
     this.setState({editline});
   }
 
