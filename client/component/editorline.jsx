@@ -19,10 +19,11 @@ export default class EditorLine extends Component{
       return (
         <input
            ref="input"
-           onClick={e => e.stopPropagation()}
+           value={this.props.value}
            onChange={e => this.props.onChange(e.target.value)}
+           onClick={e => e.stopPropagation()}
            onKeyDown={this.props.onKeyDown}
-           value={this.props.value} />
+          />
       );
     }
     else{
