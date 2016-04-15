@@ -27,7 +27,7 @@ export default class Editor extends Component {
       };
       let li;
       if(i === this.state.editline){
-        li = <li key={i}><input value={line} /></li>;
+        li = <li key={i}><input value={line} onClick={(e) => e.stopPropagation()} /></li>;
       }
       else{
         li = <li key={i}><span onClick={onClick}>{compile(line)}</span></li>;
