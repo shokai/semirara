@@ -7,7 +7,8 @@ export default class EditorLine extends Component{
       value: React.PropTypes.string.isRequired,
       edit: React.PropTypes.bool.isRequired,
       onStartEdit: React.PropTypes.func,
-      onValueChange: React.PropTypes.func
+      onValueChange: React.PropTypes.func,
+      onKeyDown: React.PropTypes.func
     };
   }
 
@@ -22,6 +23,7 @@ export default class EditorLine extends Component{
         <input
            onClick={e => e.stopPropagation()}
            onChange={this.onChange}
+           onKeyDown={this.props.onKeyDown}
            value={this.props.value} />
       );
     }
