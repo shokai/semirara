@@ -6,4 +6,4 @@ function echo(state = {}, action){
   return state;
 }
 
-export default combineReducers({page, pagelist, user: echo, app: echo});
+export default combineReducers({page, pagelist, user: echo});

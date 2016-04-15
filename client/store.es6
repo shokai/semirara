@@ -5,7 +5,6 @@ import Debug from "debug";
 
 const store = createStore(reducer, {
   user: window.user,
-  app: window.app,
   page: {
     lines: [ "" ]
   },
