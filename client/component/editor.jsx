@@ -2,40 +2,38 @@ import React from "react";
 import {Component, getStore} from "../store";
 const store = getStore();
 import compile from "../syntax";
+import EditorLine from "./editorline";
+import {clone} from "../../server/src/lib/diffpatch";
 
 export default class Editor extends Component {
 
   constructor(){
     super();
     this.onChange = this.onChange.bind(this);
+    this.updateLine = this.updateLine.bind(this);
     this.stopEdit = this.stopEdit.bind(this);
     this.startEdit = this.startEdit.bind(this);
   }
 
   mapState(state){
-    return {page: state.page, user: state.user, editline: null};
+    return {page: state.page, user: state.user};
   }
 
   render(){
     this.debug("render()");
-    let i = 0;
-    const lines = [];
-    for(let i = 0; i < this.state.page.lines.length; i++){
-      const line = this.state.page.lines[i];
-      const startEdit = (e) => {
-        e.stopPropagation();
-        this.startEdit(i);
-      };
-
-      let li;
-      if(i === this.state.editline){
-        li = <li key={i}><input value={line} onClick={e => e.stopPropagation()} /></li>;
-      }
-      else{
-        li = <li key={i}><span onClick={startEdit}>{compile(line)}</span></li>;
-      }
-      lines.push(li);
-    }
+    const lines = Object.keys(this.state.page.lines).map(i => {
+      let line = this.state.page.lines[i];
+      return (
+        <li>
+          <EditorLine
+             value={line}
+             edit={this.state.editline === i}
+             onStartEdit={e => { e.stopPropagation(); this.startEdit(i); }}
+             onValueChange={value => this.updateLine(i, value)}
+             />
+        </li>
+      );
+    });
     return (
       <div className="editor" onClick={this.stopEdit}>
         <h1>editor</h1>
@@ -45,10 +43,8 @@ export default class Editor extends Component {
     );
   }
 
-  onLineClick(e){
-    this.debug(e.target);
-    const editline = e.target.attributes.num.value;
-    this.debug(editline);
+  startEdit(editline){
+    this.debug(`start edit line:${editline}`);
     this.setState({editline});
   }
 
@@ -57,9 +53,10 @@ export default class Editor extends Component {
     this.setState({editline: null});
   }
 
-  startEdit(editline){
-    this.debug(`start edit line:${editline}`);
-    this.setState({editline});
+  updateLine(num, value){
+    const lines = clone(store.getState().page.lines);
+    lines[num] = value;
+    store.dispatch({type: "page:lines", value: lines});
   }
 
   onChange(e){
