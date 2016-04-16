@@ -7,7 +7,7 @@ const store = getStore();
 export default function compile(str){
   let chunks = split(str);
   return chunks.map((chunk) => {
-    for(let method of [strong, externalLinkWithTitle, image, externalLink, innerLink]){
+    for(let method of [strong, externalLinkWithTitle, image, externalLink, wikiLink, innerLink]){
       chunk = method(chunk);
       if(typeof chunk !== "string") return chunk;
     }
@@ -40,6 +40,12 @@ const innerLink = gyazz2jsx(/\[{2}(.+)\]{2}/, (m) => {
       {m[1]}
     </span>
   );
+});
+
+const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]+)\]{2}/, (m) => {
+  const [src, wiki, title] = m;
+  const onClick = e => store.dispatch({type: "route", value: {wiki, title}});
+  return <span className="link" onClick={onClick}>{`${wiki}::${title}`}</span>;
 });
 
 const externalLinkWithTitle = gyazz2jsx(/\[{2}(https?:\/\/.+) (.+)\]{2}/, (m) => {
