@@ -33,7 +33,6 @@ export const pushStateOnRoute = store => next => action => {
   return result;
 };
 
-
 var popStateTimeout;
 window.addEventListener("popstate", (e) => {
   clearTimeout(popStateTimeout);
@@ -45,8 +44,6 @@ window.addEventListener("popstate", (e) => {
     });
   }, 500);
 }, false);
-
-console.log(store);
 
 window.addEventListener("load", (e) => {
   store.dispatch({

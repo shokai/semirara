@@ -11,7 +11,6 @@ export default function pageReducer(state = {}, action){
     state = action.value;
     break;
   case "page:lines":
-    state.diff = diffpatch.diff(state.lines, action.value);
     state.lines = action.value;
     break;
   case "page:lines:patch":

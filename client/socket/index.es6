@@ -5,7 +5,7 @@ import SocketIO from "socket.io-client";
 import page from "./page";
 import pagelist from "./pagelist";
 
-const io = SocketIO();
+export const io = SocketIO();
 
 page(io);
 pagelist(io);

@@ -17,12 +17,4 @@ export default function pageSocket(io){
     if(!page.diff) return;
     store.dispatch({type: "page:lines:patch", value: page.diff});
   });
-
-  store.subscribe(() => {
-    const state = store.getState();
-    const {title, wiki, diff} = state.page;
-    if(!diff) return;
-    io.emit("page:lines:diff", {title, wiki, diff});
-  });
-
 }
