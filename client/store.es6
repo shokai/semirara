@@ -1,15 +1,20 @@
 import React from "react";
-import {createStore} from "redux";
+import {createStore, applyMiddleware} from "redux";
 import reducer from "./reducer/";
+import logger from "./middleware/logger";
 import Debug from "debug";
 
-const store = createStore(reducer, {
-  user: window.user,
-  page: {
-    lines: [ "" ]
+const store = createStore(
+  reducer,
+  {
+    user: window.user,
+    page: {
+      lines: [ "" ]
+    },
+    pagelist: [ ]
   },
-  pagelist: [ ]
-});
+  applyMiddleware(logger)
+);
 
 export function getStore(){
   return store;

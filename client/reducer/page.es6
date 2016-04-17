@@ -1,9 +1,6 @@
-const debug = require("debug")("semirara:reducer:page");
-
 import {diffpatch, clone} from "../../server/src/lib/diffpatch";
 
 export default function pageReducer(state = {}, action){
-  debug(`action.type = ${action.type}`);
   delete state.diff;
   switch(action.type){
   case "route":
@@ -21,6 +18,5 @@ export default function pageReducer(state = {}, action){
     state.lines = diffpatch.patch(clone(state.lines), action.value);
     break;
   }
-  debug(state);
   return state;
 }
