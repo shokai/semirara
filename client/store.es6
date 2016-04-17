@@ -1,7 +1,7 @@
 import React from "react";
 import {createStore, applyMiddleware} from "redux";
 import reducer from "./reducer/";
-import logger from "./middleware/logger";
+import middlewares from "./middleware/";
 import Debug from "debug";
 
 export const store = createStore(
@@ -13,7 +13,7 @@ export const store = createStore(
     },
     pagelist: [ ]
   },
-  applyMiddleware(logger)
+  applyMiddleware(...middlewares)
 );
 
 export class Component extends React.Component{
