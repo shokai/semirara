@@ -22,6 +22,10 @@ export class Component extends React.Component{
   }
 
   shouldComponentUpdate(nextProps, nextState){
+    if(Object.keys(nextState).length !== Object.keys(this.state).length ||
+       Object.keys(nextProps).length !== Object.keys(this.props).length){
+      return true;
+    }
     for(let k in nextState){
       if(typeof nextState[k] === "object" ||
          this.state[k] !== nextState[k]) return true;
