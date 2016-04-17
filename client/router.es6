@@ -14,8 +14,7 @@ export function build(route){
   return `/${route.wiki}/${route.title}`;
 }
 
-import {getStore} from "./store";
-const store = getStore();
+import {store} from "./store";
 
 store.subscribe(() => {
   const state = store.getState();

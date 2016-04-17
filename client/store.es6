@@ -4,7 +4,7 @@ import reducer from "./reducer/";
 import logger from "./middleware/logger";
 import Debug from "debug";
 
-const store = createStore(
+export const store = createStore(
   reducer,
   {
     user: window.user,
@@ -15,10 +15,6 @@ const store = createStore(
   },
   applyMiddleware(logger)
 );
-
-export function getStore(){
-  return store;
-}
 
 export class Component extends React.Component{
 

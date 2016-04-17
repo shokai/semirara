@@ -1,6 +1,5 @@
 import React from "react";
-import {Component, getStore} from "../store";
-const store = getStore();
+import {Component, store} from "../store";
 
 export default class PageList extends Component {
 

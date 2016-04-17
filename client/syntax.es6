@@ -1,8 +1,7 @@
 const debug = require("debug")("semirara:syntax");
 
 import React from "react";
-import {getStore} from "./store";
-const store = getStore();
+import {store} from "./store";
 
 export default function compile(str){
   const methods = [strong, externalLinkWithTitle, image, externalLink, wikiLink, innerLink];

@@ -1,7 +1,6 @@
 const debug = require("debug")("semirara:socket:pagelist");
 
-import {getStore} from "../store";
-const store = getStore();
+import {store} from "../store";
 import ioreq from "socket.io-request";
 
 export default function pageListSocket(io){

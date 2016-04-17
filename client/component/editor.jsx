@@ -1,6 +1,5 @@
 import React from "react";
-import {Component, getStore} from "../store";
-const store = getStore();
+import {Component, store} from "../store";
 import compile from "../syntax";
 import EditorLine from "./editorline";
 import {clone} from "../../server/src/lib/diffpatch";
