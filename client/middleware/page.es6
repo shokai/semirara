@@ -6,7 +6,6 @@ export const getPageOnRoute = store => next => async (action) => {
   if(action.type !== "route") return next(action);
   const result = next(action);
   const {title, wiki} = store.getState().page;
-  console.log({title, wiki});
   try{
     const page = await ioreq(io).request("getpage", {wiki, title});
     store.dispatch({type: "page", value: page});
