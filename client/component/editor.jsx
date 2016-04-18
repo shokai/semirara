@@ -55,10 +55,8 @@ export default class Editor extends Component {
     store.dispatch({type: "editline", value: null});
   }
 
-  updateLine(num, value){
-    const lines = clone(store.getState().page.lines);
-    lines[num] = value;
-    store.dispatch({type: "page:lines", value: lines});
+  updateLine(linenum, value){
+    store.dispatch({type: "editor:updateLine", value, linenum});
   }
 
   onChange(e){
