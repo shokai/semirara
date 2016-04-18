@@ -1,5 +1,6 @@
 import {io} from "../socket/";
 import ioreq from "socket.io-request";
+import {store} from "../store";
 import {diffpatch, clone} from "../../server/src/lib/diffpatch";
 
 export const getPageOnRoute = store => next => async (action) => {
@@ -27,3 +28,18 @@ export const sendPageDiff = store => next => action => {
   }
   return result;
 };
+
+
+io.once("connect", () => {
+  io.on("connect", async () => { // for next connect event
+    const state = store.getState();
+    const {wiki, title} = state.page;
+    const page = await ioreq(io).request("getpage", {wiki, title});
+    store.dispatch({type: "page", value: page});
+  });
+});
+
+io.on("page:lines:diff", (page) => {
+  if(!page.diff) return;
+  store.dispatch({type: "page:lines:patch", value: page.diff});
+});
