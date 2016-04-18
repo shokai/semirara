@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import compile from "../syntax";
 
 export default class EditorLine extends Component{
+
   static get propTypes(){
     return {
       value: React.PropTypes.string.isRequired,
@@ -27,7 +28,10 @@ export default class EditorLine extends Component{
       );
     }
     else{
-      return <span onClick={this.props.onStartEdit}>{compile(this.props.value)}</span>;
+      return (
+        <span onClick={e => { e.stopPropagation(); this.props.onStartEdit(); }}>
+          {compile(this.props.value)}
+        </span>);
     }
   }
 

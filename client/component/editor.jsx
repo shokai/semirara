@@ -29,7 +29,7 @@ export default class Editor extends Component {
           <EditorLine
              value={line}
              edit={this.state.editline === i}
-             onStartEdit={e => { e.stopPropagation(); this.startEdit(i); }}
+             onStartEdit={() => this.startEdit(i)}
              onChange={value => this.updateLine(i, value)}
              onKeyDown={e => this.onKeyDown(e)}
              />
