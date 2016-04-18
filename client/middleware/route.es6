@@ -1,5 +1,5 @@
 import {store} from "../store";
-import {io} from "../socket/";
+import {io} from "../socket";
 
 export function buildPath(route){
   return `/${route.wiki}/${route.title}`;

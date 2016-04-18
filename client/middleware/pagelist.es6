@@ -1,4 +1,4 @@
-import {io} from "../socket/";
+import {io} from "../socket";
 import ioreq from "socket.io-request";
 import {store} from "../store";
 
