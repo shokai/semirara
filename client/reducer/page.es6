@@ -22,7 +22,11 @@ export default function pageReducer(state = {}, action){
     if(action.value > -1){
       const topLines = state.lines.splice(0, action.value+1);
       state.lines = [...topLines, "", ...state.lines];
+      state.editline += 1;
     }
+    break;
+  case "editline":
+    state.editline = action.value;
     break;
   }
   return state;

@@ -9,12 +9,10 @@ export const store = createStore(
   {
     user: window.user,
     page: {
-      lines: [ "" ]
-    },
-    pagelist: [ ],
-    editor: {
+      lines: [ "" ],
       editline: null
-    }
+    },
+    pagelist: [ ]
   },
   applyMiddleware(...middlewares)
 );

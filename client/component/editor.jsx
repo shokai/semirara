@@ -16,7 +16,7 @@ export default class Editor extends Component {
   }
 
   mapState(state){
-    return {page: state.page, user: state.user, editline: state.editor.editline};
+    return {page: state.page, user: state.user};
   }
 
   render(){
@@ -28,7 +28,7 @@ export default class Editor extends Component {
         <li key={i}>
           <EditorLine
              value={line}
-             edit={this.state.editline === i}
+             edit={this.state.page.editline === i}
              onStartEdit={() => this.startEdit(i)}
              onChange={value => this.updateLine(i, value)}
              onKeyDown={e => this.onKeyDown(e)}
@@ -67,16 +67,16 @@ export default class Editor extends Component {
     this.debug(e.keyCode);
     switch(e.keyCode){
     case 13: // enter
-      store.dispatch({type: "insertNewLine", value: this.state.editline});
+      store.dispatch({type: "insertNewLine", value: this.state.page.editline});
       break;
     case 40: // down
-      if(this.state.editline < this.state.page.lines.length - 1){
-        this.startEdit(this.state.editline + 1);
+      if(this.state.page.editline < this.state.page.lines.length - 1){
+        this.startEdit(this.state.page.editline + 1);
       }
       break;
     case 38: // up
-      if(this.state.editline > 0){
-        this.startEdit(this.state.editline - 1);
+      if(this.state.page.editline > 0){
+        this.startEdit(this.state.page.editline - 1);
       }
       break;
     }
