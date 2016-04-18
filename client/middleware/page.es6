@@ -18,10 +18,10 @@ export const getPageOnRoute = store => next => async (action) => {
 };
 
 export const sendPageDiff = store => next => action => {
-  if(action.type !== "page:lines") return next(action);
+  if(action.type !== "updateLine") return next(action);
   const _lines = clone(store.getState().page.lines);
   const result = next(action);
-  const diff = diffpatch.diff(_lines, action.value);
+  const diff = diffpatch.diff(_lines, store.getState().page.lines);
   if(diff){
     const {title, wiki} = store.getState().page;
     io.emit("page:lines:diff", {title, wiki, diff});
