@@ -1,7 +1,6 @@
 import {diffpatch, clone} from "../../server/src/lib/diffpatch";
 
 export default function pageReducer(state = {}, action){
-  delete state.diff;
   switch(action.type){
   case "route":
     if(action.value.wiki) state.wiki = action.value.wiki;
