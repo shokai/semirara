@@ -28,6 +28,18 @@ export default function pageReducer(state = {}, action){
   case "editline":
     state.editline = action.value;
     break;
+  case "editline:up":
+    if(state.editline > 0){
+      state.editline -= 1;
+      state.lines = state.lines.filter(i => i.length > 0);
+    }
+    break;
+  case "editline:down":
+    if(state.editline < state.lines.length-1){
+      state.editline += 1;
+      state.lines = state.lines.filter(i => i.length > 0);
+    }
+    break;
   }
   return state;
 }

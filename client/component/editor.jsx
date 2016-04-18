@@ -70,14 +70,10 @@ export default class Editor extends Component {
       store.dispatch({type: "insertNewLine", value: this.state.page.editline});
       break;
     case 40: // down
-      if(this.state.page.editline < this.state.page.lines.length - 1){
-        this.startEdit(this.state.page.editline + 1);
-      }
+      store.dispatch({type: "editline:down"});
       break;
     case 38: // up
-      if(this.state.page.editline > 0){
-        this.startEdit(this.state.page.editline - 1);
-      }
+      store.dispatch({type: "editline:up"});
       break;
     }
   }
