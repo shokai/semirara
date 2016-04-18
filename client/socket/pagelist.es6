@@ -5,11 +5,12 @@ import ioreq from "socket.io-request";
 
 export default function pageListSocket(io){
 
-  io.on("connect", async () => {
-    const state = store.getState();
-    const {wiki} = state.page;
-    const titles = await ioreq(io).request("getpagelist", {wiki});
-    store.dispatch({type: "pagelist", value: titles});
+  io.once("connect", () => {
+    io.on("connect", async () => { // for next connect event
+      const {wiki} = store.getState().page;
+      const pagelist = await ioreq(io).request("getpagelist", {wiki});
+      store.dispatch({type: "pagelist", value: pagelist});
+    });
   });
 
   io.on("pagelist:add", (title) => {

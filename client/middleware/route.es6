@@ -1,4 +1,5 @@
 import {store} from "../store";
+import {io} from "../socket/";
 
 export function buildPath(route){
   return `/${route.wiki}/${route.title}`;
@@ -45,9 +46,9 @@ window.addEventListener("popstate", (e) => {
   }, 500);
 }, false);
 
-window.addEventListener("load", (e) => {
+io.on("connect", () => {
   store.dispatch({
     type: "route",
     value: Object.assign({wiki: "general", title: "test"}, parseRoute())
   });
-}, false);
+});
