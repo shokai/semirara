@@ -66,7 +66,11 @@ export default class Editor extends Component {
   }
 
   onKeyDown(e){
+    this.debug(e.keyCode);
     switch(e.keyCode){
+    case 13: // enter
+      store.dispatch({type: "editor:insertNewLine", value: this.state.editline});
+      break;
     case 40: // down
       if(this.state.editline < this.state.page.lines.length - 1){
         this.startEdit(this.state.editline + 1);

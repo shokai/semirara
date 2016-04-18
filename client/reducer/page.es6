@@ -15,6 +15,12 @@ export default function pageReducer(state = {}, action){
   case "page:lines:patch":
     state.lines = diffpatch.patch(clone(state.lines), action.value);
     break;
+  case "editor:insertNewLine":
+    if(action.value > -1){
+      const topLines = state.lines.splice(0, action.value+1);
+      state.lines = [...topLines, "", ...state.lines];
+    }
+    break;
   }
   return state;
 }
