@@ -56,7 +56,7 @@ export default class Editor extends Component {
   }
 
   updateLine(linenum, value){
-    store.dispatch({type: "editor:updateLine", value, linenum});
+    store.dispatch({type: "updateLine", value, linenum});
   }
 
   onChange(e){
@@ -67,7 +67,7 @@ export default class Editor extends Component {
     this.debug(e.keyCode);
     switch(e.keyCode){
     case 13: // enter
-      store.dispatch({type: "editor:insertNewLine", value: this.state.editline});
+      store.dispatch({type: "insertNewLine", value: this.state.editline});
       break;
     case 40: // down
       if(this.state.editline < this.state.page.lines.length - 1){

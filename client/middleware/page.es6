@@ -36,7 +36,6 @@ export const unsetEditLineOnRoute = store => next => action => {
   return result;
 }
 
-
 io.once("connect", () => {
   io.on("connect", async () => { // for next connect event
     const state = store.getState();
