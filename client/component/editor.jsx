@@ -16,7 +16,7 @@ export default class Editor extends Component {
   }
 
   mapState(state){
-    return {page: state.page, user: state.user};
+    return {page: state.page, user: state.user, editline: state.editor.editline};
   }
 
   render(){
@@ -47,12 +47,12 @@ export default class Editor extends Component {
 
   startEdit(editline){
     this.debug(`start edit line:${editline}`);
-    this.setState({editline});
+    store.dispatch({type: "editline", value: editline});
   }
 
   stopEdit(){
     this.debug(`stop edit`);
-    this.setState({editline: null});
+    store.dispatch({type: "editline", value: null});
   }
 
   updateLine(num, value){

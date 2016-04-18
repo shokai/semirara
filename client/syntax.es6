@@ -32,13 +32,19 @@ const strong = gyazz2jsx(/\[{3}(.+)\]{3}/, m => <strong>{m[1]}</strong>);
 
 const innerLink = gyazz2jsx(/\[{2}(.+)\]{2}/, m => {
   const title = m[1];
-  const onClick = e => store.dispatch({type: "route", value: {title}});
+  const onClick = e => {
+    e.stopPropagation();
+    store.dispatch({type: "route", value: {title}});
+  };
   return <span className="link" onClick={onClick}>{m[1]}</span>;
 });
 
 const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]+)\]{2}/, (m) => {
   const [, wiki, title] = m;
-  const onClick = e => store.dispatch({type: "route", value: {wiki, title}});
+  const onClick = e => {
+    e.stopPropagation();
+    store.dispatch({type: "route", value: {wiki, title}});
+  };
   return <span className="link" onClick={onClick}>{`${wiki}::${title}`}</span>;
 });
 

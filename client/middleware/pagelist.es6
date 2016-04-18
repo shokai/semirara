@@ -8,8 +8,13 @@ export const getPageListOnRoute = store => next => async (action) => {
   const result = next(action);
   const {wiki} = store.getState().page;
   if(wiki !== _wiki){
-    const pagelist = await ioreq(io).request("getpagelist", {wiki});
-    store.dispatch({type: "pagelist", value: pagelist});
+    try{
+      const pagelist = await ioreq(io).request("getpagelist", {wiki});
+      store.dispatch({type: "pagelist", value: pagelist});
+    }
+    catch(err){
+      console.error(err.stack || err);
+    }
   }
   return result;
 };
@@ -17,8 +22,13 @@ export const getPageListOnRoute = store => next => async (action) => {
 io.once("connect", () => {
   io.on("connect", async () => { // for next connect event
     const {wiki} = store.getState().page;
-    const pagelist = await ioreq(io).request("getpagelist", {wiki});
-    store.dispatch({type: "pagelist", value: pagelist});
+    try{
+      const pagelist = await ioreq(io).request("getpagelist", {wiki});
+      store.dispatch({type: "pagelist", value: pagelist});
+    }
+    catch(err){
+      console.error(err.stack || err);
+    }
   });
 });
 

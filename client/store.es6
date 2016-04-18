@@ -11,7 +11,10 @@ export const store = createStore(
     page: {
       lines: [ "" ]
     },
-    pagelist: [ ]
+    pagelist: [ ],
+    editor: {
+      editline: null
+    }
   },
   applyMiddleware(...middlewares)
 );

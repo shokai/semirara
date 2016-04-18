@@ -29,13 +29,25 @@ export const sendPageDiff = store => next => action => {
   return result;
 };
 
+export const unsetEditLineOnRoute = store => next => action => {
+  if(action.type !== "route") return next(action);
+  const result = next(action);
+  store.dispatch({type: "editline", value: null});
+  return result;
+}
+
 
 io.once("connect", () => {
   io.on("connect", async () => { // for next connect event
     const state = store.getState();
     const {wiki, title} = state.page;
-    const page = await ioreq(io).request("getpage", {wiki, title});
-    store.dispatch({type: "page", value: page});
+    try{
+      const page = await ioreq(io).request("getpage", {wiki, title});
+      store.dispatch({type: "page", value: page});
+    }
+    catch(err){
+      console.error(err.stack || err);
+    }
   });
 });
 
