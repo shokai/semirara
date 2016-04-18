@@ -19,14 +19,15 @@ export default function pageReducer(state = {}, action){
     state.lines[action.linenum] = action.value;
     break;
   case "insertNewLine":
-    if(action.value > -1){
-      const topLines = state.lines.splice(0, action.value+1);
+    if(state.editline > -1){
+      const topLines = state.lines.splice(0, state.editline+1);
       state.lines = [...topLines, "", ...state.lines];
       state.editline += 1;
     }
     break;
   case "editline":
     state.editline = action.value;
+    if(!state.editline) state.lines = state.lines.filter(i => i.length > 0);
     break;
   case "editline:up":
     if(state.editline > 0){

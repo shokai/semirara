@@ -8,7 +8,6 @@ export default class Editor extends Component {
 
   constructor(){
     super();
-    this.onChange = this.onChange.bind(this);
     this.updateLine = this.updateLine.bind(this);
     this.stopEdit = this.stopEdit.bind(this);
     this.startEdit = this.startEdit.bind(this);
@@ -40,7 +39,6 @@ export default class Editor extends Component {
       <div className="editor" onClick={this.stopEdit}>
         <h1>editor</h1>
         <ul>{lines}</ul>
-        <textarea onChange={this.onChange} value={this.state.page.lines.join("\n")} />
       </div>
     );
   }
@@ -59,15 +57,11 @@ export default class Editor extends Component {
     store.dispatch({type: "updateLine", value, linenum});
   }
 
-  onChange(e){
-    store.dispatch({type: "page:lines", value: e.target.value.split(/[\r\n]/)});
-  }
-
   onKeyDown(e){
     this.debug(e.keyCode);
     switch(e.keyCode){
     case 13: // enter
-      store.dispatch({type: "insertNewLine", value: this.state.page.editline});
+      store.dispatch({type: "insertNewLine"});
       break;
     case 40: // down
       store.dispatch({type: "editline:down"});
