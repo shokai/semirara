@@ -16,7 +16,7 @@ export default function pageReducer(state = {}, action){
     state.lines = diffpatch.patch(clone(state.lines), action.value);
     break;
   case "updateLine":
-    state.lines[action.linenum] = action.value;
+    state.lines[state.editline] = action.value;
     break;
   case "insertNewLine":
     if(state.editline > -1){

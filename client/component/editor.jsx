@@ -8,7 +8,6 @@ export default class Editor extends Component {
 
   constructor(){
     super();
-    this.updateLine = this.updateLine.bind(this);
     this.stopEdit = this.stopEdit.bind(this);
     this.startEdit = this.startEdit.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -29,7 +28,7 @@ export default class Editor extends Component {
              value={line}
              edit={this.state.page.editline === i}
              onStartEdit={() => this.startEdit(i)}
-             onChange={value => this.updateLine(i, value)}
+             onChange={value => store.dispatch({type: "updateLine", value})}
              onKeyDown={e => this.onKeyDown(e)}
              />
         </li>
@@ -50,10 +49,6 @@ export default class Editor extends Component {
   stopEdit(){
     this.debug(`stop edit`);
     store.dispatch({type: "editline", value: null});
-  }
-
-  updateLine(linenum, value){
-    store.dispatch({type: "updateLine", value, linenum});
   }
 
   onKeyDown(e){
