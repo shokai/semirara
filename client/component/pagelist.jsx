@@ -20,7 +20,6 @@ export default class PageList extends Component {
     });
     return (
       <div className="pagelist">
-        <h2>pagelist</h2>
         <ul>
           {list}
         </ul>

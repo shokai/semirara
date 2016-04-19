@@ -37,7 +37,6 @@ export default class Editor extends Component {
     });
     return (
       <div className="editor" onClick={this.stopEdit}>
-        <h1>editor</h1>
         <ul>{lines}</ul>
       </div>
     );
