@@ -9,9 +9,6 @@ export default function pageReducer(state = {}, action){
   case "page":
     state = action.value;
     break;
-  case "page:lines":
-    state.lines = action.value;
-    break;
   case "page:lines:patch":
     state.lines = diffpatch.patch(clone(state.lines), action.value);
     break;
