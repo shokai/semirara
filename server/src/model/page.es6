@@ -69,7 +69,11 @@ pageSchema.statics.findOneAmbiguous = function(query, ...args){
   for(let k in query){
     let v = query[k];
     if(typeof v === "string"){
-      query[k] = new RegExp(`^${v}$`, "i");
+      v = v.replace(/\s/g, "").split('').join(' ?'); // spaces
+      v = v.replace(/[\\\+\*\.\[\]\{\}\(\)\^\|]/g, c => `\\${c}`); // replace regex
+      v = v.replace(" ??", " ?\\?");
+      v = new RegExp(`^${v}$`, "i");
+      query[k] = v;
     }
   }
   return this.findOne.apply(this, [query, ...args]);

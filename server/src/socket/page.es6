@@ -33,6 +33,7 @@ export default function use(app){
 
     ioreq(socket).response("getpage", async (req, res) => {
       const {wiki, title} = req;
+      debug(`getpage ${wiki}::${title}`);
       try{
         room.join(`${wiki}::${title}`);
         const page = await Page.findOneAmbiguous({wiki, title}) || new Page({wiki, title});
