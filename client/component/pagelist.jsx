@@ -1,5 +1,6 @@
 import React from "react";
 import {Component, store} from "../store";
+import classnames from "classnames";
 
 export default class PageList extends Component {
 
@@ -14,7 +15,15 @@ export default class PageList extends Component {
 
   render(){
     const list = this.state.pagelist.map((title) => {
-      return <li key={title} onClick={e => this.onItemClick(title)}>{title}</li>;
+      return (
+        <li
+           key={title}
+           className={classnames({selected: title === this.state.page.title})}
+           onClick={e => this.onItemClick(title)}
+          >
+          {title}
+        </li>
+      );
     });
     return (
       <div className="pagelist">
