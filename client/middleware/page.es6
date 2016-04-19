@@ -30,6 +30,16 @@ export const sendPageDiff = store => next => action => {
   return result;
 };
 
+export const removeEmptyLines = store => next => action => {
+  const result = next(action);
+  const targetActions = ["editline:up", "editline:down", "page", "page:lines:patch"];
+  if((action.type === "editline" && action.value === null) ||
+     targetActions.indexOf(action.type) > -1){
+    store.dispatch({type: "removeEmptyLines"});
+  }
+  return result;
+};
+
 export const unsetEditLineOnRoute = store => next => action => {
   if(action.type !== "route") return next(action);
   const result = next(action);

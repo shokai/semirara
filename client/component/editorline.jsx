@@ -8,7 +8,7 @@ export default class EditorLine extends Component{
   static get propTypes(){
     return {
       value: React.PropTypes.string.isRequired,
-      edit: React.PropTypes.bool.isRequired,
+      edit: React.PropTypes.bool,
       onStartEdit: React.PropTypes.func,
       onChange: React.PropTypes.func,
       onKeyDown: React.PropTypes.func

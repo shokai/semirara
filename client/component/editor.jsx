@@ -17,24 +17,36 @@ export default class Editor extends Component {
 
   render(){
     this.debug("render()");
-    const lines = Object.keys(this.state.page.lines).map(i => {
-      i = parseInt(i);
-      let line = this.state.page.lines[i];
-      return (
-        <li key={i}>
-          <EditorLine
-             value={line}
-             edit={this.state.page.editline === i}
-             onStartEdit={() => this.startEdit(i)}
-             onChange={value => store.dispatch({type: "updateLine", value})}
-             onKeyDown={e => this.onKeyDown(e)}
-             />
+    let lis;
+    if(this.state.page.lines.length < 1 && !this.state.page.editline){
+      this.debug("insert li tag for empty");
+      lis = [(
+        <li key={0}>
+          <EditorLine value="(empty)" onStartEdit={() => this.startEdit(0)} />
         </li>
-      );
-    });
+      )];
+      this.debug(lis);
+    }
+    else{
+      lis = Object.keys(this.state.page.lines).map(i => {
+        i = parseInt(i);
+        let line = this.state.page.lines[i];
+        return (
+          <li key={i}>
+            <EditorLine
+               value={line}
+               edit={this.state.page.editline === i}
+               onStartEdit={() => this.startEdit(i)}
+              onChange={value => store.dispatch({type: "updateLine", value})}
+              onKeyDown={e => this.onKeyDown(e)}
+              />
+          </li>
+        );
+      });
+    }
     return (
       <div className="editor" onClick={this.stopEdit}>
-        <ul>{lines}</ul>
+        <ul>{lis}</ul>
       </div>
     );
   }

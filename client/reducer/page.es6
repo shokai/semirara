@@ -22,21 +22,20 @@ export default function pageReducer(state = {}, action){
       state.editline += 1;
     }
     break;
+  case "removeEmptyLines":
+    state.lines = state.lines.filter(i => i.length > 0);
+    break;
   case "editline":
     state.editline = action.value;
-    if(!state.editline) state.lines = state.lines.filter(i => i.length > 0);
+    if(state.editline === 0 && state.lines.length === 0){
+      state.lines = [ "" ];
+    }
     break;
   case "editline:up":
-    if(state.editline > 0){
-      state.editline -= 1;
-      state.lines = state.lines.filter(i => i.length > 0);
-    }
+    if(state.editline > 0) state.editline -= 1;
     break;
   case "editline:down":
-    if(state.editline < state.lines.length-1){
-      state.editline += 1;
-      state.lines = state.lines.filter(i => i.length > 0);
-    }
+    if(state.editline < state.lines.length-1) state.editline += 1;
     break;
   }
   return state;
