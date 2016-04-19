@@ -52,7 +52,7 @@ export default class Editor extends Component {
   }
 
   onKeyDown(e){
-    this.debug(e.keyCode);
+    this.debug("keyCode = " + e.keyCode);
     switch(e.keyCode){
     case 13: // enter
       store.dispatch({type: "insertNewLine"});
@@ -62,6 +62,12 @@ export default class Editor extends Component {
       break;
     case 38: // up
       store.dispatch({type: "editline:up"});
+      break;
+    case 78: // ctrl + N
+      if(e.ctrlKey) store.dispatch({type: "editline:down"});
+      break;
+    case 80:// ctrl + P
+      if(e.ctrlKey) store.dispatch({type: "editline:up"});
       break;
     }
   }
