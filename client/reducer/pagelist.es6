@@ -5,7 +5,7 @@ export default function pageListReducer(state = [], action){
   case "pagelist":
     state = action.value;
     break;
-  case "pagelist:add":
+  case "pagelist:update":
     state.unshift(action.value);
     state = _.uniq(state);
     break;

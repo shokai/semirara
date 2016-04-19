@@ -32,8 +32,8 @@ io.once("connect", () => {
   });
 });
 
-io.on("pagelist:add", (title) => {
-  store.dispatch({type: "pagelist:add", value: title});
+io.on("pagelist:update", (title) => {
+  store.dispatch({type: "pagelist:update", value: title});
 });
 
 io.on("pagelist:remove", (title) => {

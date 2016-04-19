@@ -46,7 +46,7 @@ pageSchema.post("save", function(page){
   if(page.lines.length === 1 && page.lines[0] === "")
     Page.emit("remove", page);
   else{
-    Page.emit("add", page);
+    Page.emit("update", page);
   }
 });
 

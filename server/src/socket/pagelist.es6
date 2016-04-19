@@ -27,10 +27,10 @@ export default function use(app){
 
   });
 
-  Page.on("add", (page) => {
+  Page.on("update", (page) => {
     const {wiki, title} = page;
-    debug(`add ${wiki}::${title}`);
-    io.to(wiki).emit("pagelist:add", title);
+    debug(`update ${wiki}::${title}`);
+    io.to(wiki).emit("pagelist:update", title);
   });
 
   Page.on("remove", (page) => {
