@@ -50,7 +50,7 @@ const externalLinkWithTitle = gyazz2jsx(/\[{2}(https?:\/\/.+) (.+)\]{2}/, (m) =>
   return <a href={m[1]} target="_blank">{m[2]}</a>;
 });
 
-const externalLink = gyazz2jsx(/\[{2}(https?:\/\/.+)\]{2}/, m => <a href={m[1]}>{m[1]}</a>);
+const externalLink = gyazz2jsx(/\[{2}(https?:\/\/.+)\]{2}/, m => <a href={m[1]} target="_blank">{m[1]}</a>);
 
 const image = gyazz2jsx(/\[{2}(https?:\/\/.+)\.(jpe?g|gif|png)\]{2}/i, m => <img src={`${m[1]}.${m[2]}`} />);
 
