@@ -17,7 +17,9 @@ export function parseRoute(path){
 }
 
 export const pushStateOnRoute = store => next => action => {
-  if(action.type !== "route") return next(action);
+  if(["route", "page"].indexOf(action.type) < 0){
+    return next(action);
+  }
   if(action.noPushState){
     delete action.noPushState;
     return next(action);
