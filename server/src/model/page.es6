@@ -65,6 +65,16 @@ pageSchema.methods.patchLines = function(diff){
   this.lines = diffpatch.patch(clone(this.lines), diff);
 };
 
+pageSchema.statics.findOneAmbiguous = function(query, ...args){
+  for(let k in query){
+    let v = query[k];
+    if(typeof v === "string"){
+      query[k] = new RegExp(`^${v}$`, "i");
+    }
+  }
+  return this.findOne.apply(this, [query, ...args]);
+};
+
 const Page = mongoose.model("Page", pageSchema);
 
 export function isValidPageId(_id){

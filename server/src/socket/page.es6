@@ -22,7 +22,7 @@ export default function use(app){
       try{
         room.join(`${wiki}::${title}`);
         socket.broadcast.to(room.name).emit("page:lines:diff", {diff});
-        const page = await Page.findOne({wiki, title}) || new Page({wiki, title});
+        const page = await Page.findOneAmbiguous({wiki, title}) || new Page({wiki, title});
         page.patchLines(diff);
         page.save();
       }
@@ -35,7 +35,7 @@ export default function use(app){
       const {wiki, title} = req;
       try{
         room.join(`${wiki}::${title}`);
-        const page = await Page.findOne({wiki, title}) || new Page({wiki, title});
+        const page = await Page.findOneAmbiguous({wiki, title}) || new Page({wiki, title});
         res(page);
       }
       catch(err){
