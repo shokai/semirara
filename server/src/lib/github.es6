@@ -8,7 +8,7 @@ export default class GitHub{
 
   constructor(token){
     this.token = token;
-    this.baseUrl = "https://api.github.com"
+    this.baseUrl = "https://api.github.com";
   }
 
   async get(path, params = {}){

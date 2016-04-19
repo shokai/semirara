@@ -20,7 +20,7 @@ router.get("/*", async (ctx, next) => {
     renderParam.user = {
       name: ctx.user.github.login,
       icon: ctx.user.github.avatar_url
-    }
+    };
   }
   ctx.render("index", renderParam);
 });

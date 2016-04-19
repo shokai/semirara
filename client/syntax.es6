@@ -12,7 +12,7 @@ export default function compile(str){
       if(typeof chunk !== "string") return chunk;
     }
     return chunk;
-  })
+  });
 }
 
 function split(str){
@@ -25,7 +25,7 @@ function gyazz2jsx(regex, replacer){
     const m = chunk.match(regex);
     if(!m) return chunk;
     return replacer(m);
-  }
+  };
 }
 
 const strong = gyazz2jsx(/\[{3}(.+)\]{3}/, m => <strong>{m[1]}</strong>);

@@ -41,7 +41,7 @@ export default function use(app){
       catch(err){
         console.error(err.stack || err);
       }
-    })
+    });
   });
 }
 

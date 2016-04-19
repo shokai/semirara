@@ -36,7 +36,7 @@ export const unsetEditLineOnRoute = store => next => action => {
   const result = next(action);
   store.dispatch({type: "editline", value: null});
   return result;
-}
+};
 
 io.once("connect", () => {
   io.on("connect", async () => { // for next connect event

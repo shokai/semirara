@@ -22,11 +22,11 @@ const pageSchema = new mongoose.Schema({
   },
   updatedAt: {
     type: Date,
-    default: () => { return Date.now() }
+    default: () => Date.now()
   },
   createdAt: {
     type: Date,
-    default: () => { return Date.now() }
+    default: () => Date.now()
   }
 });
 
@@ -63,10 +63,10 @@ pageSchema.methods.toHash = function(){
 
 pageSchema.methods.patchLines = function(diff){
   this.lines = diffpatch.patch(clone(this.lines), diff);
-}
+};
 
 const Page = mongoose.model("Page", pageSchema);
 
 export function isValidPageId(_id){
-  return typeof _id === "number" && _id > 0
+  return typeof _id === "number" && _id > 0;
 }

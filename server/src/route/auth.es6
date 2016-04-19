@@ -63,7 +63,7 @@ router.get("/login/callback", async (ctx, next) => {
     code: code
   });
 
-  const data = querystring.parse(res.data)
+  const data = querystring.parse(res.data);
   debug(data);
   if(data.error){
     ctx.body = data;
