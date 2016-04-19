@@ -18,7 +18,10 @@ export const getPageOnRoute = store => next => async (action) => {
 };
 
 export const sendPageDiff = store => next => action => {
-  if(action.type !== "updateLine") return next(action);
+  if(action.type !== "updateLine" &&
+     action.type !== "insertNewLine"){
+    return next(action);
+  }
   const _lines = clone(store.getState().page.lines);
   const result = next(action);
   const diff = diffpatch.diff(_lines, store.getState().page.lines);
