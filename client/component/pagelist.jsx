@@ -8,15 +8,13 @@ export default class PageList extends Component {
     this.onItemClick = this.onItemClick.bind(this);
   }
 
-  onItemClick(e){
-    const title = e.target.attributes.title.value;
-    if(!title) return;
+  onItemClick(title){
     store.dispatch({type: "route", value: {title}});
   }
 
   render(){
     const list = this.state.pagelist.map((title) => {
-      return <li key={title} onClick={this.onItemClick} title={title}>{title}</li>;
+      return <li key={title} onClick={e => this.onItemClick(title)}>{title}</li>;
     });
     return (
       <div className="pagelist">
