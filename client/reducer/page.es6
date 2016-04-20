@@ -51,7 +51,7 @@ export default function pageReducer(state = {}, action){
   case "editline:down":
     if(state.editline < state.lines.length-1) state.editline += 1;
     break;
-  case "swapline:up":
+  case "swapLine:up":
     if(state.editline > 0){
       let currentLine = state.lines[state.editline];
       state.lines[state.editline] = state.lines[state.editline-1];
@@ -59,7 +59,7 @@ export default function pageReducer(state = {}, action){
       state.editline -= 1;
     }
     break;
-  case "swapline:down":
+  case "swapLine:down":
     if(state.editline < state.lines.length-1){
       let currentLine = state.lines[state.editline];
       state.lines[state.editline] = state.lines[state.editline+1];

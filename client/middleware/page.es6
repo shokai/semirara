@@ -19,7 +19,7 @@ export const getPageOnRoute = store => next => async (action) => {
 };
 
 export const sendPageDiff = store => next => action => {
-  const targetActions = ["insertNewLine", "updateLine", "swapline:up", "swapline:down",
+  const targetActions = ["insertNewLine", "updateLine", "swapLine:up", "swapLine:down",
                          "indent:increment", "indent:decrement",
                          "indentBlock:increment", "indentBlock:decrement"];
   if(targetActions.indexOf(action.type) < 0) return next(action);
