@@ -65,6 +65,14 @@ export default function pageReducer(state = {}, action){
       state.editline += 1;
     }
     break;
+  case "indent:decrement":
+    if(state.lines[state.editline].match(/^\s*/)[0].length > 0){
+      state.lines[state.editline] = state.lines[state.editline].match(/^\s(.*)$/)[1];
+    }
+    break;
+  case "indent:increment":
+    state.lines[state.editline] = " " + state.lines[state.editline];
+    break;
   }
   return state;
 }

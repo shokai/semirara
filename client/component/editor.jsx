@@ -84,6 +84,12 @@ export default class Editor extends Component {
     case 80:// ctrl + P
       if(e.ctrlKey) store.dispatch({type: "editline:up"});
       break;
+    case 37: // left
+      if(e.shiftKey || e.ctrlKey) store.dispatch({type: "indent:decrement"});
+      break;
+    case 39: // right
+      if(e.shiftKey || e.ctrlKey) store.dispatch({type: "indent:increment"});
+      break;
     }
   }
 
