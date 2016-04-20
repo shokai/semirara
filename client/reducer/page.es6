@@ -67,7 +67,7 @@ export default function pageReducer(state = {}, action){
       state.editline += 1;
     }
     break;
-  case "indent:decrement":{
+  case "indent:decrement": {
     let currentLine = state.lines[state.editline];
     if(currentLine.indent > 0) currentLine.indent -= 1;
     break;
@@ -75,6 +75,25 @@ export default function pageReducer(state = {}, action){
   case "indent:increment":
     state.lines[state.editline].indent += 1;
     break;
+  case "indentBlock:decrement": {
+    let indent = state.lines[state.editline].indent;
+    if(indent < 1) break;
+    state.lines[state.editline].indent -= 1;
+    for(let i = state.editline+1; i < state.lines.length; i++){
+      if(state.lines[i].indent <= indent) break;
+      state.lines[i].indent -= 1;
+    }
+    break;
+  }
+  case "indentBlock:increment": {
+    let indent = state.lines[state.editline].indent;
+    state.lines[state.editline].indent += 1;
+    for(let i = state.editline+1; i < state.lines.length; i++){
+      if(state.lines[i].indent <= indent) break;
+      state.lines[i].indent += 1;
+    }
+    break;
+  }
   }
   return state;
 }

@@ -84,10 +84,12 @@ export default class Editor extends Component {
       if(e.ctrlKey) store.dispatch({type: "editline:up"});
       break;
     case 37: // left
-      if(e.shiftKey || e.ctrlKey) store.dispatch({type: "indent:decrement"});
+      if(e.ctrlKey) store.dispatch({type: "indent:decrement"});
+      else if(e.shiftKey) store.dispatch({type: "indentBlock:decrement"});
       break;
     case 39: // right
-      if(e.shiftKey || e.ctrlKey) store.dispatch({type: "indent:increment"});
+      if(e.ctrlKey) store.dispatch({type: "indent:increment"});
+      else if(e.shiftKey) store.dispatch({type: "indentBlock:increment"});
       break;
     }
   }
