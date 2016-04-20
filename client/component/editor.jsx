@@ -31,8 +31,9 @@ export default class Editor extends Component {
       lis = Object.keys(this.state.page.lines).map(i => {
         i = parseInt(i);
         let line = this.state.page.lines[i];
+        let indent = line.match(/^\s*/)[0].length;
         return (
-          <li key={i}>
+          <li key={i} style={{marginLeft: indent*20}}>
             <EditorLine
                value={line}
                edit={this.state.page.editline === i}
