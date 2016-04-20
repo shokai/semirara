@@ -27,14 +27,14 @@ export default function pageReducer(state = {}, action){
     let upCount = 0;
     for(let i = 0; i < state.lines.length; i++){
       if(/^\s*$/.test(state.lines[i])){ // empty line
-        if(i < state.editline) upCount += 1;
+        if(i <= state.editline) upCount += 1;
       }
       else{
         lines.push(state.lines[i]);
       }
     }
     state.lines = lines;
-    state.editline -= upCount;
+    if(state.editline) state.editline -= upCount;
     break;
   }
   case "editline":

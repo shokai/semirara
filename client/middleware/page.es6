@@ -18,7 +18,7 @@ export const getPageOnRoute = store => next => async (action) => {
 };
 
 export const sendPageDiff = store => next => action => {
-  const targetActions = ["insertNewLine", "updateLine", "removeEmptyLines"];
+  const targetActions = ["insertNewLine", "updateLine"];
   if(targetActions.indexOf(action.type) < 0) return next(action);
   const _lines = clone(store.getState().page.lines);
   const result = next(action);

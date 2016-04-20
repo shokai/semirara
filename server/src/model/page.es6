@@ -32,6 +32,7 @@ const pageSchema = new mongoose.Schema({
 
 pageSchema.pre("save", function(next){
   this.updatedAt = Date.now();
+  this.lines = this.lines.filter(i => !/^\s*$/.test(i));
   next();
 });
 
