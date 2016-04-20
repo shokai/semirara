@@ -18,7 +18,7 @@ export const getPageOnRoute = store => next => async (action) => {
 };
 
 export const sendPageDiff = store => next => action => {
-  const targetActions = ["insertNewLine", "updateLine"];
+  const targetActions = ["insertNewLine", "updateLine", "removeEmptyLines"];
   if(targetActions.indexOf(action.type) < 0) return next(action);
   const _lines = clone(store.getState().page.lines);
   const result = next(action);
@@ -32,7 +32,7 @@ export const sendPageDiff = store => next => action => {
 
 export const removeEmptyLines = store => next => action => {
   const result = next(action);
-  const targetActions = ["editline:up", "editline:down", "page", "page:lines:patch"];
+  const targetActions = ["editline:up", "editline:down"];
   if((action.type === "editline" && action.value === null) ||
      targetActions.indexOf(action.type) > -1){
     store.dispatch({type: "removeEmptyLines"});
