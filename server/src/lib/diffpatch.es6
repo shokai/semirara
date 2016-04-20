@@ -4,11 +4,7 @@ import md5 from "md5";
 export const diffpatch = JSONDiffPatch.create({
   // https://github.com/benjamine/jsondiffpatch/blob/master/docs/arrays.md
   objectHash: (obj, index) => {
+    if(typeof obj === "object") return md5(obj.value + obj.indent);
     return md5(obj);
   }
 });
-
-export function clone(obj){
-  if(obj instanceof Array) return obj.concat();
-  return Object.assign({}, obj);
-}

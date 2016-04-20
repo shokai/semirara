@@ -31,15 +31,14 @@ export default class Editor extends Component {
       lis = Object.keys(this.state.page.lines).map(i => {
         i = parseInt(i);
         let line = this.state.page.lines[i];
-        let indent = line.match(/^\s*/)[0].length;
         return (
-          <li key={i} style={{marginLeft: indent*20}}>
+          <li key={i} style={{marginLeft: line.indent*20}}>
             <EditorLine
-               value={line}
+               value={line.value}
                edit={this.state.page.editline === i}
                onStartEdit={() => this.startEdit(i)}
-              onChange={value => store.dispatch({type: "updateLine", value})}
-              onKeyDown={e => this.onKeyDown(e)}
+               onChange={value => store.dispatch({type: "updateLine", value})}
+               onKeyDown={e => this.onKeyDown(e)}
               />
           </li>
         );

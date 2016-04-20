@@ -2,6 +2,7 @@ import React from "react";
 import {createStore, applyMiddleware} from "redux";
 import reducer from "./reducer/";
 import middlewares from "./middleware/";
+import Line from "./line";
 import Debug from "debug";
 
 export const store = createStore(
@@ -9,7 +10,7 @@ export const store = createStore(
   {
     user: window.user,
     page: {
-      lines: [ "" ],
+      lines: [ new Line ],
       editline: null
     },
     pagelist: [ ]

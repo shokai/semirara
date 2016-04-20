@@ -4,7 +4,8 @@ import mongoose from "mongoose";
 import autoIncrement from "mongoose-auto-increment";
 autoIncrement.initialize(mongoose.connection);
 
-import {diffpatch, clone} from "../lib/diffpatch";
+import {diffpatch} from "../lib/diffpatch";
+import clone from "clone";
 
 const pageSchema = new mongoose.Schema({
   title: {
@@ -32,7 +33,7 @@ const pageSchema = new mongoose.Schema({
 
 pageSchema.pre("save", function(next){
   this.updatedAt = Date.now();
-  this.lines = this.lines.filter(i => !/^\s*$/.test(i));
+  this.lines = this.lines.filter(i => !/^\s*$/.test(i.value));
   next();
 });
 
@@ -44,8 +45,9 @@ pageSchema.plugin(autoIncrement.plugin, {
 
 pageSchema.post("save", function(page){
   debug("save! " + page._id);
-  if(page.lines.length === 1 && page.lines[0] === "")
+  if(page.lines.length < 1){
     Page.emit("remove", page);
+  }
   else{
     Page.emit("update", page);
   }

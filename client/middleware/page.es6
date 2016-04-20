@@ -1,7 +1,8 @@
 import {io} from "../socket";
 import ioreq from "socket.io-request";
 import {store} from "../store";
-import {diffpatch, clone} from "../../server/src/lib/diffpatch";
+import {diffpatch} from "../../server/src/lib/diffpatch";
+import clone from "clone";
 
 export const getPageOnRoute = store => next => async (action) => {
   if(action.type !== "route") return next(action);
