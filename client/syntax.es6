@@ -30,20 +30,23 @@ const strong = gyazz2jsx(/\[{3}(.+)\]{3}/, m => <strong>{m[1]}</strong>);
 
 const innerLink = gyazz2jsx(/\[{2}(.+)\]{2}/, m => {
   const title = m[1];
+  const wiki = store.getState().page.wiki;
   const onClick = e => {
+    e.preventDefault();
     e.stopPropagation();
     store.dispatch({type: "route", value: {title}});
   };
-  return <span className="link" onClick={onClick}>{m[1]}</span>;
+  return <a href={`/${wiki}/${title}`} onClick={onClick}>{title}</a>;
 });
 
 const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]+)\]{2}/, (m) => {
   const [, wiki, title] = m;
   const onClick = e => {
+    e.preventDefault();
     e.stopPropagation();
     store.dispatch({type: "route", value: {wiki, title}});
   };
-  return <span className="link" onClick={onClick}>{`${wiki}::${title}`}</span>;
+  return <a href={`/${wiki}/${title}`} onClick={onClick}>{`${wiki}::${title}`}</a>;
 });
 
 const externalLinkWithTitle = gyazz2jsx(/\[{2}(https?:\/\/.+) (.+)\]{2}/, (m) => {
