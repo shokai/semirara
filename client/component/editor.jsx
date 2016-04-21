@@ -91,6 +91,18 @@ export default class Editor extends Component {
       if(e.ctrlKey) store.dispatch({type: "indent:increment"});
       else if(e.shiftKey) store.dispatch({type: "indentBlock:increment"});
       break;
+    case 32: // space
+      if(e.target.selectionStart !== 0 ||
+         e.target.selectionEnd !== 0) break;
+      e.preventDefault();
+      store.dispatch({type: "indent:increment"});
+      break;
+    case 8: // backspace
+      if(e.target.selectionStart !== 0 ||
+         e.target.selectionEnd !== 0) break;
+      e.preventDefault();
+      store.dispatch({type: "indent:decrement"});
+      break;
     }
   }
 
