@@ -29,14 +29,19 @@ export default function pageReducer(state = {}, action){
     }
     break;
   case "removeEmptyLines": {
-    const lines = [];
     let upCount = 0;
+    state.lines = state.lines.map(line => {
+      line.value = line.value.trim();
+      return line;
+    });
+    const lines = [];
     for(let i = 0; i < state.lines.length; i++){
-      if(/^\s*$/.test(state.lines[i].value)){ // empty line
+      let line = state.lines[i];
+      if(line.value.length < 1){ // empty line
         if(i <= state.editline) upCount += 1;
       }
       else{
-        lines.push(state.lines[i]);
+        lines.push(line);
       }
     }
     state.lines = lines;
