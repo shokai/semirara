@@ -29,7 +29,7 @@ describe("Cache", function(){
 
     it("should expire in 1 sec", async function(){
       await cache.set("name", "shokai");
-      await delay(1100); // wait for expire
+      await delay(1500); // wait for expire
       const res = await cache.get("name");
       assert.equal(res, null);
     });
