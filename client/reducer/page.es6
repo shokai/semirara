@@ -75,25 +75,30 @@ export default function pageReducer(state = {}, action){
   case "indent:increment":
     state.lines[state.editline].indent += 1;
     break;
-  case "indentBlock:decrement": {
-    let indent = state.lines[state.editline].indent;
-    if(indent < 1) break;
-    state.lines[state.editline].indent -= 1;
-    for(let i = state.editline+1; i < state.lines.length; i++){
-      if(state.lines[i].indent <= indent) break;
-      state.lines[i].indent -= 1;
-    }
+  case "indentBlock:decrement":
+    if(state.lines[state.editline].indent < 1) break;
+    getBlock(state.lines, state.editline, line => line.indent--);
     break;
-  }
-  case "indentBlock:increment": {
-    let indent = state.lines[state.editline].indent;
-    state.lines[state.editline].indent += 1;
-    for(let i = state.editline+1; i < state.lines.length; i++){
-      if(state.lines[i].indent <= indent) break;
-      state.lines[i].indent += 1;
-    }
+  case "indentBlock:increment":
+    getBlock(state.lines, state.editline, line => line.indent++);
     break;
-  }
   }
   return state;
+}
+
+
+function getBlock(lines, start, func){
+  const indent = lines[start].indent;
+  const block = {
+    indent, start, end: start,
+    get length(){ return this.end - this.start + 1; }
+  };
+  if(typeof func === "function") func(lines[start]);
+  for(let i = start+1; i < lines.length; i++){
+    let line = lines[i];
+    if(indent >= line.indent) break;
+    if(typeof func === "function") func(line);
+    block.end = i;
+  }
+  return block;
 }
