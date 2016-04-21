@@ -67,6 +67,41 @@ export default function pageReducer(state = {}, action){
       state.editline += 1;
     }
     break;
+  case "swapBlock:up": {
+    let currentBlock = getBlock(state.lines, state.editline);
+    let upperBlock;
+    for(let i = state.editline-1; i >= 0; i--){
+      let line = state.lines[i];
+      if(line.indent < currentBlock.indent) break;
+      if(line.indent === currentBlock.indent){
+        upperBlock = getBlock(state.lines, i);
+        break;
+      }
+    }
+    if(!upperBlock) break;
+    state.lines = [
+        ...state.lines.slice(0, upperBlock.start),
+        ...state.lines.slice(currentBlock.start, currentBlock.end+1),
+        ...state.lines.slice(upperBlock.start, upperBlock.end+1),
+        ...state.lines.slice(currentBlock.end+1, state.lines.length)
+    ];
+    state.editline = upperBlock.start;
+    break;
+  }
+  case "swapBlock:down": {
+    let currentBlock = getBlock(state.lines, state.editline);
+    if(currentBlock.end+1 >= state.lines.length ||
+       state.lines[currentBlock.end+1].indent !== currentBlock.indent) break;
+    let bottomBlock = getBlock(state.lines, currentBlock.end+1);
+    state.lines = [
+        ...state.lines.slice(0, currentBlock.start),
+        ...state.lines.slice(bottomBlock.start, bottomBlock.end+1),
+        ...state.lines.slice(currentBlock.start, currentBlock.end+1),
+        ...state.lines.slice(bottomBlock.end+1, state.lines.length)
+    ];
+    state.editline += bottomBlock.length;
+    break;
+  }
   case "indent:decrement": {
     let currentLine = state.lines[state.editline];
     if(currentLine.indent > 0) currentLine.indent -= 1;

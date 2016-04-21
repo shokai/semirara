@@ -68,13 +68,13 @@ export default class Editor extends Component {
       store.dispatch({type: "insertNewLine"});
       break;
     case 40: // down
-      if(e.shiftKey) store.dispatch({type: "swapLine:down"});
-      else if(e.ctrlKey) store.dispatch({type: "swapLine:down"});
+      if(e.ctrlKey) store.dispatch({type: "swapLine:down"});
+      else if(e.shiftKey) store.dispatch({type: "swapBlock:down"});
       else store.dispatch({type: "editline:down"});
       break;
     case 38: // up
-      if(e.shiftKey) store.dispatch({type: "swapLine:up"});
-      else if(e.ctrlKey) store.dispatch({type: "swapLine:up"});
+      if(e.ctrlKey) store.dispatch({type: "swapLine:up"});
+      else if(e.shiftKey) store.dispatch({type: "swapBlock:up"});
       else store.dispatch({type: "editline:up"});
       break;
     case 78: // ctrl + N
