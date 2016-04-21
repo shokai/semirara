@@ -1,5 +1,6 @@
 const debug = require("debug")("semirara:socket:page");
 
+import {ambiguous} from "../model/";
 import ioreq from "socket.io-request";
 
 import mongoose from "mongoose";
@@ -22,7 +23,7 @@ export default function use(app){
       try{
         room.join(`${wiki}::${title}`);
         socket.broadcast.to(room.name).emit("page:lines", {wiki, title, lines});
-        const page = await Page.findOneAmbiguous({wiki, title}) || new Page({wiki, title});
+        const page = await Page.findOne(ambiguous({wiki, title})) || new Page({wiki, title});
         page.lines = lines;
         page.save();
       }
@@ -36,7 +37,7 @@ export default function use(app){
       debug(`getpage ${wiki}::${title}`);
       try{
         room.join(`${wiki}::${title}`);
-        const page = await Page.findOneAmbiguous({wiki, title}) || new Page({wiki, title});
+        const page = await Page.findOne(ambiguous({wiki, title})) || new Page({wiki, title});
         res(page);
       }
       catch(err){
