@@ -55,6 +55,11 @@ pageSchema.post("save", function(page){
   }
 });
 
+pageSchema.statics.findNotEmpty = function(...args){
+  args[0].lines = {$ne: []};
+  return this.find(...args);
+};
+
 pageSchema.methods.toHash = function(){
   return {
     wiki: this.wiki,
