@@ -23,11 +23,9 @@ export default function use(app){
       try{
         room.join(`${wiki}::${title}`);
         socket.broadcast.to(room.name).emit("page:lines", {wiki, title, lines});
-        await Page.findOneAndUpdate(
-          ambiguous({wiki, title}),
-          {wiki, title, lines},
-          {upsert: true}
-        );
+        const page = await Page.findOne(ambiguous({wiki, title})) || new Page({wiki, title});
+        page.lines = lines;
+        page.save();
       }
       catch(err){
         console.error(err.stack || err);
