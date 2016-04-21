@@ -6,22 +6,12 @@ export default class Editor extends Component {
 
   constructor(){
     super();
-    this.stopEdit = this.stopEdit.bind(this);
     this.startEdit = this.startEdit.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
   }
 
   mapState(state){
     return {page: state.page, user: state.user};
-  }
-
-  componentDidMount(){
-    super.componentDidMount();
-    document.getElementsByTagName("body")[0].addEventListener("click", this.stopEdit, false);
-  }
-
-  componentWillUnmount(){
-    document.getElementsByTagName("body")[0].removeEventListener("click", this.stopEdit, false);
   }
 
   render(){
@@ -63,11 +53,6 @@ export default class Editor extends Component {
   startEdit(editline){
     this.debug(`start edit line:${editline}`);
     store.dispatch({type: "editline", value: editline});
-  }
-
-  stopEdit(){
-    this.debug(`stop edit`);
-    store.dispatch({type: "editline", value: null});
   }
 
   onKeyDown(e){
