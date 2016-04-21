@@ -1,7 +1,6 @@
 import {io} from "../socket";
 import ioreq from "socket.io-request";
 import {store} from "../store";
-import {diffpatch} from "../../server/src/lib/diffpatch";
 import clone from "clone";
 
 export const getPageOnRoute = store => next => async (action) => {
@@ -27,9 +26,8 @@ export const sendPage = store => next => action => {
   if(targetActions.indexOf(action.type) < 0) return next(action);
   const _lines = clone(store.getState().page.lines);
   const result = next(action);
-  const diff = diffpatch.diff(_lines, store.getState().page.lines);
-  if(diff){
-    const {title, wiki, lines} = store.getState().page;
+  const {title, wiki, lines} = store.getState().page;
+  if(lineChanged(_lines, lines)){
     io.emit("page:lines", {title, wiki, lines});
   }
   return result;
@@ -70,3 +68,15 @@ io.on("page:lines", (page) => {
   if(!page.lines) return;
   store.dispatch({type: "page:lines", value: page});
 });
+
+
+function lineChanged(lineA, lineB){
+  if(lineA.length !== lineB.length) return true;
+  for(let i = 0; i < lineA.length; i++){
+    let a = lineA[i];
+    let b = lineB[i];
+    if(a.value !== b.value ||
+       a.indent !== b.indent) return true;
+  }
+  return false;
+}

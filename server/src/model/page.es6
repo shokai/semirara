@@ -2,7 +2,6 @@ const debug = require("debug")("semirara:model:page");
 
 import mongoose from "mongoose";
 
-import {diffpatch} from "../lib/diffpatch";
 import clone from "clone";
 
 const pageSchema = new mongoose.Schema({
@@ -59,10 +58,6 @@ pageSchema.methods.toHash = function(){
     updatedAt: this.updatedAt,
     createdAt: this.createdAt
   };
-};
-
-pageSchema.methods.patchLines = function(diff){
-  this.lines = diffpatch.patch(clone(this.lines), diff);
 };
 
 pageSchema.statics.findOneAmbiguous = function(query, ...args){
