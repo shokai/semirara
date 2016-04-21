@@ -11,8 +11,9 @@ export default function pageReducer(state = {}, action){
   case "page":
     state = action.value;
     break;
-  case "page:lines:patch":
-    state.lines = diffpatch.patch(clone(state.lines), action.value);
+  case "page:lines":
+    if(state.wiki !== action.value.wiki || state.title !== action.value.title) break;
+    state.lines = action.value.lines;
     break;
   case "updateLine":
     state.lines[state.editline].value = action.value;

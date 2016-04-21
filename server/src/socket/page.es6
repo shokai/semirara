@@ -14,16 +14,16 @@ export default function use(app){
   io.on("connection", (socket) => {
     const room = new Room(socket);
 
-    socket.on("page:lines:diff", async (data) => {
-      debug("page:lines:diff");
+    socket.on("page:lines", async (data) => {
+      debug("page:lines");
       debug(data);
-      const {title, wiki, diff} = data;
-      if(!title || !wiki || !diff) return;
+      const {title, wiki, lines} = data;
+      if(!title || !wiki || !lines) return;
       try{
         room.join(`${wiki}::${title}`);
-        socket.broadcast.to(room.name).emit("page:lines:diff", {diff});
+        socket.broadcast.to(room.name).emit("page:lines", {wiki, title, lines});
         const page = await Page.findOneAmbiguous({wiki, title}) || new Page({wiki, title});
-        page.patchLines(diff);
+        page.lines = lines;
         page.save();
       }
       catch(err){

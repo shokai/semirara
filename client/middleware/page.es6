@@ -18,7 +18,7 @@ export const getPageOnRoute = store => next => async (action) => {
   return result;
 };
 
-export const sendPageDiff = store => next => action => {
+export const sendPage = store => next => action => {
   const targetActions = ["insertNewLine", "updateLine",
                          "swapLine:up", "swapLine:down",
                          "swapBlock:up", "swapBlock:down",
@@ -29,8 +29,8 @@ export const sendPageDiff = store => next => action => {
   const result = next(action);
   const diff = diffpatch.diff(_lines, store.getState().page.lines);
   if(diff){
-    const {title, wiki} = store.getState().page;
-    io.emit("page:lines:diff", {title, wiki, diff});
+    const {title, wiki, lines} = store.getState().page;
+    io.emit("page:lines", {title, wiki, lines});
   }
   return result;
 };
@@ -66,7 +66,7 @@ io.once("connect", () => {
   });
 });
 
-io.on("page:lines:diff", (page) => {
-  if(!page.diff) return;
-  store.dispatch({type: "page:lines:patch", value: page.diff});
+io.on("page:lines", (page) => {
+  if(!page.lines) return;
+  store.dispatch({type: "page:lines", value: page});
 });

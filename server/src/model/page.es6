@@ -38,7 +38,7 @@ pageSchema.pre("save", function(next){
       line.value = line.value.trim();
       return line;
     })
-    .filter(line => line.value > 0);
+    .filter(line => line.value.length > 0);
   next();
 });
 
