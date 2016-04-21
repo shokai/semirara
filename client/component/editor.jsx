@@ -15,6 +15,15 @@ export default class Editor extends Component {
     return {page: state.page, user: state.user};
   }
 
+  componentDidMount(){
+    super.componentDidMount();
+    document.getElementsByTagName("body")[0].addEventListener("click", this.stopEdit, false);
+  }
+
+  componentWillUnmount(){
+    document.getElementsByTagName("body")[0].removeEventListener("click", this.stopEdit, false);
+  }
+
   render(){
     this.debug("render()");
     let lis;
@@ -45,7 +54,7 @@ export default class Editor extends Component {
       });
     }
     return (
-      <div className="editor" onClick={this.stopEdit}>
+      <div className="editor">
         <ul>{lis}</ul>
       </div>
     );
