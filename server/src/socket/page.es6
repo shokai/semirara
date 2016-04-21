@@ -25,7 +25,7 @@ export default function use(app){
         socket.broadcast.to(room.name).emit("page:lines", {wiki, title, lines});
         const page = await Page.findOne(ambiguous({wiki, title})) || new Page({wiki, title});
         page.lines = lines;
-        page.save();
+        page.saveWithCache();
       }
       catch(err){
         console.error(err.stack || err);
@@ -37,7 +37,7 @@ export default function use(app){
       debug(`getpage ${wiki}::${title}`);
       try{
         room.join(`${wiki}::${title}`);
-        const page = await Page.findOne(ambiguous({wiki, title})) || new Page({wiki, title});
+        const page = await Page.findOneByWikiTitle({wiki, title}) || new Page({wiki, title});
         res(page);
       }
       catch(err){

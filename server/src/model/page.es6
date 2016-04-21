@@ -1,5 +1,12 @@
 const debug = require("debug")("semirara:model:page");
 
+import {ambiguous} from "./";
+import Cache from "../lib/cache";
+const pageCache = new Cache({
+  prefix: "page",
+  expire: 60*60 // 60min
+});
+
 import mongoose from "mongoose";
 import autoIncrement from "mongoose-auto-increment";
 autoIncrement.initialize(mongoose.connection);
@@ -60,12 +67,26 @@ pageSchema.statics.findNotEmpty = function(...args){
   return this.find(...args);
 };
 
+pageSchema.statics.findOneByWikiTitle = async function(query){
+  const {wiki, title} = query;
+  return await pageCache.get(`${wiki}::${title}`) || this.findOne(ambiguous(query));
+};
+
+const saveTimeouts = {};
+pageSchema.methods.saveWithCache = function(){
+  const key = `${this.wiki}::${this.title}`;
+  clearTimeout(saveTimeouts[key]);
+  pageCache.set(key, this.toHash());
+  saveTimeouts[key] = setTimeout(this.save, 20000);
+};
+
 pageSchema.methods.toHash = function(){
   return {
     wiki: this.wiki,
     title: this.title,
     number: this.number,
     lines: this.lines,
+    indent: this.indent,
     updatedAt: this.updatedAt,
     createdAt: this.createdAt
   };
