@@ -4,8 +4,6 @@ import mongoose from "mongoose";
 import autoIncrement from "mongoose-auto-increment";
 autoIncrement.initialize(mongoose.connection);
 
-import clone from "clone";
-
 const pageSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -69,7 +67,3 @@ pageSchema.methods.toHash = function(){
 };
 
 const Page = mongoose.model("Page", pageSchema);
-
-export function isValidPageId(_id){
-  return typeof _id === "number" && _id > 0;
-}

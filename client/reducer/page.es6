@@ -1,4 +1,3 @@
-import clone from "clone";
 import Line from "../line";
 
 export default function pageReducer(state = {}, action){
