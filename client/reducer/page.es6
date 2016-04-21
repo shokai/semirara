@@ -19,8 +19,12 @@ export default function pageReducer(state = {}, action){
     break;
   case "insertNewLine":
     if(state.editline > -1){
-      const topLines = state.lines.splice(0, state.editline+1);
-      state.lines = [...topLines, new Line, ...state.lines];
+      let indent = state.lines[state.editline].indent;
+      state.lines = [
+        ...state.lines.slice(0, state.editline+1),
+        new Line({indent}),
+        ...state.lines.slice(state.editline+1, state.lines.length)
+      ];
       state.editline += 1;
     }
     break;
