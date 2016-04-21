@@ -1,8 +1,6 @@
 const debug = require("debug")("semirara:model:page");
 
 import mongoose from "mongoose";
-import autoIncrement from "mongoose-auto-increment";
-autoIncrement.initialize(mongoose.connection);
 
 import {diffpatch} from "../lib/diffpatch";
 import clone from "clone";
@@ -40,12 +38,6 @@ pageSchema.pre("save", function(next){
     })
     .filter(line => line.value.length > 0);
   next();
-});
-
-pageSchema.plugin(autoIncrement.plugin, {
-  model: "Page",
-  field: "number",
-  startAt: 1
 });
 
 pageSchema.post("save", function(page){
