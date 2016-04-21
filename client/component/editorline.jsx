@@ -6,6 +6,11 @@ import compile from "../syntax";
 
 export default class EditorLine extends Component{
 
+  constructor(){
+    super();
+    this.focusInput = this.focusInput.bind(this);
+  }
+
   static get propTypes(){
     return {
       value: React.PropTypes.string.isRequired,
@@ -38,6 +43,14 @@ export default class EditorLine extends Component{
   }
 
   componentDidUpdate(){
+    this.focusInput();
+  }
+
+  componentDidMount(){
+    this.focusInput();
+  }
+
+  focusInput(){
     if(!this.props.edit) return;
     ReactDOM.findDOMNode(this.refs.input).focus();
   }
