@@ -1,5 +1,7 @@
 import Line from "../line";
 
+const MAX_INDENT = 16;
+
 export default function pageReducer(state = {}, action){
   switch(action.type){
   case "route":
@@ -119,15 +121,19 @@ export default function pageReducer(state = {}, action){
     if(currentLine.indent > 0) currentLine.indent -= 1;
     break;
   }
-  case "indent:increment":
-    state.lines[state.editline].indent += 1;
+  case "indent:increment": {
+    let line = state.lines[state.editline];
+    if(line.indent < MAX_INDENT) line.indent += 1;
     break;
+  }
   case "indentBlock:decrement":
     if(state.lines[state.editline].indent < 1) break;
     getBlock(state.lines, state.editline, line => line.indent--);
     break;
   case "indentBlock:increment":
-    getBlock(state.lines, state.editline, line => line.indent++);
+    if(state.lines[state.editline].indent < MAX_INDENT){
+      getBlock(state.lines, state.editline, line => line.indent++);
+    }
     break;
   }
   return state;
