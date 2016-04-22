@@ -32,6 +32,7 @@ export default class Editor extends Component {
           <li key={i} style={{marginLeft: line.indent*20}}>
             <EditorLine
                value={line.value}
+               user={line.user}
                edit={this.state.page.editline === i}
                onStartEdit={() => this.startEdit(i)}
                onChange={value => store.dispatch({type: "updateLine", value})}

@@ -20,6 +20,6 @@ export default class UserIcon extends Component{
   }
 
   render(){
-    return <img src={this.url} width={this.props.size} height={this.props.size} />;
+    return <img className="usericon" src={this.url} width={this.props.size} height={this.props.size} />;
   }
 }
