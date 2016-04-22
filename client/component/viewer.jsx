@@ -1,6 +1,6 @@
 import React from "react";
 import {Component} from "../store";
-import compile from "../syntax";
+import EditorLine from "./editorline";
 
 export default class Viewer extends Component{
 
@@ -11,7 +11,12 @@ export default class Viewer extends Component{
   render(){
     const lis = this.state.page.lines.map(line => {
       return (
-        <li style={{marginLeft: line.indent*20}}>{compile(line.value)}</li>
+        <li style={{marginLeft: line.indent*20}}>
+          <EditorLine
+             value={line.value}
+             user={line.user}
+             />
+        </li>
       );
     });
     return (
