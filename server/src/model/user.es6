@@ -26,9 +26,12 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre("save", function(next){
-  debug("save!");
   this.updatedAt = Date.now();
   next();
+});
+
+userSchema.post("save", function(user){
+  debug(`save!  ${user._id}`);
 });
 
 userSchema.methods.isLogin = function(){

@@ -53,7 +53,7 @@ pageSchema.plugin(autoIncrement.plugin, {
 });
 
 pageSchema.post("save", function(page){
-  debug("save! " + page._id);
+  debug(`save!  ${page.wiki}::${page.title}`);
   pageCache.set(`${this.wiki}::${this.title}`, this.toHash());
   if(page.lines.length < 1){
     Page.emit("remove", page);
