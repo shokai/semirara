@@ -1,27 +1,29 @@
-import React from "react";
-import {Component} from "../store";
+import React, {Component} from "react";
 
 export default class Login extends Component {
 
-  mapState(state){
-    return {user: state.user};
+  static get propTypes(){
+    return {
+      user: React.PropTypes.object
+    };
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-    return this.state.user &&
-      this.state.user.name !== nextState.user.name;
+  static get defaultProps(){
+    return {
+      user: window.user
+    };
   }
 
   render(){
     let element;
-    if(!this.state.user){
+    if(!this.props.user){
       element = <ul><li><span><a href="/auth/login">login</a></span></li></ul>;
     }
     else{
       element = (
         <ul>
-          <li><span><a href={"https://github.com/"+this.state.user.name}>
-                <img src={this.state.user.icon+"&s=20"} />{this.state.user.name}
+          <li><span><a href={"https://github.com/"+this.props.user.name}>
+                <img src={this.props.user.icon+"&s=20"} />{this.props.user.name}
           </a></span></li>
           <li><span><a href="/auth/logout">logout</a></span></li>
         </ul>
