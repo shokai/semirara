@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import "babel-regenerator-runtime";
 
 require("insert-css")(require("./styl/index.styl"));
 
