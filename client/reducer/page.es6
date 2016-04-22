@@ -13,9 +13,12 @@ export default function pageReducer(state = {}, action){
     if(state.wiki !== action.value.wiki || state.title !== action.value.title) break;
     state.lines = action.value.lines;
     break;
-  case "updateLine":
-    state.lines[state.editline].value = action.value;
+  case "updateLine":{
+    let line = state.lines[state.editline];
+    line.value = action.value;
+    line.user = window.user.id;
     break;
+  }
   case "insertNewLine":
     if(state.editline > -1){
       let indent = state.lines[state.editline].indent;
