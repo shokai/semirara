@@ -18,6 +18,7 @@ router.get("/*", async (ctx, next) => {
   };
   if(ctx.user){
     renderParam.user = {
+      id: ctx.user.github.id,
       name: ctx.user.github.login,
       icon: ctx.user.github.avatar_url
     };
