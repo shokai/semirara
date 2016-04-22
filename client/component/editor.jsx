@@ -32,7 +32,7 @@ export default class Editor extends Component {
           <li key={i} style={{marginLeft: line.indent*20}}>
             <EditorLine
                value={line.value}
-               user={line.user}
+               user={shouldShowUserIcon(this.state.page.lines, i) ? line.user : null}
                edit={this.state.page.editline === i}
                onStartEdit={() => this.startEdit(i)}
                onChange={value => store.dispatch({type: "updateLine", value})}
@@ -99,4 +99,13 @@ export default class Editor extends Component {
     }
   }
 
+}
+
+export function shouldShowUserIcon(lines, position){
+  if(position < 1) return true;
+  const currentLine = lines[position];
+  const upperLine = lines[position-1];
+  if(currentLine.user !== upperLine.user) return true;
+  if(currentLine.indent < upperLine.indent) return true;
+  return false;
 }

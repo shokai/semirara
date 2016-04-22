@@ -1,6 +1,7 @@
 import React from "react";
 import {Component} from "../store";
 import EditorLine from "./editorline";
+import {shouldShowUserIcon} from "./editor";
 
 export default class Viewer extends Component{
 
@@ -9,12 +10,13 @@ export default class Viewer extends Component{
   }
 
   render(){
-    const lis = this.state.page.lines.map(line => {
+    const lis = Object.keys(this.state.page.lines).map(i => {
+      const line = this.state.page.lines[i];
       return (
         <li style={{marginLeft: line.indent*20}}>
           <EditorLine
              value={line.value}
-             user={line.user}
+             user={shouldShowUserIcon(this.state.page.lines, i) ? line.user : null}
              />
         </li>
       );
