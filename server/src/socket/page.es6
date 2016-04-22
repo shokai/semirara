@@ -15,6 +15,22 @@ export default function use(app){
   io.on("connection", (socket) => {
     const room = new Room(socket);
 
+    ioreq(socket).response("getpage", async (req, res) => {
+      const {wiki, title} = req;
+      debug(`getpage ${wiki}::${title}`);
+      try{
+        room.join(`${wiki}::${title}`);
+        const page = await Page.findOneByWikiTitle({wiki, title}) || new Page({wiki, title});
+        res(page);
+      }
+      catch(err){
+        console.error(err.stack || err);
+      }
+    });
+
+    if(!socket.user) return;
+
+    // for Authorized User
     socket.on("page:lines", async (data) => {
       debug("page:lines");
       debug(data);
@@ -32,18 +48,6 @@ export default function use(app){
       }
     });
 
-    ioreq(socket).response("getpage", async (req, res) => {
-      const {wiki, title} = req;
-      debug(`getpage ${wiki}::${title}`);
-      try{
-        room.join(`${wiki}::${title}`);
-        const page = await Page.findOneByWikiTitle({wiki, title}) || new Page({wiki, title});
-        res(page);
-      }
-      catch(err){
-        console.error(err.stack || err);
-      }
-    });
-  });
+});
 }
 
