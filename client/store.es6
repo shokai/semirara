@@ -8,7 +8,6 @@ import Debug from "debug";
 export const store = createStore(
   reducer,
   {
-    user: window.user,
     page: {
       lines: [ new Line ],
       editline: null
