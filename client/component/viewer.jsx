@@ -13,7 +13,7 @@ export default class Viewer extends Component{
     const lis = Object.keys(this.state.page.lines).map(i => {
       const line = this.state.page.lines[i];
       return (
-        <li style={{marginLeft: line.indent*20}}>
+        <li key={line.id || i} style={{marginLeft: line.indent*20}}>
           <EditorLine
              value={line.value}
              user={shouldShowUserIcon(this.state.page.lines, i) ? line.user : null}

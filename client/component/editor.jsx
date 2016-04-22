@@ -29,7 +29,7 @@ export default class Editor extends Component {
         i = parseInt(i);
         let line = this.state.page.lines[i];
         return (
-          <li key={i} style={{marginLeft: line.indent*20}}>
+          <li key={line.id || i} style={{marginLeft: line.indent*20}}>
             <EditorLine
                value={line.value}
                user={shouldShowUserIcon(this.state.page.lines, i) ? line.user : null}
