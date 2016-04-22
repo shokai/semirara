@@ -69,6 +69,28 @@ io.on("page:lines", (page) => {
   store.dispatch({type: "page:lines", value: page});
 });
 
+export const adjustEditLineOnPageLines = store => next => action => {
+  if(action.type !== "page:lines") return next(action);
+  const _state = store.getState();
+  const _editline = _state.page.editline;
+  if(!_editline) return next(action);
+  const id = _state.page.lines[_editline].id;
+  const result = next(action);
+  if(!id) return result;
+  const state = store.getState();
+  let editline;
+  for(let i = 0; i < state.page.lines.length; i++){
+    let line = state.page.lines[i];
+    if(line.id === id){
+      editline = i;
+      break;
+    }
+  }
+  if(!editline) return result;
+  if(editline !== _editline) store.dispatch({type: "editline", value: editline});
+  return result;
+};
+
 
 function lineChanged(lineA, lineB){
   if(lineA.length !== lineB.length) return true;

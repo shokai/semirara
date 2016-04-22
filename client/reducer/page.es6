@@ -1,4 +1,5 @@
 import Line from "../line";
+import shortid from "shortid";
 
 const MAX_INDENT = 16;
 
@@ -20,6 +21,7 @@ export default function pageReducer(state = {}, action){
     let line = state.lines[state.editline];
     line.value = action.value;
     line.user = window.user.id;
+    if(!line.id) line.id = shortid.generate();
     break;
   }
   case "insertNewLine":

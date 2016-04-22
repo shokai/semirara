@@ -57,6 +57,7 @@
     "react-dom": "^15.0.1",
     "reactify": "^1.1.1",
     "redux": "^3.4.0",
+    "shortid": "^2.2.6",
     "socket.io": "^1.4.5",
     "socket.io-client": "^1.4.5",
     "socket.io-request": "^0.0.4",
