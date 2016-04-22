@@ -8,7 +8,7 @@ import PageList from "./component/pagelist";
 import {store} from "./store";
 import "./socket";
 
-const editor = store.getState().user ? <Editor /> : <Viewer />;
+const editor = window.user ? <Editor /> : <Viewer />;
 
 export default class App extends Component{
 
