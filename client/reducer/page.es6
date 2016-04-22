@@ -14,6 +14,7 @@ export default function pageReducer(state = {}, action){
     state.lines = action.value.lines;
     break;
   case "updateLine":{
+    if(!window.user) break;
     let line = state.lines[state.editline];
     line.value = action.value;
     line.user = window.user.id;
