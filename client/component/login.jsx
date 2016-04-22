@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import UserIcon from "./usericon";
 
 export default class Login extends Component {
 
@@ -22,9 +23,14 @@ export default class Login extends Component {
     else{
       element = (
         <ul>
-          <li><span><a href={"https://github.com/"+this.props.user.name}>
-                <img src={this.props.user.icon+"&s=20"} />{this.props.user.name}
-          </a></span></li>
+          <li>
+            <span>
+              <a href={"https://github.com/"+this.props.user.name}>
+                <UserIcon id={this.props.user.id} size={20} />
+                {this.props.user.name}
+              </a>
+            </span>
+          </li>
           <li><span><a href="/auth/logout">logout</a></span></li>
         </ul>
       );
