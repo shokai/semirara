@@ -11,7 +11,7 @@ export default class Editor extends Component {
   }
 
   mapState(state){
-    return {page: state.page, user: state.user};
+    return {page: state.page};
   }
 
   render(){
