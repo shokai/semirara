@@ -15,10 +15,8 @@ export default class Editor extends Component {
   }
 
   render(){
-    this.debug("render()");
     let lis;
     if(this.state.page.lines.length < 1 && !this.state.page.editline){
-      this.debug("insert li tag for empty");
       lis = [(
         <li key={0}>
           <EditorLine value="(empty)" onStartEdit={() => this.startEdit(0)} />
