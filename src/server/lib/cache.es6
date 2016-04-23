@@ -6,9 +6,9 @@ const client = memjs.Client.create();
 
 export default class Cache{
 
-  constructor(opts){
-    this.prefix = opts.prefix || "";
-    this.expire = opts.expire || 60;
+  constructor({prefix, expire}){
+    this.prefix = prefix || "";
+    this.expire = expire || 60;
   }
 
   key(key){
@@ -33,6 +33,7 @@ export default class Cache{
       debug(`get ${_key}`);
       client.get(_key, (err, val) => {
         if(err) return reject(err);
+        debug(`hit ${_key}`);
         resolve(JSON.parse(val));
       });
     });
