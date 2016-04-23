@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import ReactDOM from "react-dom";
 
 import LongPress from "./longpress";
-import compile from "../syntax";
+import compile from "./syntax";
 import UserIcon from "./usericon";
 
 export default class EditorLine extends Component{

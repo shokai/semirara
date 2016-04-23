@@ -1,5 +1,5 @@
 import React from "react";
-import {store} from "./store";
+import {store} from "../store";
 
 export default function compile(str){
   const methods = [strong, externalLinkWithTitle, image, externalLink, wikiLink, titleLink];
