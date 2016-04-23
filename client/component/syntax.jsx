@@ -41,7 +41,7 @@ const titleLink = gyazz2jsx(/\[{2}(.+)\]{2}/, (m, attrs) => {
   return <a href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{title}</a>;
 });
 
-const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]+)\]{2}/, (m, attrs) => {
+const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]*)\]{2}/, (m, attrs) => {
   const [, wiki, title] = m;
   const onClick = e => {
     e.preventDefault();
