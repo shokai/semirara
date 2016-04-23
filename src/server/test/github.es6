@@ -1,7 +1,7 @@
 /* global describe it */
 
 import {assert} from "chai";
-import GitHub from "../src/lib/github";
+import GitHub from "../lib/github";
 
 describe("GitHub", function(){
 

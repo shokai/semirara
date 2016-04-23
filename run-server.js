@@ -1,8 +1,8 @@
 require("babel-polyfill");
 
-var path = './dist';
+var path = './dist/server/';
 if(process.env.NODE_ENV !== "production"){
-  path = './src';
+  path = './src/server/';
   require("babel-register");
 }
 

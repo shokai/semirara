@@ -2,7 +2,7 @@
 
 import {delay} from "./test_helper";
 import {assert} from "chai";
-import Cache from "../src/lib/cache";
+import Cache from "../lib/cache";
 
 
 describe("Cache", function(){

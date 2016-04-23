@@ -30,7 +30,7 @@ app.use(router.routes());
 import Jade from "koa-jade";
 new Jade({
   app: app,
-  viewPath: "server/view",
+  viewPath: "view",
   debug: app.env !== "production",
   noCache: app.env !== "production",
   helperPath: [ ]

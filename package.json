@@ -1,24 +1,25 @@
 {
+  "private": true,
   "name": "semirara",
   "version": "0.0.1",
   "description": "wiki",
-  "main": "server/run.js",
+  "main": "run-server.js",
   "engines": {
     "node": "5.x",
     "npm": "3.x"
   },
   "scripts": {
     "prestart": "npm run build && npm run browserify",
-    "start": "node server/run.js",
-    "start:dev": "DEBUG=semirara*,koa* node-dev server/run.js",
+    "start": "node run-server.js",
+    "start:dev": "DEBUG=semirara*,koa* node-dev run-server.js",
     "test": "npm run eslint && npm run mocha",
-    "mocha": "mocha */test/*.es6 --compilers js:babel-register",
-    "eslint": "eslint server/src/{*,**/*}.es6 client/{*,**/*}.{es6,jsx}",
-    "browserify": "browserify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify ] -t [ stylify ] client/index.es6 | uglifyjs -o public/dist/index.js",
-    "watchify": "watchify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify ] -t [ stylify ] client/index.es6 -o public/dist/index.js",
-    "build": "babel server/src/ --out-dir server/dist/ --source-maps inline",
+    "mocha": "mocha src/*/test/*.es6 --compilers js:babel-register",
+    "eslint": "eslint src/{*,**/*}.{js,es6,jsx}",
+    "browserify": "browserify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify ] -t [ stylify ] src/client/index.es6 | uglifyjs -o public/dist/index.js",
+    "watchify": "watchify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify ] -t [ stylify ] src/client/index.es6 -o public/dist/index.js",
+    "build": "babel src/ --out-dir dist/ --source-maps inline",
     "watch": "parallelshell 'chokidar \"*/**.{es6,jsx}\" -c \"npm run test\"' 'npm run build -- --watch' 'npm run watchify'",
-    "clean": "rm -rf server/dist public/dist/*"
+    "clean": "rm -rf dist/* public/dist/*"
   },
   "keywords": [
     "wiki",
