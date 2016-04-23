@@ -6,7 +6,6 @@ export default class Editor extends Component {
 
   constructor(){
     super();
-    this.startEdit = this.startEdit.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
   }
 
@@ -19,10 +18,9 @@ export default class Editor extends Component {
     if(this.state.page.lines.length < 1 && !this.state.page.editline){
       lis = [(
         <li key={0}>
-          <EditorLine value="(empty)" onStartEdit={() => this.startEdit(0)} />
+          <EditorLine value="(empty)" onStartEdit={() => store.dispatch({type: "editline", value: 0})} />
         </li>
       )];
-      this.debug(lis);
     }
     else{
       lis = Object.keys(this.state.page.lines).map(i => {
@@ -34,7 +32,7 @@ export default class Editor extends Component {
                value={line.value}
                user={shouldShowUserIcon(this.state.page.lines, i) ? line.user : null}
                edit={this.state.page.editline === i}
-               onStartEdit={() => this.startEdit(i)}
+               onStartEdit={() => store.dispatch({type: "editline", value: i})}
                onChange={value => store.dispatch({type: "updateLine", value})}
                onKeyDown={e => this.onKeyDown(e)}
               />
@@ -49,13 +47,7 @@ export default class Editor extends Component {
     );
   }
 
-  startEdit(editline){
-    this.debug(`start edit line:${editline}`);
-    store.dispatch({type: "editline", value: editline});
-  }
-
   onKeyDown(e){
-    this.debug("keyCode = " + e.keyCode);
     switch(e.keyCode){
     case 13: // enter
       store.dispatch({type: "insertNewLine"});
