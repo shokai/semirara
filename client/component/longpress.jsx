@@ -30,7 +30,8 @@ export default class LongPress extends Component{
          onMouseUp={this.stop}
          onMouseOut={this.stop}>
         {this.props.children}
-        </span>);
+      </span>
+    );
   }
 
   start(e){
