@@ -4,7 +4,7 @@ export default class UserIcon extends Component{
 
   static get propTypes(){
     return {
-      id: React.PropTypes.string.isRequired,
+      id: React.PropTypes.number.isRequired,
       size: React.PropTypes.number.isRequired
     };
   }

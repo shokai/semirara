@@ -15,7 +15,7 @@ export default class EditorLine extends Component{
   static get propTypes(){
     return {
       value: React.PropTypes.string.isRequired,
-      user: React.PropTypes.string,
+      user: React.PropTypes.number,
       edit: React.PropTypes.bool,
       onStartEdit: React.PropTypes.func,
       onChange: React.PropTypes.func,
