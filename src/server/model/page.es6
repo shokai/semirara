@@ -1,5 +1,7 @@
 const debug = require("debug")("semirara:model:page");
 
+import {validateTitle, validateWiki} from "../../share/route";
+
 import {ambiguous} from "./";
 import Cache from "../lib/cache";
 const pageCache = new Cache({
@@ -14,11 +16,13 @@ autoIncrement.initialize(mongoose.connection);
 const pageSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    validate: (title) => validateTitle(title).valid
   },
   wiki: {
     type: String,
-    required: true
+    required: true,
+    validate: (wiki) => validateWiki(wiki).valid
   },
   lines: {
     type: Array,
