@@ -7,8 +7,8 @@ export function parseRoute(path){
   let route = {};
   const m = decodeURIComponent(path).match(/^\/([^\/]+)\/(.+)/);
   if(m){
-    route.wiki = m[1];
-    route.title = m[2];
+    if(validateWiki(m[1]).valid) route.wiki = m[1];
+    if(validateTitle(m[2]).valid) route.title = m[2];
   }
   return route;
 }

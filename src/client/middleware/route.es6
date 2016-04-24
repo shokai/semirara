@@ -43,13 +43,15 @@ export const pushStateOnRoute = store => next => action => {
   return result;
 };
 
+const defaultRoute = {wiki: "general", title: "hello"};
+
 var popStateTimeout;
 window.addEventListener("popstate", (e) => {
   clearTimeout(popStateTimeout);
   popStateTimeout = setTimeout(() => {
     store.dispatch({
       type: "route",
-      value: Object.assign({wiki: "general", title: "test"}, parseRoute()),
+      value: Object.assign({}, defaultRoute, parseRoute()),
       noPushState: true
     });
   }, 500);
@@ -58,6 +60,6 @@ window.addEventListener("popstate", (e) => {
 io.on("connect", () => {
   store.dispatch({
     type: "route",
-    value: Object.assign({wiki: "general", title: "test"}, parseRoute())
+    value: Object.assign({}, defaultRoute, parseRoute())
   });
 });
