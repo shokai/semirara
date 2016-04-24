@@ -105,8 +105,13 @@ export default class Editor extends Component {
 export function shouldShowUserIcon(lines, position){
   if(position < 1) return true;
   const currentLine = lines[position];
-  const upperLine = lines[position-1];
-  if(currentLine.user !== upperLine.user) return true;
-  if(currentLine.indent < upperLine.indent) return true;
-  return false;
+  for(let i = position-1; i >= 0; i--){
+    let line = lines[i];
+    if(line.indent <= currentLine.indent){
+      if(line.user === currentLine.user) return false;
+      if(line.user !== currentLine.user) return true;
+    }
+    if(line.indent < 1) break;
+  }
+  return true;
 }
