@@ -3,7 +3,7 @@ import {store} from "../store";
 import {validateTitle, validateWiki, validateRoute} from "../../share/route";
 
 export default function compile(str){
-  const methods = [strong, externalLinkWithDescription, image, externalLink, wikiLink, titleLink];
+  const methods = [strong, externalLinkWithDescription, image, externalLink, wikiTitleLink, wikiLink, titleLink];
   const chunks = split(str);
   let i = 0;
   return chunks.map((chunk) => {
@@ -42,7 +42,7 @@ const titleLink = gyazz2jsx(/\[{2}(.+)\]{2}/, ([source, title], attrs) => {
   return <a href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{title}</a>;
 });
 
-const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]*)\]{2}/, ([source, wiki, title], attrs) => {
+const wikiTitleLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]*)\]{2}/, ([source, wiki, title], attrs) => {
   if(validateRoute({wiki, title}).invalid) return source;
   const onClick = e => {
     e.preventDefault();
@@ -50,6 +50,16 @@ const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]*)\]{2}/, ([source, wiki, title
     store.dispatch({type: "route", value: {wiki, title}});
   };
   return <a href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{`${wiki}::${title}`}</a>;
+});
+
+const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::\]{2}/, ([source, wiki], attrs) => {
+  if(validateWiki(wiki).invalid) return source;
+  const onClick = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    store.dispatch({type: "route", value: {wiki}});
+  };
+  return <a href={`/${wiki}`} onClick={onClick} {...attrs}>{`${wiki}::`}</a>;
 });
 
 const externalLinkWithDescription = gyazz2jsx(
