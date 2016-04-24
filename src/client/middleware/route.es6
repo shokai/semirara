@@ -1,7 +1,27 @@
 import {store} from "../store";
 import {io} from "../socket";
 
-import {buildPath, parseRoute} from "../../share/route";
+import {buildPath, parseRoute, validateWiki, validateTitle} from "../../share/route";
+
+export const validateOnRoute = store => next => action => {
+  if(action.type !== "route") return next(action);
+  const {wiki, title} = action.value;
+  if(wiki){
+    let result = validateWiki(wiki);
+    if(result.invalid){
+      alert(result.errors);
+      return;
+    }
+  }
+  if(title){
+    let result = validateTitle(title);
+    if(result.invalid){
+      alert(result.errors);
+      return;
+    }
+  }
+  return next(action);
+};
 
 export const pushStateOnRoute = store => next => action => {
   if(["route", "page"].indexOf(action.type) < 0){

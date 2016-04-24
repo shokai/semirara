@@ -5,7 +5,7 @@ export function buildPath({wiki, title}){
 export function parseRoute(path){
   if(!path) path = location.pathname+location.search;
   let route = {};
-  const m = decodeURI(path).match(/^\/([^\/]+)\/([^\/]+)/);
+  const m = decodeURIComponent(path).match(/^\/([^\/]+)\/(.+)/);
   if(m){
     route.wiki = m[1];
     route.title = m[2];

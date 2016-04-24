@@ -19,6 +19,7 @@ describe("route - parser and validator of /wiki/title path", function(){
     it("parse path", function(){
       assert.deepEqual(parseRoute("/foo/bar"), {wiki: "foo", title: "bar"});
       assert.deepEqual(parseRoute("foo/bar"), {});
+      assert.deepEqual(parseRoute("/foo/bar/baz"), {wiki: "foo", title: "bar/baz"});
     });
 
   });
