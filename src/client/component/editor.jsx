@@ -7,6 +7,7 @@ export default class Editor extends Component {
   constructor(){
     super();
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.onPaste = this.onPaste.bind(this);
   }
 
   mapState(state){
@@ -34,7 +35,8 @@ export default class Editor extends Component {
                edit={this.state.page.editline === i}
                onStartEdit={() => store.dispatch({type: "editline", value: i})}
                onChange={value => store.dispatch({type: "updateLine", value})}
-               onKeyDown={e => this.onKeyDown(e)}
+               onKeyDown={this.onKeyDown}
+               onPaste={this.onPaste}
               />
           </li>
         );
@@ -89,6 +91,13 @@ export default class Editor extends Component {
       store.dispatch({type: "indent:decrement"});
       break;
     }
+  }
+
+  onPaste(e){
+    const lines = e.clipboardData.getData("Text").split(/[\r\n]/);
+    if(lines.length < 2) return;
+    e.preventDefault();
+    store.dispatch({type: "insertMultiLines", value: lines});
   }
 
 }

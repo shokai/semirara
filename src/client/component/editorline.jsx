@@ -19,7 +19,8 @@ export default class EditorLine extends Component{
       edit: React.PropTypes.bool,
       onStartEdit: React.PropTypes.func,
       onChange: React.PropTypes.func,
-      onKeyDown: React.PropTypes.func
+      onKeyDown: React.PropTypes.func,
+      onPaste: React.PropTypes.func
     };
   }
 
@@ -32,6 +33,7 @@ export default class EditorLine extends Component{
            onChange={e => this.props.onChange(e.target.value)}
            onClick={e => e.stopPropagation()}
            onKeyDown={this.props.onKeyDown}
+           onPasteCapture={this.props.onPaste}
           />
       );
     }

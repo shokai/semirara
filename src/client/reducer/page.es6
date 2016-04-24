@@ -24,6 +24,16 @@ export default function pageReducer(state = {}, action){
     if(!line.id) line.id = shortid.generate();
     break;
   }
+  case "insertMultiLines": {
+    let indent = state.lines[state.editline].indent;
+    state.lines = [
+        ...state.lines.slice(0, state.editline+1),
+        ...action.value.map(value => new Line({value, indent})),
+        ...state.lines.slice(state.editline+1)
+    ];
+    state.editline += action.value.length;
+    break;
+  }
   case "insertNewLine":
     if(state.editline > -1){
       let indent = state.lines[state.editline].indent;

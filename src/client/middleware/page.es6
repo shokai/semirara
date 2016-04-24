@@ -18,7 +18,7 @@ export const getPageOnRoute = store => next => async (action) => {
 };
 
 export const sendPage = store => next => action => {
-  const targetActions = ["insertNewLine", "updateLine",
+  const targetActions = ["insertNewLine", "updateLine", "insertMultiLines",
                          "swapLine:up", "swapLine:down",
                          "swapBlock:up", "swapBlock:down",
                          "indent:increment", "indent:decrement",
@@ -35,7 +35,7 @@ export const sendPage = store => next => action => {
 
 export const removeEmptyLines = store => next => action => {
   const result = next(action);
-  const targetActions = ["editline:up", "editline:down"];
+  const targetActions = ["editline:up", "editline:down", "insertMultiLines"];
   if((action.type === "editline" && action.value === null) ||
      targetActions.indexOf(action.type) > -1){
     store.dispatch({type: "removeEmptyLines"});
