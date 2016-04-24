@@ -1,8 +1,9 @@
 import React from "react";
 import {store} from "../store";
+import {validateTitle, validateWiki, validateRoute} from "../../share/route";
 
 export default function compile(str){
-  const methods = [strong, externalLinkWithTitle, image, externalLink, wikiLink, titleLink];
+  const methods = [strong, externalLinkWithDescription, image, externalLink, wikiLink, titleLink];
   const chunks = split(str);
   let i = 0;
   return chunks.map((chunk) => {
@@ -30,8 +31,8 @@ function gyazz2jsx(regex, replacer){
 
 const strong = gyazz2jsx(/\[{3}(.+)\]{3}/, (m, attrs) => <strong {...attrs}>{m[1]}</strong>);
 
-const titleLink = gyazz2jsx(/\[{2}(.+)\]{2}/, (m, attrs) => {
-  const title = m[1];
+const titleLink = gyazz2jsx(/\[{2}(.+)\]{2}/, ([source, title], attrs) => {
+  if(validateTitle(title).invalid) return source;
   const wiki = store.getState().page.wiki;
   const onClick = e => {
     e.preventDefault();
@@ -41,8 +42,8 @@ const titleLink = gyazz2jsx(/\[{2}(.+)\]{2}/, (m, attrs) => {
   return <a href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{title}</a>;
 });
 
-const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]*)\]{2}/, (m, attrs) => {
-  const [, wiki, title] = m;
+const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]*)\]{2}/, ([source, wiki, title], attrs) => {
+  if(validateRoute({wiki, title}).invalid) return source;
   const onClick = e => {
     e.preventDefault();
     e.stopPropagation();
@@ -51,11 +52,18 @@ const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]*)\]{2}/, (m, attrs) => {
   return <a href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{`${wiki}::${title}`}</a>;
 });
 
-const externalLinkWithTitle = gyazz2jsx(/\[{2}(https?:\/\/.+) (.+)\]{2}/, (m, attrs) => {
-  return <a href={m[1]} target="_blank" {...attrs}>{m[2]}</a>;
-});
+const externalLinkWithDescription = gyazz2jsx(
+    /\[{2}(https?:\/\/.+) (.+)\]{2}/
+    , ([source, url, description], attrs) => {
+      return <a href={url} target="_blank" {...attrs}>{description}</a>;
+    }
+);
 
-const externalLink = gyazz2jsx(/\[{2}(https?:\/\/.+)\]{2}/, (m, attrs) => <a href={m[1]} target="_blank" {...attrs}>{m[1]}</a>);
+const externalLink = gyazz2jsx(
+    /\[{2}(https?:\/\/.+)\]{2}/, ([source, url], attrs) => {
+      return <a href={url} target="_blank" {...attrs}>{url}</a>;
+    }
+);
 
 const image = gyazz2jsx(/\[{2}(https?:\/\/.+)\.(jpe?g|gif|png)\]{2}/i, (m, attrs) => <img src={`${m[1]}.${m[2]}`} title={m[0]} {...attrs} />);
 
