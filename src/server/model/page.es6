@@ -1,6 +1,6 @@
 const debug = require("debug")("semirara:model:page");
 
-import {validateTitle, validateWiki} from "../../share/route";
+import {validateTitle, validateWiki, validateRoute} from "../../share/route";
 
 import {ambiguous} from "./";
 import Cache from "../lib/cache";
@@ -79,6 +79,8 @@ pageSchema.statics.findOneByWikiTitle = async function(query){
 
 const saveTimeouts = {};
 pageSchema.methods.saveWithCache = function(){
+  const validationResult = validateRoute(this);
+  if(validationResult.invalid) throw new Error(validationResult.errors);
   const key = `${this.wiki}::${this.title}`;
   clearTimeout(saveTimeouts[key]);
   pageCache.set(key, this.toHash());
