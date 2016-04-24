@@ -1,6 +1,8 @@
 import React from "react";
 import {Component, store} from "../store";
 import EditorLine from "./editorline";
+import {detectLang} from "./syntax";
+import clone from "clone";
 
 export default class Editor extends Component {
 
@@ -24,14 +26,16 @@ export default class Editor extends Component {
       )];
     }
     else{
-      lis = Object.keys(this.state.page.lines).map(i => {
+      const lines = addLangToLines(this.state.page.lines);
+      lis = Object.keys(lines).map(i => {
         i = parseInt(i);
-        let line = this.state.page.lines[i];
+        let line = lines[i];
         return (
           <li key={line.id || i} style={{marginLeft: line.indent*20}}>
             <EditorLine
                value={line.value}
-               user={shouldShowUserIcon(this.state.page.lines, i) ? line.user : null}
+               user={shouldShowUserIcon(lines, i) ? line.user : null}
+               lang={line.lang}
                edit={this.state.page.editline === i}
                onStartEdit={() => store.dispatch({type: "editline", value: i})}
                onChange={value => store.dispatch({type: "updateLine", value})}
@@ -114,4 +118,20 @@ export function shouldShowUserIcon(lines, position){
     if(line.indent < 1) break;
   }
   return true;
+}
+
+export function addLangToLines(_lines){
+  const lines = clone(_lines);
+  let lang, indent;
+  for(let line of lines){
+    if(lang && line.indent > indent){
+      line.lang = lang;
+    }
+    else{
+      line.lang = lang = detectLang(line.value);
+      if(lang) indent = line.indent;
+      else indent = null;
+    }
+  }
+  return lines;
 }

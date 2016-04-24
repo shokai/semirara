@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import LongPress from "./longpress";
 import compile from "./syntax";
 import UserIcon from "./usericon";
+import Code from "./code";
 
 export default class EditorLine extends Component{
 
@@ -17,6 +18,7 @@ export default class EditorLine extends Component{
       value: React.PropTypes.string.isRequired,
       user: React.PropTypes.number,
       edit: React.PropTypes.bool,
+      lang: React.PropTypes.string,
       onStartEdit: React.PropTypes.func,
       onChange: React.PropTypes.func,
       onKeyDown: React.PropTypes.func,
@@ -39,10 +41,13 @@ export default class EditorLine extends Component{
     }
     else{
       const icon = !this.props.user ? null : <UserIcon id={this.props.user} size={20} />;
+      let elm = this.props.lang ?
+            <Code lang={this.props.lang} code={this.props.value} /> :
+            compile(this.props.value);
       return (
         <span>
           <LongPress onLongPress={this.props.onStartEdit}>
-            {compile(this.props.value)}
+            {elm}
           </LongPress>
           {icon}
         </span>

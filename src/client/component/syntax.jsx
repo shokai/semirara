@@ -77,3 +77,8 @@ const externalLink = gyazz2jsx(
 
 const image = gyazz2jsx(/\[{2}(https?:\/\/.+)\.(jpe?g|gif|png)\]{2}/i, (m, attrs) => <img src={`${m[1]}.${m[2]}`} title={m[0]} {...attrs} />);
 
+export function detectLang(str){
+  const m = str.match(/^code:(.+)$/);
+  if(m) return m[1];
+  return null;
+}
