@@ -61,6 +61,10 @@ export function validateName(name){
     }
   }
 
+  if(/::/.test(name)){
+    result.errors.push(`name cannot contain "::"`);
+  }
+
   try{
     if(decodeURIComponent(name) !== name){
       result.errors.push("name cannot contain URI encoded char");

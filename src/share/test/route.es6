@@ -45,6 +45,7 @@ describe("route - parser and validator of /wiki/title path", function(){
       assert(validateName("config").invalid);
       assert(validateName("%20").invalid);
       assert(validateName("%").invalid);
+      assert(validateName("::").invalid);
     });
 
     it("valid name", function(){
