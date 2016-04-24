@@ -2,7 +2,7 @@
 
 import {assert} from "chai";
 
-import {buildPath, parseRoute, validateName, validateWiki, validateTitle} from "../route";
+import {buildPath, parseRoute, validateName, validateWiki, validateTitle, validateRoute} from "../route";
 
 describe("route - parser and validator of /wiki/title path", function(){
 
@@ -41,6 +41,7 @@ describe("route - parser and validator of /wiki/title path", function(){
       assert(validateName("api").invalid);
       assert(validateName("config").invalid);
       assert(validateName("%20").invalid);
+      assert(validateName("%").invalid);
     });
 
     it("valid name", function(){
@@ -50,6 +51,7 @@ describe("route - parser and validator of /wiki/title path", function(){
       assert(validateName("general").valid);
       assert(validateName("logoff").valid);
       assert(validateName("logon").valid);
+      assert(validateName("?_^+-*").valid);
     });
   });
 
@@ -77,6 +79,22 @@ describe("route - parser and validator of /wiki/title path", function(){
       assert(validateTitle("general").valid);
       assert(validateTitle("sl/ash").valid);
       assert(validateTitle("javascript:").valid);
+    });
+
+  });
+
+
+  describe("validate route", function(){
+
+    it("invalid route", function(){
+      assert(validateRoute({wiki: "ok"}).invalid);
+      assert(validateRoute({title: "ok"}).invalid);
+      assert(validateRoute({wiki: "general", title: "sh#arp"}).invalid);
+      assert(validateRoute({wiki: "sl/ash", title: "hello"}).invalid);
+    });
+
+    it("invalid route", function(){
+      assert(validateRoute({wiki: "general", title: "hello"}).valid);
     });
 
   });

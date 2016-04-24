@@ -46,7 +46,7 @@ export function validateName(name){
 
   for(let s of blacklist){
     if(name.toLowerCase() === s){
-      result.errors.push(`${name} is reserved for system`);
+      result.errors.push(`"${name}" is reserved for system`);
     }
   }
 
@@ -60,8 +60,13 @@ export function validateName(name){
     }
   }
 
-  if(decodeURIComponent(name) !== name){
-    result.errors.push("name cannot contain URI encoded char");
+  try{
+    if(decodeURIComponent(name) !== name){
+      result.errors.push("name cannot contain URI encoded char");
+    }
+  }
+  catch(err){
+    result.errors.push(err.message);
   }
 
   return result;
@@ -90,5 +95,11 @@ export function validateWiki(name){
     }
   }
 
+  return result;
+}
+
+export function validateRoute({wiki, title}){
+  const result = validateWiki(wiki);
+  result.errors.push(...validateTitle(title).errors);
   return result;
 }
