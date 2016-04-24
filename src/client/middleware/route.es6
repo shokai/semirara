@@ -1,20 +1,7 @@
 import {store} from "../store";
 import {io} from "../socket";
 
-export function buildPath(route){
-  return `/${route.wiki}/${route.title}`;
-}
-
-export function parseRoute(path){
-  if(!path) path = location.pathname+location.search;
-  let route = {};
-  const m = decodeURI(path).match(/^\/([^\/]+)\/([^\/]+)/);
-  if(m){
-    route.wiki = m[1];
-    route.title = m[2];
-  }
-  return route;
-}
+import {buildPath, parseRoute} from "../../share/route";
 
 export const pushStateOnRoute = store => next => action => {
   if(["route", "page"].indexOf(action.type) < 0){
