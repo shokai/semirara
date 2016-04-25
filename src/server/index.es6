@@ -27,13 +27,12 @@ app.use(logger());
 import router from "./route";
 app.use(router.routes());
 
-import Jade from "koa-jade";
-new Jade({
-  app: app,
-  viewPath: "view",
-  debug: app.env !== "production",
-  noCache: app.env !== "production",
-  helperPath: [ ]
+import react from "koa-react-view";
+import path from "path";
+
+react(app, {
+  views: path.join(__dirname, "views"),
+  extname: process.env.NODE_ENV === "production" ? ".js" : ".jsx"
 });
 
 module.exports = {
