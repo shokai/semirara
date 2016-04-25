@@ -26,6 +26,7 @@ export default class EditorLine extends Component{
   }
 
   render(){
+    const {line} = this.props;
     if(this.props.edit){
       return (
         <input
@@ -46,6 +47,15 @@ export default class EditorLine extends Component{
       }
       else if(this.props.line.lang){
         elm = <Code lang={this.props.line.lang} code={this.props.line.value} />;
+      }
+      else if(line.cli){
+        elm = (
+          <span className="cli">
+            <span className="prefix">{line.cli.prefix}</span>
+            {" "}
+            <span>{line.cli.command}</span>
+          </span>
+        );
       }
       else{
         elm = compile(this.props.line.value);

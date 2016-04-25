@@ -120,6 +120,16 @@ export function shouldShowUserIcon(lines, position){
   return true;
 }
 
+
+function detectCLI(str){
+  const m = str.match(/^([\%\$]) (.+)/);
+  if(m){
+    const [, prefix, command] = m;
+    return {prefix, command};
+  }
+  return false;
+}
+
 export function addLangToLines(_lines){
   const lines = clone(_lines);
   let lang, indent;
@@ -135,6 +145,7 @@ export function addLangToLines(_lines){
       }
       else{
         indent = null;
+        line.cli = detectCLI(line.value);
       }
     }
   }
