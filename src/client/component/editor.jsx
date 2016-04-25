@@ -131,6 +131,7 @@ export function addLangToLines(_lines){
       line.lang = lang = detectLang(line.value);
       if(lang){
         indent = line.indent;
+        line.codestart = true;
       }
       else{
         indent = null;

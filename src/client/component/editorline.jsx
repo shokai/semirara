@@ -40,9 +40,16 @@ export default class EditorLine extends Component{
     }
     else{
       const icon = this.props.showUser ? <UserIcon id={this.props.line.user} size={20} /> : null;
-      let elm = this.props.line.lang ?
-            <Code lang={this.props.line.lang} code={this.props.line.value} /> :
-            compile(this.props.line.value);
+      let elm;
+      if(this.props.line.codestart){
+        elm = <span className="codestart">{this.props.line.lang}</span>;
+      }
+      else if(this.props.line.lang){
+        elm = <Code lang={this.props.line.lang} code={this.props.line.value} />;
+      }
+      else{
+        elm = compile(this.props.line.value);
+      }
       return (
         <span>
           <LongPress onLongPress={this.props.onStartEdit}>
