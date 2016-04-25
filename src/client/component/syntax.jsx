@@ -3,7 +3,7 @@ import {store} from "../store";
 import {validateTitle, validateWiki, validateRoute} from "../../share/route";
 
 export default function compile(str){
-  const methods = [strong, externalLinkWithDescription, image, externalLink, wikiTitleLink, wikiLink, titleLink];
+  const methods = [strong, externalLinkWithImage, externalLinkWithDescription, image, externalLink, wikiTitleLink, wikiLink, titleLink];
   const chunks = split(str);
   let i = 0;
   return chunks.map((chunk) => {
@@ -61,6 +61,17 @@ const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::\]{2}/, ([source, wiki], attrs) => {
   };
   return <a href={`/${wiki}`} onClick={onClick} {...attrs}>{`${wiki}::`}</a>;
 });
+
+const externalLinkWithImage = gyazz2jsx(
+    /\[{2}(https?:\/\/.+) (https?:\/\/.+)\.(jpe?g|gif|png)\]{2}/i
+  , ([source, url, image, ext], attrs) => {
+    return (
+      <a href={url} target="_blank" {...attrs}>
+        <img src={`${image}.${ext}`} />
+      </a>
+    );
+  }
+);
 
 const externalLinkWithDescription = gyazz2jsx(
     /\[{2}(https?:\/\/.+) (.+)\]{2}/
