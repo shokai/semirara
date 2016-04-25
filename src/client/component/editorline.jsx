@@ -31,7 +31,7 @@ export default class EditorLine extends Component{
       return (
         <input
            ref="input"
-           value={this.props.line.value}
+           value={line.value}
            onChange={e => this.props.onChange(e.target.value)}
            onClick={e => e.stopPropagation()}
            onKeyDown={this.props.onKeyDown}
@@ -40,13 +40,13 @@ export default class EditorLine extends Component{
       );
     }
     else{
-      const icon = this.props.showUser ? <UserIcon id={this.props.line.user} size={20} /> : null;
+      const icon = this.props.showUser ? <UserIcon id={line.user} size={20} /> : null;
       let elm;
-      if(this.props.line.codestart){
-        elm = <span className="codestart">{this.props.line.lang}</span>;
+      if(line.codestart){
+        elm = <span className="codestart">{line.lang}</span>;
       }
-      else if(this.props.line.lang){
-        elm = <Code lang={this.props.line.lang} code={this.props.line.value} />;
+      else if(line.lang){
+        elm = <Code lang={line.lang} code={line.value} />;
       }
       else if(line.cli){
         elm = (
@@ -58,7 +58,7 @@ export default class EditorLine extends Component{
         );
       }
       else{
-        elm = compile(this.props.line.value);
+        elm = compile(line.value);
       }
       return (
         <span>
