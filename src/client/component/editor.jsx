@@ -21,7 +21,7 @@ export default class Editor extends Component {
     if(this.state.page.lines.length < 1 && !this.state.page.editline){
       lis = [(
         <li key={0}>
-          <EditorLine value="(empty)" onStartEdit={() => store.dispatch({type: "editline", value: 0})} />
+          <EditorLine line={{value: "(empty)"}} onStartEdit={() => store.dispatch({type: "editline", value: 0})} />
         </li>
       )];
     }
@@ -33,9 +33,8 @@ export default class Editor extends Component {
         return (
           <li key={line.id || i} style={{marginLeft: line.indent*20}}>
             <EditorLine
-               value={line.value}
-               user={shouldShowUserIcon(lines, i) ? line.user : null}
-               lang={line.lang}
+               line={line}
+               showUser={shouldShowUserIcon(lines, i)}
                edit={this.state.page.editline === i}
                onStartEdit={() => store.dispatch({type: "editline", value: i})}
                onChange={value => store.dispatch({type: "updateLine", value})}
@@ -109,6 +108,7 @@ export default class Editor extends Component {
 export function shouldShowUserIcon(lines, position){
   if(position < 1) return true;
   const currentLine = lines[position];
+  if(!currentLine.user) return false;
   for(let i = position-1; i >= 0; i--){
     let line = lines[i];
     if(line.indent <= currentLine.indent){
@@ -129,8 +129,12 @@ export function addLangToLines(_lines){
     }
     else{
       line.lang = lang = detectLang(line.value);
-      if(lang) indent = line.indent;
-      else indent = null;
+      if(lang){
+        indent = line.indent;
+      }
+      else{
+        indent = null;
+      }
     }
   }
   return lines;

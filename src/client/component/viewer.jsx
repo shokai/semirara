@@ -16,9 +16,8 @@ export default class Viewer extends Component{
       return (
         <li key={line.id || i} style={{marginLeft: line.indent*20}}>
           <EditorLine
-             value={line.value}
-             user={shouldShowUserIcon(lines, i) ? line.user : null}
-             lang={line.lang}
+             line={line}
+             showUser={shouldShowUserIcon(lines, i)}
              />
         </li>
       );

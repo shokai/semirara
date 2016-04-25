@@ -15,10 +15,9 @@ export default class EditorLine extends Component{
 
   static get propTypes(){
     return {
-      value: React.PropTypes.string.isRequired,
-      user: React.PropTypes.number,
+      line: React.PropTypes.object.isRequired,
+      showUser: React.PropTypes.bool,
       edit: React.PropTypes.bool,
-      lang: React.PropTypes.string,
       onStartEdit: React.PropTypes.func,
       onChange: React.PropTypes.func,
       onKeyDown: React.PropTypes.func,
@@ -31,7 +30,7 @@ export default class EditorLine extends Component{
       return (
         <input
            ref="input"
-           value={this.props.value}
+           value={this.props.line.value}
            onChange={e => this.props.onChange(e.target.value)}
            onClick={e => e.stopPropagation()}
            onKeyDown={this.props.onKeyDown}
@@ -40,10 +39,10 @@ export default class EditorLine extends Component{
       );
     }
     else{
-      const icon = !this.props.user ? null : <UserIcon id={this.props.user} size={20} />;
-      let elm = this.props.lang ?
-            <Code lang={this.props.lang} code={this.props.value} /> :
-            compile(this.props.value);
+      const icon = this.props.showUser ? <UserIcon id={this.props.line.user} size={20} /> : null;
+      let elm = this.props.line.lang ?
+            <Code lang={this.props.line.lang} code={this.props.line.value} /> :
+            compile(this.props.line.value);
       return (
         <span>
           <LongPress onLongPress={this.props.onStartEdit}>
