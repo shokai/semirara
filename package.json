@@ -55,6 +55,7 @@
     "memjs": "^0.9.0",
     "mongoose": "^4.4.5",
     "mongoose-auto-increment": "^5.0.1",
+    "nib": "^1.1.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "reactify": "^1.1.1",
