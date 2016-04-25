@@ -14,7 +14,7 @@
     "start:dev": "DEBUG=semirara*,koa* node-dev run-server.js",
     "test": "npm run eslint && npm run mocha",
     "mocha": "mocha src/*/test/*.es6 --compilers js:babel-register",
-    "eslint": "eslint src/{*,**/*}.{js,es6,jsx}",
+    "eslint": "eslint src/*/{*,**/*}.{js,es6,jsx}",
     "browserify": "browserify --verbose --extension=.jsx --extension=.es6 -t [ babelify ] -t [ stylify ] -g uglifyify src/client/index.es6 -o public/dist/index.js",
     "watchify": "watchify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify ] -t [ stylify ] src/client/index.es6 -o public/dist/index.js",
     "build": "babel src/ --out-dir dist/ --source-maps inline",
