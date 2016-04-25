@@ -39,7 +39,7 @@ const titleLink = gyazz2jsx(/\[{2}(.+)\]{2}/, ([source, title], attrs) => {
     e.stopPropagation();
     store.dispatch({type: "route", value: {title}});
   };
-  return <a href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{title}</a>;
+  return <a className="internal" href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{title}</a>;
 });
 
 const wikiTitleLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]*)\]{2}/, ([source, wiki, title], attrs) => {
@@ -49,7 +49,7 @@ const wikiTitleLink = gyazz2jsx(/\[{2}([^\]]+)::([^\]]*)\]{2}/, ([source, wiki, 
     e.stopPropagation();
     store.dispatch({type: "route", value: {wiki, title}});
   };
-  return <a href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{`${wiki}::${title}`}</a>;
+  return <a className="internal" href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{`${wiki}::${title}`}</a>;
 });
 
 const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::\]{2}/, ([source, wiki], attrs) => {
@@ -59,7 +59,7 @@ const wikiLink = gyazz2jsx(/\[{2}([^\]]+)::\]{2}/, ([source, wiki], attrs) => {
     e.stopPropagation();
     store.dispatch({type: "route", value: {wiki}});
   };
-  return <a href={`/${wiki}`} onClick={onClick} {...attrs}>{`${wiki}::`}</a>;
+  return <a className="internal" href={`/${wiki}`} onClick={onClick} {...attrs}>{`${wiki}::`}</a>;
 });
 
 const externalLinkWithImage = gyazz2jsx(
