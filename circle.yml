@@ -4,5 +4,4 @@ machine:
 test:
   override:
     - npm run build
-    - npm run browserify
     - npm run test
