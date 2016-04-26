@@ -9,7 +9,7 @@ export default function IndexHTML({user, app}){
   return (
     <html>
       <head>
-        <title>{app.anme}</title>
+        <title>{app.name}</title>
         <link rel="stylesheet" href="/highlight.css" />
         <script dangerouslySetInnerHTML={{__html: script}} />
       </head>
