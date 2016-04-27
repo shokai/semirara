@@ -4,6 +4,7 @@ import Header from "./component/header";
 import Editor from "./component/editor";
 import Viewer from "./component/viewer";
 import PageList from "./component/pagelist";
+import hasDom from "has-dom";
 
 export default class App extends Component{
 
@@ -16,7 +17,7 @@ export default class App extends Component{
   render(){
     debug("render()");
     const {store} = this.props;
-    const editor = !global && window.user ? <Editor store={store} /> : <Viewer store={store} />;
+    const editor = hasDom() && window.user ? <Editor store={store} /> : <Viewer store={store} />;
     return (
       <div className="app" onClick={() => store.dispatch({type: "editline", value: null})}>
         <Header store={store} />

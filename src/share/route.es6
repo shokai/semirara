@@ -1,9 +1,11 @@
+import hasDom from "has-dom";
+
 export function buildPath({wiki, title}){
   return `/${wiki}/${title}`;
 }
 
 export function parseRoute(path){
-  if(!path && !global) path = location.pathname+location.search;
+  if(!path && hasDom()) path = location.pathname+location.search;
   path = decodeURIComponent(path);
   let route = {};
   const m = path.match(/^\/([^\/]+)\/?$/) || path.match(/^\/([^\/]+)\/(.+)/);

@@ -14,14 +14,13 @@ export default class PageList extends StoreComponent {
   }
 
   render(){
+    const {wiki} = this.state.page;
     const list = this.state.pagelist.map((title) => {
       return (
-        <li
-           key={title}
-           className={classnames({selected: title === this.state.page.title})}
-           onClick={e => this.onItemClick(title)}
-          >
-          {title}
+        <li key={title} className={classnames({selected: title === this.state.page.title})}>
+          <a href={`/${wiki}/${title}`} onClick={e => {e.preventDefault(); this.onItemClick(title);}}>
+            {title}
+          </a>
         </li>
       );
     });

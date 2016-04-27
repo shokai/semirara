@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import UserIcon from "./usericon";
+import hasDom from "has-dom";
 
 export default class Login extends Component {
 
@@ -11,7 +12,7 @@ export default class Login extends Component {
 
   static get defaultProps(){
     return {
-      user: !global ? window.user : null
+      user: hasDom() ? window.user : null
     };
   }
 
