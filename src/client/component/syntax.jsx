@@ -1,7 +1,7 @@
 import React from "react";
 import {validateTitle, validateWiki, validateRoute} from "../../share/route";
 
-export function createCompiler(store){
+export function createCompiler({action, state}){
 
   function split(str){
     return str.split(/(\[{2,3}[^\]]+\]{2,3})/).filter(i => i.length > 0);
@@ -20,11 +20,11 @@ export function createCompiler(store){
 
   const titleLink = gyazz2jsx(/\[{2}(.+)\]{2}/, ([source, title], attrs) => {
     if(validateTitle(title).invalid) return source;
-    const wiki = store.getState().page.wiki;
+    const {wiki} = state.page;
     const onClick = e => {
       e.preventDefault();
       e.stopPropagation();
-      store.dispatch({type: "route", value: {title}});
+      action.route({title});
     };
     return <a className="internal" href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{title}</a>;
   });
@@ -34,7 +34,7 @@ export function createCompiler(store){
     const onClick = e => {
       e.preventDefault();
       e.stopPropagation();
-      store.dispatch({type: "route", value: {wiki, title}});
+      action.route({wiki, title});
     };
     return <a className="internal" href={`/${wiki}/${title}`} onClick={onClick} {...attrs}>{`${wiki}::${title}`}</a>;
   });
@@ -44,7 +44,7 @@ export function createCompiler(store){
     const onClick = e => {
       e.preventDefault();
       e.stopPropagation();
-      store.dispatch({type: "route", value: {wiki}});
+      action.route({wiki});
     };
     return <a className="internal" href={`/${wiki}`} onClick={onClick} {...attrs}>{`${wiki}::`}</a>;
   });
@@ -90,6 +90,11 @@ export function createCompiler(store){
   };
 
 }
+
+createCompiler.propTypes = {
+  action: React.PropTypes.object.isRequired,
+  state: React.PropTypes.object.isRequired
+};
 
 export function detectLang(str){
   const m = str.match(/^code:(.+)$/);

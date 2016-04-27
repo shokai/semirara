@@ -44,6 +44,7 @@
     "cookie": "^0.2.3",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
+    "feed": "^0.3.0",
     "has-dom": "^1.0.0",
     "highlight.js": "^9.3.0",
     "koa": "^2.0.0-alpha.3",

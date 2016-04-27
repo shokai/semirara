@@ -6,6 +6,9 @@ export default router;
 import authRouter from "./auth";
 router.mount("/auth", authRouter);
 
+import feedRouter from "./feed";
+router.mount("/", feedRouter);
+
 import {setUserContext} from "../lib/middleware";
 router.use(setUserContext);
 

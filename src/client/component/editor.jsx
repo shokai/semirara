@@ -15,7 +15,7 @@ export default class Editor extends StoreComponent {
 
   componentWillMount(){
     super.componentWillMount();
-    this.compiler = createCompiler(this.store);
+    this.compiler = createCompiler({action: this.action, state: this.state});
   }
 
   mapState(state){
