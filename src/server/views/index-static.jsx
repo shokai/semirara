@@ -7,11 +7,12 @@ import App from "../../client/app";
 export default function IndexStaticHTML({user, app, state}){
 
   const store = createStore((state) => state, state);
+  const {wiki, title} = state.page;
 
   return (
     <html>
       <head>
-        <title>{app.name}</title>
+        <title>{`${wiki}::${title}`}</title>
         <link rel="stylesheet" href="/dist/index.css" />
       </head>
       <body>
