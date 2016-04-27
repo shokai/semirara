@@ -24,12 +24,12 @@ export default router;
 
 router.get("/logout", async (ctx, next) => {
   ctx.cookies.set("session", null);
-  ctx.redirect(ctx.query.redirect || "/");
+  ctx.redirect(ctx.headers.referer || "/");
 });
 
 router.get("/login", async (ctx, next) => {
   debug("/login");
-  ctx.cookies.set("redirect", ctx.query.redirect);
+  ctx.cookies.set("redirect", ctx.headers.referer);
   const state = md5(Date.now() + ctx.request.ip);
   loginStateCache.set(state, true);
   const fullUrl = ctx.request.protocol+"://"+ctx.request.host+ctx.request.path;
