@@ -1,6 +1,6 @@
 import React from "react";
 import {bindActionCreators} from "redux";
-import * as Actions from "../action/";
+import * as actions from "../action/";
 import Debug from "debug";
 
 export default class StoreComponent extends React.Component{
@@ -47,7 +47,7 @@ export default class StoreComponent extends React.Component{
     this.debug("componentWillMount()");
     this.store = this.props.store;
     this.state = this.mapState(this.store.getState());
-    this.action = bindActionCreators(Actions, this.store.dispatch);
+    this.action = bindActionCreators(actions, this.store.dispatch);
   }
 
   constructor(){
