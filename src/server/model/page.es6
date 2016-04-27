@@ -72,6 +72,10 @@ pageSchema.statics.findNotEmpty = function(...args){
   return this.find(...args);
 };
 
+pageSchema.statics.findPagesByWiki = function(wiki){
+  return Page.findNotEmpty({wiki}, 'title', {sort: {updatedAt: -1}});
+};
+
 pageSchema.statics.findOneByWikiTitle = async function(query){
   const {wiki, title} = query;
   return await pageCache.get(`${wiki}::${title}`) || this.findOne(ambiguous(query));

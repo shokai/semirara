@@ -17,7 +17,7 @@ export default function use(app){
       const {wiki} = req;
       room.join(wiki);
       try{
-        const pages = await Page.findNotEmpty({wiki}, 'title', {sort: {updatedAt: -1}});
+        const pages = await Page.findPagesByWiki(wiki);
         res(pages.map(i => i.title));
       }
       catch(err){

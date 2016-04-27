@@ -31,9 +31,10 @@ router.get("/*", async (ctx, next) => {
   }
   else{
     const {wiki, title} = parseRoute(ctx.path);
+    const pages = await Page.findPagesByWiki(wiki);
     renderParam.state = {
       page: await Page.findOneByWikiTitle({wiki, title}) || new Page({wiki, title}),
-      pagelist: (await Page.findNotEmpty({wiki}, 'title', {sort: {updatedAt: -1}})).map(i => i.title)
+      pagelist: pages.map(i => i.title)
     };
     ctx.render("index_static", renderParam);
   }
