@@ -1,7 +1,7 @@
 const debug = require("debug")("semirara:socket");
 
 import SocketIO from "socket.io-client";
-import {parseRoute} from "../../share/route";
+import {defaultRoute, parseRoute} from "../../share/route";
 import page from "./page";
 import pagelist from "./pagelist";
 
@@ -19,8 +19,6 @@ export default function use(store){
 
   page({io, store});
   pagelist({io, store});
-
-  const defaultRoute = {wiki: "general", title: "hello"};
 
   var popStateTimeout;
   window.addEventListener("popstate", (e) => {

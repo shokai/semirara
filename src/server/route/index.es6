@@ -12,7 +12,7 @@ router.use(setUserContext);
 import mongoose from "mongoose";
 const Page = mongoose.model("Page");
 
-import {buildPath, parseRoute} from "../../share/route";
+import {buildPath, parseRoute, defaultRoute} from "../../share/route";
 
 router.get("/*", async (ctx, next) => {
   let renderParam = {
@@ -31,8 +31,10 @@ router.get("/*", async (ctx, next) => {
   }
   else{
     const {wiki, title} = parseRoute(ctx.path);
-    const page = await Page.findOneByWikiTitle({wiki, title});
-    if(!page) return ctx.throw(404);
+    if(!wiki || !title){
+      return ctx.redirect(buildPath(Object.assign({wiki, title}, defaultRoute)));
+    }
+    const page = await Page.findOneByWikiTitle({wiki, title}) || new Page({wiki, title});
     if(page.title !== title || page.wiki !== wiki){
       return ctx.redirect(buildPath({wiki: page.wiki, title: page.title}));
     }
@@ -41,6 +43,6 @@ router.get("/*", async (ctx, next) => {
       page: page,
       pagelist: pages.map(i => i.title)
     };
-    ctx.render("index-static", renderParam);
+    return ctx.render("index-static", renderParam);
   }
 });

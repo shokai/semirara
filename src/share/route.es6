@@ -1,5 +1,7 @@
 import hasDom from "has-dom";
 
+export const defaultRoute = {wiki: "general", title: "hello"};
+
 export function buildPath({wiki, title}){
   return `/${wiki}/${title}`;
 }
