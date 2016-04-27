@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import ReactDOM from "react-dom";
 
 import LongPress from "./longpress";
-import compile from "./syntax";
 import UserIcon from "./usericon";
 import Code from "./code";
 
@@ -16,6 +15,7 @@ export default class EditorLine extends Component{
   static get propTypes(){
     return {
       line: React.PropTypes.object.isRequired,
+      compiler: React.PropTypes.func.isRequired,
       showUser: React.PropTypes.bool,
       edit: React.PropTypes.bool,
       onStartEdit: React.PropTypes.func,
@@ -26,7 +26,7 @@ export default class EditorLine extends Component{
   }
 
   render(){
-    const {line} = this.props;
+    const {line, compiler} = this.props;
     if(this.props.edit){
       return (
         <input
@@ -58,7 +58,7 @@ export default class EditorLine extends Component{
         );
       }
       else{
-        elm = compile(line.value);
+        elm = compiler(line.value);
       }
       return (
         <span>

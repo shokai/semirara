@@ -1,8 +1,8 @@
 import React from "react";
-import {Component, store} from "../store";
+import StoreComponent from "./store-component";
 import classnames from "classnames";
 
-export default class PageList extends Component {
+export default class PageList extends StoreComponent {
 
   constructor(){
     super();
@@ -10,7 +10,7 @@ export default class PageList extends Component {
   }
 
   onItemClick(title){
-    store.dispatch({type: "route", value: {title}});
+    this.action.route({title});
   }
 
   render(){

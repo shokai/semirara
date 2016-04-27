@@ -1,15 +1,17 @@
 import React from "react";
-import {Component} from "../store";
-import EditorLine from "./editorline";
+import StoreComponent from "./store-component";
+import EditorLine from "./editor-line";
 import {shouldShowUserIcon, addLangToLines} from "./editor";
+import {createCompiler} from "./syntax";
 
-export default class Viewer extends Component{
+export default class Viewer extends StoreComponent{
 
   mapState(state){
     return {page: state.page};
   }
 
   render(){
+    const compiler = createCompiler(this.store);
     const lines = addLangToLines(this.state.page.lines);
     const lis = Object.keys(this.state.page.lines).map(i => {
       const line = lines[i];
@@ -17,6 +19,7 @@ export default class Viewer extends Component{
         <li key={line.id || i} style={{marginLeft: line.indent*20}}>
           <EditorLine
              line={line}
+             compiler={compiler}
              showUser={shouldShowUserIcon(lines, i)}
              />
         </li>

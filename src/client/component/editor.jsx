@@ -1,10 +1,11 @@
 import React from "react";
-import {Component, store} from "../store";
-import EditorLine from "./editorline";
+import StoreComponent from "./store-component";
+import EditorLine from "./editor-line";
 import {detectLang} from "./syntax";
 import clone from "clone";
+import {createCompiler} from "./syntax";
 
-export default class Editor extends Component {
+export default class Editor extends StoreComponent {
 
   constructor(){
     super();
@@ -17,11 +18,13 @@ export default class Editor extends Component {
   }
 
   render(){
+    this.debug("render()");
+    const compiler = createCompiler(this.store);
     let lis;
     if(this.state.page.lines.length < 1 && !this.state.page.editline){
       lis = [(
         <li key={0}>
-          <EditorLine line={{value: "(empty)"}} onStartEdit={() => store.dispatch({type: "editline", value: 0})} />
+          <EditorLine compiler={compiler} line={{value: "(empty)"}} onStartEdit={() => this.action.setEditline(0)} />
         </li>
       )];
     }
@@ -33,11 +36,12 @@ export default class Editor extends Component {
         return (
           <li key={line.id || i} style={{marginLeft: line.indent*20}}>
             <EditorLine
+               compiler={compiler}
                line={line}
                showUser={shouldShowUserIcon(lines, i)}
                edit={this.state.page.editline === i}
-               onStartEdit={() => store.dispatch({type: "editline", value: i})}
-               onChange={value => store.dispatch({type: "updateLine", value})}
+               onStartEdit={() => this.action.setEditline(i)}
+               onChange={this.action.updateLine}
                onKeyDown={this.onKeyDown}
                onPaste={this.onPaste}
               />
@@ -55,43 +59,43 @@ export default class Editor extends Component {
   onKeyDown(e){
     switch(e.keyCode){
     case 13: // enter
-      store.dispatch({type: "insertNewLine"});
+      this.action.insertNewLine();
       break;
     case 40: // down
-      if(e.ctrlKey) store.dispatch({type: "swapLine:down"});
-      else if(e.shiftKey) store.dispatch({type: "swapBlock:down"});
-      else store.dispatch({type: "editline:down"});
+      if(e.ctrlKey) this.action.swapLineDown();
+      else if(e.shiftKey) this.action.swapBlockDown();
+      else this.action.editlineDown();
       break;
     case 38: // up
-      if(e.ctrlKey) store.dispatch({type: "swapLine:up"});
-      else if(e.shiftKey) store.dispatch({type: "swapBlock:up"});
-      else store.dispatch({type: "editline:up"});
+      if(e.ctrlKey) this.action.swapLineUp();
+      else if(e.shiftKey) this.action.swapBlockUp();
+      else this.action.editlineUp();
       break;
     case 78: // ctrl + N
-      if(e.ctrlKey) store.dispatch({type: "editline:down"});
+      if(e.ctrlKey) this.action.editlineDown();
       break;
     case 80:// ctrl + P
-      if(e.ctrlKey) store.dispatch({type: "editline:up"});
+      if(e.ctrlKey) this.action.editlineUp();
       break;
     case 37: // left
-      if(e.ctrlKey) store.dispatch({type: "indent:decrement"});
-      else if(e.shiftKey) store.dispatch({type: "indentBlock:decrement"});
+      if(e.ctrlKey) this.action.indentDecrement();
+      else if(e.shiftKey) this.action.indentBlockDecrement();
       break;
     case 39: // right
-      if(e.ctrlKey) store.dispatch({type: "indent:increment"});
-      else if(e.shiftKey) store.dispatch({type: "indentBlock:increment"});
+      if(e.ctrlKey) this.action.indentIncrement();
+      else if(e.shiftKey) this.action.indentBlockIncrement();
       break;
     case 32: // space
       if(e.target.selectionStart !== 0 ||
          e.target.selectionEnd !== 0) break;
       e.preventDefault();
-      store.dispatch({type: "indent:increment"});
+      this.action.indentIncrement();
       break;
     case 8: // backspace
       if(e.target.selectionStart !== 0 ||
          e.target.selectionEnd !== 0) break;
       e.preventDefault();
-      store.dispatch({type: "indent:decrement"});
+      this.action.indentDecrement();
       break;
     }
   }
@@ -100,7 +104,7 @@ export default class Editor extends Component {
     const lines = e.clipboardData.getData("Text").split(/[\r\n]/);
     if(lines.length < 2) return;
     e.preventDefault();
-    store.dispatch({type: "insertMultiLines", value: lines});
+    this.action.insertMultiLines(lines);
   }
 
 }

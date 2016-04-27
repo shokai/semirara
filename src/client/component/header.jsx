@@ -1,9 +1,9 @@
 import React from "react";
-import {Component} from "../store";
+import StoreComponent from "./store-component";
 
 import Login from "./login";
 
-export default class Header extends Component{
+export default class Header extends StoreComponent{
 
   mapState(state){
     const {wiki, title} = state.page;
