@@ -29,9 +29,10 @@ router.get("/logout", async (ctx, next) => {
 
 router.get("/login", async (ctx, next) => {
   debug("/login");
+  ctx.cookies.set("redirect", ctx.query.redirect);
   const state = md5(Date.now() + ctx.request.ip);
   loginStateCache.set(state, true);
-  const fullUrl = ctx.request.protocol+"://"+ctx.request.host+ctx.request.url;
+  const fullUrl = ctx.request.protocol+"://"+ctx.request.host+ctx.request.path;
   const query = querystring.stringify({
     client_id: process.env.GITHUB_CLIENT_ID,
     redirect_uri: fullUrl+"/callback",
@@ -48,12 +49,12 @@ router.get("/login/callback", async (ctx, next) => {
   const state = ctx.query.state;
   if(!state || !code){
     debug("invalid access");
-    ctx.redirect("/");
+    ctx.redirect(ctx.cookies.get("redirect") || "/");
     return;
   }
   if(await loginStateCache.get(state) !== true){
     debug("invalid state");
-    ctx.redirect("/");
+    ctx.redirect(ctx.cookies.get("redirect") || "/");
     return;
   }
 
@@ -76,5 +77,5 @@ router.get("/login/callback", async (ctx, next) => {
   ctx.cookies.set('session', session, {maxAge: 1000*60*60*24*14}); // 14 days
   await user.setSession(session);
   user.save();
-  ctx.redirect("/");
+  ctx.redirect(ctx.cookies.get("redirect") || "/");
 });
