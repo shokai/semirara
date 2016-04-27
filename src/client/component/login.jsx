@@ -1,8 +1,14 @@
-import React, {Component} from "react";
+import React from "react";
+import StoreComponent from "./store-component";
 import UserIcon from "./usericon";
 import hasDom from "has-dom";
+import {buildPath} from "../../share/route";
 
-export default class Login extends Component {
+export default class Login extends StoreComponent {
+
+  mapState(state){
+    return {page: state.page};
+  }
 
   static get propTypes(){
     return {
@@ -17,6 +23,7 @@ export default class Login extends Component {
   }
 
   render(){
+    const {wiki, title} = this.state.page;
     let element;
     if(!this.props.user){
       element = <ul><li><span><a href="/auth/login">login</a></span></li></ul>;
@@ -32,7 +39,7 @@ export default class Login extends Component {
               </a>
             </span>
           </li>
-          <li><span><a href="/auth/logout">logout</a></span></li>
+          <li><span><a href={`/auth/logout/?redirect=${buildPath({wiki, title})}`}>logout</a></span></li>
         </ul>
       );
     }

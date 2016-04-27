@@ -24,7 +24,7 @@ export default router;
 
 router.get("/logout", async (ctx, next) => {
   ctx.cookies.set("session", null);
-  ctx.redirect("/");
+  ctx.redirect(ctx.query.redirect || "/");
 });
 
 router.get("/login", async (ctx, next) => {
