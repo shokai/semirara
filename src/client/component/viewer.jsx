@@ -10,9 +10,13 @@ export default class Viewer extends StoreComponent{
     return {page: state.page};
   }
 
+  componentWillMount(){
+    super.componentWillMount();
+    this.compiler = createCompiler(this.store);
+  }
+
   render(){
     const {page} = this.state;
-    const compiler = createCompiler(this.store);
     const lines = addLangToLines(page.lines);
     const lis = Object.keys(page.lines).map(i => {
       const line = lines[i];
@@ -20,7 +24,7 @@ export default class Viewer extends StoreComponent{
         <li key={line.id || i} style={{marginLeft: line.indent*20}}>
           <EditorLine
              line={line}
-             compiler={compiler}
+             compiler={this.compiler}
              showUser={shouldShowUserIcon(lines, i)}
              />
         </li>

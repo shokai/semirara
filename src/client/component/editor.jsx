@@ -13,33 +13,38 @@ export default class Editor extends StoreComponent {
     this.onPaste = this.onPaste.bind(this);
   }
 
+  componentWillMount(){
+    super.componentWillMount();
+    this.compiler = createCompiler(this.store);
+  }
+
   mapState(state){
     return {page: state.page};
   }
 
   render(){
     this.debug("render()");
-    const compiler = createCompiler(this.store);
+    const {page} = this.state;
     let lis;
-    if(this.state.page.lines.length < 1 && !this.state.page.editline){
+    if(page.lines.length < 1 && !page.editline){
       lis = [(
         <li key={0}>
-          <EditorLine compiler={compiler} line={{value: "(empty)"}} onStartEdit={() => this.action.setEditline(0)} />
+          <EditorLine compiler={this.compiler} line={{value: "(empty)"}} onStartEdit={() => this.action.setEditline(0)} />
         </li>
       )];
     }
     else{
-      const lines = addLangToLines(this.state.page.lines);
+      const lines = addLangToLines(page.lines);
       lis = Object.keys(lines).map(i => {
         i = parseInt(i);
         let line = lines[i];
         return (
           <li key={line.id || i} style={{marginLeft: line.indent*20}}>
             <EditorLine
-               compiler={compiler}
+               compiler={this.compiler}
                line={line}
                showUser={shouldShowUserIcon(lines, i)}
-               edit={this.state.page.editline === i}
+               edit={page.editline === i}
                onStartEdit={() => this.action.setEditline(i)}
                onChange={this.action.updateLine}
                onKeyDown={this.onKeyDown}
