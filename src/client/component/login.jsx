@@ -2,7 +2,6 @@ import React from "react";
 import StoreComponent from "./store-component";
 import UserIcon from "./usericon";
 import hasDom from "has-dom";
-import {buildPath} from "../../share/route";
 
 export default class Login extends StoreComponent {
 
@@ -23,7 +22,6 @@ export default class Login extends StoreComponent {
   }
 
   render(){
-    const {wiki, title} = this.state.page;
     let element;
     if(!this.props.user){
       element = <ul><li><span><a href="/auth/login">login</a></span></li></ul>;
