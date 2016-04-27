@@ -43,7 +43,7 @@ export function insertNewLine(){
 }
 
 export function swapLineUp(){
-  return {type: "swapLineUp"};
+  return {type: "swapLine:up"};
 }
 
 export function swapLineDown(){
