@@ -3,7 +3,7 @@ export function buildPath({wiki, title}){
 }
 
 export function parseRoute(path){
-  if(!path) path = location.pathname+location.search;
+  if(!path && !global) path = location.pathname+location.search;
   path = decodeURIComponent(path);
   let route = {};
   const m = path.match(/^\/([^\/]+)\/?$/) || path.match(/^\/([^\/]+)\/(.+)/);

@@ -9,6 +9,11 @@ router.mount("/auth", authRouter);
 import {setUserContext} from "../lib/middleware";
 router.use(setUserContext);
 
+import mongoose from "mongoose";
+const Page = mongoose.model("Page");
+
+import {parseRoute} from "../../share/route";
+
 router.get("/*", async (ctx, next) => {
   let renderParam = {
     user: null,
@@ -22,6 +27,14 @@ router.get("/*", async (ctx, next) => {
       name: ctx.user.github.login,
       icon: ctx.user.github.avatar_url
     };
+    ctx.render("index", renderParam);
   }
-  ctx.render("index", renderParam);
+  else{
+    const {wiki, title} = parseRoute(ctx.path);
+    renderParam.state = {
+      page: await Page.findOneByWikiTitle({wiki, title}),
+      pagelist: (await Page.findNotEmpty({wiki}, 'title', {sort: {updatedAt: -1}})).map(i => i.title)
+    };
+    ctx.render("index_static", renderParam);
+  }
 });

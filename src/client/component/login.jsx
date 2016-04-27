@@ -11,7 +11,7 @@ export default class Login extends Component {
 
   static get defaultProps(){
     return {
-      user: window.user
+      user: !global ? window.user : null
     };
   }
 
