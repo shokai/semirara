@@ -13,7 +13,7 @@ export default class Header extends StoreComponent{
   render(){
     const {store} = this.props;
     return(
-      <div>
+      <div className="header">
         <Login store={store} />
         <h1>{this.state.wiki}::{this.state.title}</h1>
       </div>
