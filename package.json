@@ -18,7 +18,7 @@
     "browserify": "browserify --verbose --extension=.jsx --extension=.es6 -t [ babelify ] -g uglifyify src/client/index.es6 -o public/dist/index.js",
     "watchify": "watchify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify ] src/client/index.es6 -o public/dist/index.js",
     "build": "npm run babel && npm run browserify && npm run stylus",
-    "stylus": "stylus -I node_modules/nib/lib -I node_modules/highlight.js/styles --include-css src/styl/index.styl -o public/dist/index.css",
+    "stylus": "stylus -I node_modules/nib/lib -I node_modules/highlight.js/styles --include-css src/client/styl/index.styl -o public/dist/index.css",
     "babel": "babel src/ --out-dir dist/ --source-maps inline",
     "watch": "parallelshell 'chokidar \"*/**.{es6,jsx}\" -c \"npm run test\"' 'npm run babel -- --watch' 'npm run watchify' 'npm run stylus -- --watch'",
     "clean": "rm -rf dist/* public/dist/*"
