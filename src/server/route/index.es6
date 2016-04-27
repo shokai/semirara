@@ -41,6 +41,6 @@ router.get("/*", async (ctx, next) => {
       page: page,
       pagelist: pages.map(i => i.title)
     };
-    ctx.render("index_static", renderParam);
+    ctx.render("index-static", renderParam);
   }
 });
