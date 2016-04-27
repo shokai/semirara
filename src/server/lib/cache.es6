@@ -19,7 +19,7 @@ export default class Cache{
     return new Promise((resolve, reject) => {
       const _key = this.key(key);
       const _value = JSON.stringify(value);
-      debug(`set ${_key}=${_value}`);
+      debug(`set ${_key}`);
       client.set(_key, _value, (err, val) => {
         if(err) return reject(err);
         resolve(val);

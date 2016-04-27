@@ -33,7 +33,6 @@ export default function use(app){
     // for Authorized User
     socket.on("page:lines", async (data) => {
       debug("page:lines");
-      debug(data);
       const {title, wiki, lines} = data;
       if(!title || !wiki || !lines) return;
       try{
