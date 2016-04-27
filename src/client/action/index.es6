@@ -2,8 +2,36 @@ export function route({wiki, title}){
   return {type: "route", value: {wiki, title}};
 }
 
+export function noPushStateRoute({wiki, title}){
+  return Object.assign(route({wiki, title}), {noPushState: true});
+}
+
+export function setPage(value){
+  return {type: "page", value};
+}
+
+export function setPageLines(value){
+  return {type: "page:lines", value};
+}
+
+export function setPageList(value){
+  return {type: "pagelist", value};
+}
+
+export function pagelistUpdate(value){
+  return {type: "pagelist:update", value};
+}
+
+export function pagelistRemove(value){
+  return {type: "pagelist:remove", value};
+}
+
 export function setEditline(value){
   return {type: "editline", value};
+}
+
+export function unsetEditline(){
+  return {type: "editline", value: null};
 }
 
 export function updateLine(value){

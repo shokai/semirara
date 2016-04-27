@@ -27,7 +27,6 @@ export default class StoreComponent extends React.Component{
          typeof nextProps[k] === "object" ||
          this.props[k] !== nextProps[k]) return true;
     }
-    this.debug("shouldNotComponentUpdate");
     return false;
   }
 

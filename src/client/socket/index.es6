@@ -15,28 +15,21 @@ io.on("disconnect", () => {
   debug("disconnect");
 });
 
-export default function use(store){
+export default function use({store, action}){
 
-  page({io, store});
-  pagelist({io, store});
+  page({io, store, action});
+  pagelist({io, store, action});
 
   var popStateTimeout;
   window.addEventListener("popstate", (e) => {
     clearTimeout(popStateTimeout);
     popStateTimeout = setTimeout(() => {
-      store.dispatch({
-        type: "route",
-        value: Object.assign({}, defaultRoute, parseRoute()),
-        noPushState: true
-      });
+      action.noPushStateRoute(Object.assign({}, defaultRoute, parseRoute()));
     }, 500);
   }, false);
 
   io.on("connect", () => {
-    store.dispatch({
-      type: "route",
-      value: Object.assign({}, defaultRoute, parseRoute())
-    });
+    action.route(Object.assign({}, defaultRoute, parseRoute()));
   });
 
 }

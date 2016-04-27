@@ -2,9 +2,10 @@ import "babel-regenerator-runtime";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore, applyMiddleware} from "redux";
+import {createStore, applyMiddleware, bindActionCreators} from "redux";
 import reducer from "./reducer/";
 import middlewares from "./middleware/";
+import * as actions from "./action/";
 import App from "./app";
 import Line from "./line";
 
@@ -23,4 +24,7 @@ const store = createStore(
 ReactDOM.render(<App store={store} />, document.getElementById("app"));
 
 import socket from "./socket";
-socket(store);
+socket({
+  store,
+  action: bindActionCreators(actions, store.dispatch)
+});
