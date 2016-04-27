@@ -30,9 +30,10 @@ router.get("/*", async (ctx, next) => {
     return ctx.render("index", renderParam);
   }
   else{
-    const {wiki, title} = parseRoute(ctx.path);
+    const route = parseRoute(ctx.path);
+    const {wiki, title} = route;
     if(!wiki || !title){
-      return ctx.redirect(buildPath(Object.assign({wiki, title}, defaultRoute)));
+      return ctx.redirect(buildPath(Object.assign({}, defaultRoute, route)));
     }
     const page = await Page.findOneByWikiTitle({wiki, title}) || new Page({wiki, title});
     if(page.title !== title || page.wiki !== wiki){
