@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import LongPress from "./longpress";
 import UserIcon from "./usericon";
-import Code from "./code";
+import Code, {getFullLanguage} from "./code";
 
 export default class EditorLine extends Component{
 
@@ -43,7 +43,7 @@ export default class EditorLine extends Component{
       const icon = this.props.showUser ? <UserIcon id={line.user} size={20} /> : null;
       let elm;
       if(line.codestart){
-        elm = <span className="codestart">{line.lang}</span>;
+        elm = <span className="codestart">{getFullLanguage(line.lang) || line.lang}</span>;
       }
       else if(line.lang){
         elm = <Code lang={line.lang} code={line.value} />;
