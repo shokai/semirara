@@ -11,9 +11,10 @@ export default class Viewer extends StoreComponent{
   }
 
   render(){
+    const {page} = this.state;
     const compiler = createCompiler(this.store);
-    const lines = addLangToLines(this.state.page.lines);
-    const lis = Object.keys(this.state.page.lines).map(i => {
+    const lines = addLangToLines(page.lines);
+    const lis = Object.keys(page.lines).map(i => {
       const line = lines[i];
       return (
         <li key={line.id || i} style={{marginLeft: line.indent*20}}>
