@@ -21,6 +21,7 @@ export function ambiguous(query){
       v = v.replace(/\s/g, "").split('').join(' ?'); // spaces
       v = v.replace(/[\\\+\*\.\[\]\{\}\(\)\^\|]/g, c => `\\${c}`); // replace regex
       v = v.replace(" ??", " ?\\?");
+      v = v.replace(/^\?/, "\\?");
       v = new RegExp(`^${v}$`, "i");
       query[k] = v;
     }
