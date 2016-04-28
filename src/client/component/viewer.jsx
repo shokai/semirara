@@ -2,7 +2,7 @@ import React from "react";
 import StoreComponent from "./store-component";
 import EditorLine from "./editor-line";
 import {shouldShowUserIcon, addLangToLines} from "./editor";
-import {createCompiler} from "./syntax";
+import {createCompiler} from "./syntax/markup";
 
 export default class Viewer extends StoreComponent{
 

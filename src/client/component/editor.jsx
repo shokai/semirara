@@ -1,9 +1,8 @@
 import React from "react";
 import StoreComponent from "./store-component";
 import EditorLine from "./editor-line";
-import {detectLang} from "./syntax";
 import clone from "clone";
-import {createCompiler} from "./syntax";
+import {createCompiler, detectLang} from "./syntax/markup";
 
 export default class Editor extends StoreComponent {
 

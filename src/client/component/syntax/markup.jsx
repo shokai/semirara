@@ -1,5 +1,5 @@
 import React from "react";
-import {validateTitle, validateWiki, validateRoute} from "../../share/route";
+import {validateTitle, validateWiki, validateRoute} from "../../../share/route";
 
 function split(str){
   return str.split(/(\[{2,3}[^\]]+\]{2,3})/).filter(i => i.length > 0);

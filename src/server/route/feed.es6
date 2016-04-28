@@ -8,7 +8,7 @@ export default router;
 import mongoose from "mongoose";
 const Page = mongoose.model("Page");
 
-import {createCompiler} from "../../client/component/syntax";
+import {createCompiler} from "../../client/component/syntax/markup";
 
 router.get("/api/feed/:wiki", async (ctx, next) => {
   const {wiki} = ctx.params;
