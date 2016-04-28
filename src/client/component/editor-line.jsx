@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import ReactDOM from "react-dom";
+import {findDOMNode} from "react-dom";
 
 import LongPress from "./longpress";
 import UserIcon from "./usericon";
@@ -81,7 +81,7 @@ export default class EditorLine extends Component{
 
   focusInput(){
     if(!this.props.edit) return;
-    ReactDOM.findDOMNode(this.refs.input).focus();
+    findDOMNode(this.refs.input).focus();
   }
 
 }

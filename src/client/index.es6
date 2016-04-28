@@ -1,7 +1,7 @@
 import "babel-regenerator-runtime";
 
 import React from "react";
-import ReactDOM from "react-dom";
+import {render} from "react-dom";
 import {createStore, applyMiddleware, bindActionCreators} from "redux";
 import reducer from "./reducer/";
 import middlewares from "./middleware/";
@@ -21,7 +21,7 @@ const store = createStore(
   applyMiddleware(...middlewares)
 );
 
-ReactDOM.render(<App store={store} />, document.getElementById("app"));
+render(<App store={store} />, document.getElementById("app"));
 
 import socket from "./socket";
 socket({
