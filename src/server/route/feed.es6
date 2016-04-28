@@ -1,6 +1,5 @@
 import Feed from "feed";
 import {renderToStaticMarkup} from "react-dom/server";
-import React, {createElement} from "react";
 
 import Router from "koa-66";
 const router = new Router();
