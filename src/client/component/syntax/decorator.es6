@@ -53,10 +53,11 @@ function codeblock(lines){
   for(let i = 0; i < lines.length; i++){
     let {filename, lang} = detectCodeblockStart(lines[i].value);
     if(lang){
-      getBlock(lines, i, (line) => {
+      let block = getBlock(lines, i, (line) => {
         line.codeblock = {lang, filename, start: false};
       });
       lines[i].codeblock.start = true;
+      i = block.end;
     }
   }
 }
