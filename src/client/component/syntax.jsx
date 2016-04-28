@@ -1,20 +1,20 @@
 import React from "react";
 import {validateTitle, validateWiki, validateRoute} from "../../share/route";
 
+function split(str){
+  return str.split(/(\[{2,3}[^\]]+\]{2,3})/).filter(i => i.length > 0);
+}
+
+function gyazz2jsx(regex, replacer){
+  return function(chunk, attrs){
+    if(typeof chunk !== "string") return chunk;
+    const m = chunk.match(regex);
+    if(!m) return chunk;
+    return replacer(m, attrs);
+  };
+}
+
 export function createCompiler({action, state}){
-
-  function split(str){
-    return str.split(/(\[{2,3}[^\]]+\]{2,3})/).filter(i => i.length > 0);
-  }
-
-  function gyazz2jsx(regex, replacer){
-    return function(chunk, attrs){
-      if(typeof chunk !== "string") return chunk;
-      const m = chunk.match(regex);
-      if(!m) return chunk;
-      return replacer(m, attrs);
-    };
-  }
 
   const strong = gyazz2jsx(/\[{3}(.+)\]{3}/, (m, attrs) => <strong {...attrs}>{m[1]}</strong>);
 
