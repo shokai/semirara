@@ -2,7 +2,8 @@ import React from "react";
 import StoreComponent from "./store-component";
 import EditorLine from "./editor-line";
 import clone from "clone";
-import {createCompiler, detectLang} from "./syntax/markup";
+import {createCompiler} from "./syntax/markup";
+import {decorateLines} from "./syntax/decorator";
 
 export default class Editor extends StoreComponent {
 
@@ -14,7 +15,6 @@ export default class Editor extends StoreComponent {
 
   componentWillMount(){
     super.componentWillMount();
-    this.compiler = createCompiler({action: this.action, state: this.state});
   }
 
   mapState(state){
@@ -23,24 +23,25 @@ export default class Editor extends StoreComponent {
 
   render(){
     this.debug("render()");
+    const compiler = createCompiler({action: this.action, state: this.state});
     const {page} = this.state;
     let lis;
     if(page.lines.length < 1 && !page.editline){
       lis = [(
         <li key={0}>
-          <EditorLine compiler={this.compiler} line={{value: "(empty)"}} onStartEdit={() => this.action.setEditline(0)} />
+          <EditorLine compiler={compiler} line={{value: "(empty)"}} onStartEdit={() => this.action.setEditline(0)} />
         </li>
       )];
     }
     else{
-      const lines = addLangToLines(page.lines);
+      const lines = decorateLines(page.lines);
       lis = Object.keys(lines).map(i => {
         i = parseInt(i);
         let line = lines[i];
         return (
           <li key={line.id || i} style={{marginLeft: line.indent*20}}>
             <EditorLine
-               compiler={this.compiler}
+               compiler={compiler}
                line={line}
                showUser={shouldShowUserIcon(lines, i)}
                edit={page.editline === i}
@@ -132,34 +133,3 @@ export function shouldShowUserIcon(lines, position){
   return true;
 }
 
-
-function detectCLI(str){
-  const m = str.match(/^([\%\$]) (.+)/);
-  if(m){
-    const [, prefix, command] = m;
-    return {prefix, command};
-  }
-  return false;
-}
-
-export function addLangToLines(_lines){
-  const lines = clone(_lines);
-  let lang, indent;
-  for(let line of lines){
-    if(lang && line.indent > indent){
-      line.lang = lang;
-    }
-    else{
-      line.lang = lang = detectLang(line.value);
-      if(lang){
-        indent = line.indent;
-        line.codestart = true;
-      }
-      else{
-        indent = null;
-        line.cli = detectCLI(line.value);
-      }
-    }
-  }
-  return lines;
-}

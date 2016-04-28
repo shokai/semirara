@@ -3,6 +3,7 @@ import StoreComponent from "./store-component";
 import EditorLine from "./editor-line";
 import {shouldShowUserIcon, addLangToLines} from "./editor";
 import {createCompiler} from "./syntax/markup";
+import {decorateLines} from "./syntax/decorator";
 
 export default class Viewer extends StoreComponent{
 
@@ -17,7 +18,7 @@ export default class Viewer extends StoreComponent{
 
   render(){
     const {page} = this.state;
-    const lines = addLangToLines(page.lines);
+    const lines = decorateLines(page.lines);
     const lis = Object.keys(page.lines).map(i => {
       const line = lines[i];
       return (

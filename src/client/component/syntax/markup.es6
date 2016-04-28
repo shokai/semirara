@@ -95,9 +95,3 @@ createCompiler.propTypes = {
   action: React.PropTypes.object.isRequired,
   state: React.PropTypes.object.isRequired
 };
-
-export function detectLang(str){
-  const m = str.match(/^code:(.+)$/);
-  if(m) return m[1];
-  return null;
-}
