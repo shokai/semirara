@@ -1,7 +1,6 @@
 import React from "react";
 import StoreComponent from "./store-component";
 import EditorLine from "./editor-line";
-import {shouldShowUserIcon, addLangToLines} from "./editor";
 import {createCompiler} from "./syntax/markup";
 import {decorateLines} from "./syntax/decorator";
 
@@ -26,7 +25,6 @@ export default class Viewer extends StoreComponent{
           <EditorLine
              line={line}
              compiler={this.compiler}
-             showUser={shouldShowUserIcon(lines, i)}
              />
         </li>
       );

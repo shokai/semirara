@@ -40,7 +40,7 @@ export default class EditorLine extends Component{
       );
     }
     else{
-      const icon = this.props.showUser ? <UserIcon id={line.user} size={20} /> : null;
+      const icon = line.showUserIcon ? <UserIcon id={line.user} size={20} /> : null;
       let elm;
       if(line.codestart){
         elm = <span className="codestart">{getFullLanguage(line.lang) || line.lang}</span>;

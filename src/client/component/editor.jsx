@@ -1,7 +1,6 @@
 import React from "react";
 import StoreComponent from "./store-component";
 import EditorLine from "./editor-line";
-import clone from "clone";
 import {createCompiler} from "./syntax/markup";
 import {decorateLines} from "./syntax/decorator";
 
@@ -43,7 +42,6 @@ export default class Editor extends StoreComponent {
             <EditorLine
                compiler={compiler}
                line={line}
-               showUser={shouldShowUserIcon(lines, i)}
                edit={page.editline === i}
                onStartEdit={() => this.action.setEditline(i)}
                onChange={this.action.updateLine}
@@ -117,19 +115,3 @@ export default class Editor extends StoreComponent {
   }
 
 }
-
-export function shouldShowUserIcon(lines, position){
-  if(position < 1) return true;
-  const currentLine = lines[position];
-  if(!currentLine.user) return false;
-  for(let i = position-1; i >= 0; i--){
-    let line = lines[i];
-    if(line.indent <= currentLine.indent){
-      if(line.user === currentLine.user) return false;
-      if(line.user !== currentLine.user) return true;
-    }
-    if(line.indent < 1) break;
-  }
-  return true;
-}
-

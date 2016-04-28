@@ -4,7 +4,10 @@
 import clone from "clone";
 
 export function decorateLines(lines){
-  return addLangToLines(lines);
+  const _lines = clone(lines);
+  addLangToLines(_lines);
+  showUserIcon(_lines);
+  return _lines;
 }
 
 export function detectLang(str){
@@ -22,8 +25,7 @@ function detectCLI(str){
   return false;
 }
 
-function addLangToLines(_lines){
-  const lines = clone(_lines);
+function addLangToLines(lines){
   let lang, indent;
   for(let line of lines){
     if(lang && line.indent > indent){
@@ -41,5 +43,25 @@ function addLangToLines(_lines){
       }
     }
   }
-  return lines;
 }
+
+export function showUserIcon(lines){
+  for(let i = 0; i < lines.length; i++){
+    lines[i].showUserIcon =
+      ((position) => {
+        if(position < 1) return true;
+        const currentLine = lines[position];
+        if(!currentLine.user) return false;
+        for(let i = position-1; i >= 0; i--){
+          let line = lines[i];
+          if(line.indent <= currentLine.indent){
+            if(line.user === currentLine.user) return false;
+            if(line.user !== currentLine.user) return true;
+          }
+          if(line.indent < 1) break;
+        }
+        return true;
+      })(i);
+  }
+}
+
