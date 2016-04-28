@@ -6,16 +6,17 @@ import Login from "./login";
 export default class Header extends StoreComponent{
 
   mapState(state){
-    const {wiki, title} = state.page;
-    return {wiki, title};
+    const {title} = state.page;
+    return {title};
   }
 
   render(){
     const {store} = this.props;
+    const {title} = this.state;
     return(
       <div className="header">
         <Login store={store} />
-        <h1>{this.state.wiki}::{this.state.title}</h1>
+        <h1>{title}</h1>
       </div>
     );
   }

@@ -26,6 +26,7 @@ export default class PageList extends StoreComponent {
     });
     return (
       <div className="pagelist">
+        <h2>{wiki}({list.length})</h2>
         <ul>
           {list}
         </ul>
