@@ -16,11 +16,11 @@ export default class EditorLine extends Component{
     return {
       line: React.PropTypes.object.isRequired,
       compiler: React.PropTypes.func.isRequired,
-      edit: React.PropTypes.bool.isRequired,
-      onStartEdit: React.PropTypes.func.isRequired,
-      onChange: React.PropTypes.func.isRequired,
-      onKeyDown: React.PropTypes.func.isRequired,
-      onPaste: React.PropTypes.func.isRequired
+      edit: React.PropTypes.bool,
+      onStartEdit: React.PropTypes.func,
+      onChange: React.PropTypes.func,
+      onKeyDown: React.PropTypes.func,
+      onPaste: React.PropTypes.func
     };
   }
 
