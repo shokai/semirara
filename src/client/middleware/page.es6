@@ -26,7 +26,6 @@ function _sendPage({title, wiki, lines}){
     io.emit("page:lines", {title, wiki, lines}, ({error, success}) => {
       _sendingPage = false;
       if(_nextSendPageData){
-        console.log("send next data");
         _sendPage(_nextSendPageData);
       }
     });
