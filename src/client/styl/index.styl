@@ -3,6 +3,10 @@ normalize-css()
 
 @import 'railscasts.css'
 
+window = {
+  width: 1000px
+}
+
 html
   height: 100%
 
@@ -18,10 +22,14 @@ div, span, ul, li, input, img
 
 div#app
   height: 100%
+  padding: 5px
 
 div.app
-  max-width: 800px
+  margin: 0 auto
   height: 100%
+  max-width: window.width
+  @media (max-width: window.width)
+    width: 100%
 
 div.login
   font-size: 12pt
@@ -36,9 +44,10 @@ div.login
     margin: 0px 3px 0px 0px
 
 div.editor
-  float: right
-  width: 100%
-  max-width: 600px
+  float: left
+  width: 800px
+  @media (max-width: window.width)
+    width: 100%
   font-size: 12pt
   ul
     margin-left: 20px
@@ -84,6 +93,8 @@ div.editor
     height: 1.2em
 
 div.pagelist
+  @media (max-width: window.width)
+    width: 100%
   width: 200px
   float: left
   li
