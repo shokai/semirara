@@ -62,45 +62,49 @@ export default class Editor extends StoreComponent {
   }
 
   onKeyDown(e){
+    const {action} = this;
     switch(e.keyCode){
+    case 27: // escape
+      action.unsetEditline();
+      break;
     case 13: // enter
-      this.action.insertNewLine();
+      action.insertNewLine();
       break;
     case 40: // down
-      if(e.ctrlKey) this.action.swapLineDown();
-      else if(e.shiftKey) this.action.swapBlockDown();
-      else this.action.editlineDown();
+      if(e.ctrlKey) action.swapLineDown();
+      else if(e.shiftKey) action.swapBlockDown();
+      else action.editlineDown();
       break;
     case 38: // up
-      if(e.ctrlKey) this.action.swapLineUp();
-      else if(e.shiftKey) this.action.swapBlockUp();
-      else this.action.editlineUp();
+      if(e.ctrlKey) action.swapLineUp();
+      else if(e.shiftKey) action.swapBlockUp();
+      else action.editlineUp();
       break;
     case 78: // ctrl + N
-      if(e.ctrlKey) this.action.editlineDown();
+      if(e.ctrlKey) action.editlineDown();
       break;
     case 80:// ctrl + P
-      if(e.ctrlKey) this.action.editlineUp();
+      if(e.ctrlKey) action.editlineUp();
       break;
     case 37: // left
-      if(e.ctrlKey) this.action.indentDecrement();
-      else if(e.shiftKey) this.action.indentBlockDecrement();
+      if(e.ctrlKey) action.indentDecrement();
+      else if(e.shiftKey) action.indentBlockDecrement();
       break;
     case 39: // right
-      if(e.ctrlKey) this.action.indentIncrement();
-      else if(e.shiftKey) this.action.indentBlockIncrement();
+      if(e.ctrlKey) action.indentIncrement();
+      else if(e.shiftKey) action.indentBlockIncrement();
       break;
     case 32: // space
       if(e.target.selectionStart !== 0 ||
          e.target.selectionEnd !== 0) break;
       e.preventDefault();
-      this.action.indentIncrement();
+      action.indentIncrement();
       break;
     case 8: // backspace
       if(e.target.selectionStart !== 0 ||
          e.target.selectionEnd !== 0) break;
       e.preventDefault();
-      this.action.indentDecrement();
+      action.indentDecrement();
       break;
     }
   }
