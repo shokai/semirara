@@ -24,7 +24,17 @@ export function decorateLines(lines){
   codeblock(_lines);
   showUserIcon(_lines);
   cli(_lines);
+  blocktitle(_lines);
   return _lines;
+}
+
+function blocktitle(lines){
+  for(let i = 0; i < lines.length; i++){
+    let line = lines[i];
+    if(line.indent < 1 && (i === 0 || lines[i-1].indent > 0)){
+      line.blocktitle = true;
+    }
+  }
 }
 
 function cli(lines){

@@ -37,17 +37,19 @@ export default class Editor extends StoreComponent {
       lis = Object.keys(lines).map(i => {
         i = parseInt(i);
         let line = lines[i];
+        let editlineElm =
+              <EditorLine
+                compiler={compiler}
+                line={line}
+                edit={page.editline === i}
+                onStartEdit={() => this.action.setEditline(i)}
+                onChange={this.action.updateLine}
+                onKeyDown={this.onKeyDown}
+                onPaste={this.onPaste} />;
+        if(line.blocktitle) editlineElm = <h3>{editlineElm}</h3>;
         return (
           <li key={line.id || i} style={{marginLeft: line.indent*20}}>
-            <EditorLine
-               compiler={compiler}
-               line={line}
-               edit={page.editline === i}
-               onStartEdit={() => this.action.setEditline(i)}
-               onChange={this.action.updateLine}
-               onKeyDown={this.onKeyDown}
-               onPaste={this.onPaste}
-              />
+            {editlineElm}
           </li>
         );
       });
