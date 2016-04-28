@@ -1,5 +1,6 @@
 import Line from "../line";
 import shortid from "shortid";
+import {getBlock} from "../component/syntax/decorator";
 
 const MAX_INDENT = 16;
 
@@ -155,21 +156,4 @@ export default function pageReducer(state = {}, action){
     break;
   }
   return state;
-}
-
-
-function getBlock(lines, start, func){
-  const indent = lines[start].indent;
-  const block = {
-    indent, start, end: start,
-    get length(){ return this.end - this.start + 1; }
-  };
-  if(typeof func === "function") func(lines[start]);
-  for(let i = start+1; i < lines.length; i++){
-    let line = lines[i];
-    if(indent >= line.indent) break;
-    if(typeof func === "function") func(line);
-    block.end = i;
-  }
-  return block;
 }

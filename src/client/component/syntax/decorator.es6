@@ -3,17 +3,27 @@
 
 import clone from "clone";
 
-export function decorateLines(lines){
-  const _lines = clone(lines);
-  addLangToLines(_lines);
-  showUserIcon(_lines);
-  return _lines;
+export function getBlock(lines, start, func){
+  const indent = lines[start].indent;
+  const block = {
+    indent, start, end: start,
+    get length(){ return this.end - this.start + 1; }
+  };
+  if(typeof func === "function") func(lines[start]);
+  for(let i = start+1; i < lines.length; i++){
+    let line = lines[i];
+    if(indent >= line.indent) break;
+    if(typeof func === "function") func(line);
+    block.end = i;
+  }
+  return block;
 }
 
-export function detectLang(str){
-  const m = str.match(/^code:(.+)$/);
-  if(m) return m[1];
-  return null;
+export function decorateLines(lines){
+  const _lines = clone(lines);
+  codeblock(_lines);
+  showUserIcon(_lines);
+  return _lines;
 }
 
 function detectCLI(str){
@@ -25,27 +35,26 @@ function detectCLI(str){
   return false;
 }
 
-function addLangToLines(lines){
+function detectLang(str){
+  const m = str.match(/^code:(.+)$/);
+  if(m) return m[1];
+  return null;
+}
+
+function codeblock(lines){
   let lang, indent;
-  for(let line of lines){
-    if(lang && line.indent > indent){
-      line.lang = lang;
-    }
-    else{
-      line.lang = lang = detectLang(line.value);
-      if(lang){
-        indent = line.indent;
-        line.codestart = true;
-      }
-      else{
-        indent = null;
-        line.cli = detectCLI(line.value);
-      }
+  for(let i = 0; i < lines.length; i++){
+    let lang = detectLang(lines[i].value);
+    if(lang){
+      getBlock(lines, i, (line) => {
+        line.codeblock = {lang, start: false};
+      });
+      lines[i].codeblock.start = true;
     }
   }
 }
 
-export function showUserIcon(lines){
+function showUserIcon(lines){
   for(let i = 0; i < lines.length; i++){
     lines[i].showUserIcon =
       ((position) => {

@@ -42,11 +42,14 @@ export default class EditorLine extends Component{
     else{
       const icon = line.showUserIcon ? <UserIcon id={line.user} size={20} /> : null;
       let elm;
-      if(line.codestart){
-        elm = <span className="codestart">{getFullLanguage(line.lang) || line.lang}</span>;
-      }
-      else if(line.lang){
-        elm = <Code lang={line.lang} code={line.value} />;
+      if(line.codeblock){
+        let {lang, start} = line.codeblock;
+        if(start){
+          elm = <span className="codeblock-start">{getFullLanguage(lang) || lang}</span>;
+        }
+        else{
+          elm = <Code lang={lang} code={line.value} />;
+        }
       }
       else if(line.cli){
         elm = (

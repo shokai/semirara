@@ -26,5 +26,5 @@ export default function Code({lang, code}){
   catch(err){
     return <span>{code}</span>;
   }
-  return <span className="code" dangerouslySetInnerHTML={{__html}} />;
+  return <span className="codeblock" dangerouslySetInnerHTML={{__html}} />;
 }
