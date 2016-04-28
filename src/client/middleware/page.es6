@@ -16,6 +16,26 @@ export const getPageOnRoute = store => next => async (action) => {
   return result;
 };
 
+var _sendingPage = false;
+var _nextSendPageData = null;
+function _sendPage({title, wiki, lines}){
+  if(!title || !wiki || !lines) return;
+  if(!_sendingPage){
+    _nextSendPageData = null;
+    _sendingPage = true;
+    io.emit("page:lines", {title, wiki, lines}, ({error, success}) => {
+      _sendingPage = false;
+      if(_nextSendPageData){
+        console.log("send next data");
+        _sendPage(_nextSendPageData);
+      }
+    });
+  }
+  else{
+    _nextSendPageData = {title, wiki, lines};
+  }
+}
+
 export const sendPage = store => next => action => {
   const targetActions = ["insertNewLine", "updateLine", "insertMultiLines",
                          "swapLine:up", "swapLine:down",
@@ -27,7 +47,7 @@ export const sendPage = store => next => action => {
   const result = next(action);
   const {title, wiki, lines} = store.getState().page;
   if(lineChanged(_lines, lines)){
-    io.emit("page:lines", {title, wiki, lines});
+    _sendPage({title, wiki, lines});
   }
   return result;
 };

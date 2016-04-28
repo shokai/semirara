@@ -31,10 +31,10 @@ export default function use(app){
     if(!socket.user) return;
 
     // for Authorized User
-    socket.on("page:lines", async (data) => {
+    socket.on("page:lines", async (data, ack) => {
       debug("page:lines");
       const {title, wiki, lines} = data;
-      if(!title || !wiki || !lines) return;
+      if(!title || !wiki || !lines) return ack({error: "prop incorrect"});
       try{
         room.join(`${wiki}::${title}`);
         socket.broadcast.to(room.name).emit("page:lines", {wiki, title, lines});
@@ -45,6 +45,7 @@ export default function use(app){
       catch(err){
         console.error(err.stack || err);
       }
+      ack({success: "ok"});
     });
 
 });
