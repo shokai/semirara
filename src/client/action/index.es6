@@ -10,8 +10,8 @@ export function setPage(value){
   return {type: "page", value};
 }
 
-export function setPageLines(value){
-  return {type: "page:lines", value};
+export function setPageLines({wiki, title, lines}){
+  return {type: "page:lines", value: {wiki, title, lines}};
 }
 
 export function setPageList(value){

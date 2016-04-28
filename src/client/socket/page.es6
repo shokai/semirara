@@ -18,7 +18,7 @@ export default function use({io, store, action}){
 
   io.on("page:lines", (page) => {
     if(!page.lines) return;
-    action.setPageLines({value: page});
+    action.setPageLines(page);
   });
 
 }
