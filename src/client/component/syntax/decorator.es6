@@ -37,19 +37,24 @@ function cli(lines){
   }
 }
 
-function detectLang(str){
+function detectCodeblockStart(str){
   const m = str.match(/^code:(.+)$/);
-  if(m) return m[1];
-  return null;
+  if(m){
+    const [, filename] = m;
+    const lang = m[1].split('.').pop();
+    if(lang === filename) return {lang};
+    return {filename, lang};
+  }
+  return {};
 }
 
 function codeblock(lines){
   let lang, indent;
   for(let i = 0; i < lines.length; i++){
-    let lang = detectLang(lines[i].value);
+    let {filename, lang} = detectCodeblockStart(lines[i].value);
     if(lang){
       getBlock(lines, i, (line) => {
-        line.codeblock = {lang, start: false};
+        line.codeblock = {lang, filename, start: false};
       });
       lines[i].codeblock.start = true;
     }
