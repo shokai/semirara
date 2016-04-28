@@ -60,7 +60,7 @@ export default class EditorLine extends Component{
           </span>
         );
       }
-      else{
+      else{ // normal line
         elm = compiler(line.value);
       }
       return (

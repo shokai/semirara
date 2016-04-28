@@ -23,16 +23,18 @@ export function decorateLines(lines){
   const _lines = clone(lines);
   codeblock(_lines);
   showUserIcon(_lines);
+  cli(_lines);
   return _lines;
 }
 
-function detectCLI(str){
-  const m = str.match(/^([\%\$]) (.+)/);
-  if(m){
-    const [, prefix, command] = m;
-    return {prefix, command};
+function cli(lines){
+  for(let line of lines){
+    const m = line.value.match(/^([\%\$]) (.+)/);
+    if(m){
+      const [, prefix, command] = m;
+      line.cli = {prefix, command};
+    }
   }
-  return false;
 }
 
 function detectLang(str){
