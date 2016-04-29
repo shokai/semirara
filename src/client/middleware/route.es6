@@ -1,4 +1,3 @@
-import {buildTitle} from "../../share/title";
 import {buildPath, validateWiki, validateTitle} from "../../share/route";
 
 export const validateOnRoute = store => next => action => {
@@ -33,8 +32,7 @@ export const pushStateOnRoute = store => next => action => {
   const _wiki = _state.page.wiki;
   const _title = _state.page.title;
   const result = next(action);
-  const {wiki, title, lines} = store.getState().page;
-  document.title = buildTitle({wiki, title, lines});
+  const {wiki, title} = store.getState().page;
   if(_title !== title || _wiki !== wiki){
     history.pushState({wiki, title}, document.title, buildPath({wiki, title}));
   }
