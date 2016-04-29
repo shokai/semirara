@@ -59,7 +59,6 @@ function detectCodeblockStart(str){
 }
 
 function codeblock(lines){
-  let lang, indent;
   for(let i = 0; i < lines.length; i++){
     let {filename, lang} = detectCodeblockStart(lines[i].value);
     if(lang){
