@@ -7,14 +7,22 @@ window = {
   width: 1000px
 }
 
+color = {
+  bg: {
+    base: #66878D
+    dark: #56777D
+  }
+  font: #fafafa
+}
+
 html
   height: 100%
 
 body
   height: 100%
-  background-color: #66878D
+  background-color: color.bg.base
   font: 12pt "Lucida Grande", Helvetica, Arial, sans-serif
-  color: #fafafa
+  color: color.font
 
 h1
   font-size: 40pt
@@ -105,14 +113,22 @@ div.editor
 div.pagelist
   @media (max-width: window.width)
     width: 100%
+    margin: 0 auto
+    li
+      display: inline-block
+      width: 6em
+      height: 6em
+      overflow: hidden
+      font-size: 1.2em
   width: 200px
   float: left
   li
     min-height: 1.5em
     padding: 3px
     margin: 1px
+    background-color: color.bg.base
     &:hover, &.selected
-      background-color: #56777D
+      background-color: color.bg.dark
     a
       text-decoration: none
       color: #FFF
