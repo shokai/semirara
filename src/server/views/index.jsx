@@ -9,6 +9,7 @@ export default function IndexHTML({user, app}){
   return (
     <html>
       <head>
+        <meta name="viewport" content="width=640px" />
         <title>{app.name}</title>
         <link rel="stylesheet" href="/dist/index.css" />
         <script dangerouslySetInnerHTML={{__html: script}} />

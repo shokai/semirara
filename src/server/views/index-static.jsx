@@ -13,6 +13,7 @@ export default function IndexStaticHTML({user, app, state}){
   return (
     <html>
       <head>
+        <meta name="viewport" content="width=640px" />
         <title>{buildTitle({wiki, title, lines})}</title>
         <link rel="stylesheet" href="/dist/index.css" />
       </head>
