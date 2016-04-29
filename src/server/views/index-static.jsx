@@ -3,6 +3,7 @@
 import React from "react";
 import {createStore} from "redux";
 import App from "../../client/app";
+import TwitterCard from "./twitter-card";
 import {buildTitle} from "../../share/title";
 
 export default function IndexStaticHTML({user, app, state}){
@@ -16,6 +17,7 @@ export default function IndexStaticHTML({user, app, state}){
         <meta name="viewport" content="width=640px" />
         <title>{buildTitle({wiki, title, lines})}</title>
         <link rel="stylesheet" href="/dist/index.css" />
+        <TwitterCard state={state} />
       </head>
       <body>
         <div id="app">
