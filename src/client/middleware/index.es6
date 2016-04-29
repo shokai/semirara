@@ -4,6 +4,6 @@ import {getPageOnRoute, sendPage, unsetEditLineOnRoute, removeEmptyLines, adjust
 import {getPageListOnRoute} from "./pagelist";
 import {updateTitle} from "./document";
 
-export default [ validateOnRoute, pushStateOnRoute, unsetEditLineOnRoute, getPageOnRoute, getPageListOnRoute,
+export default [ validateOnRoute, pushStateOnRoute, updateTitle, unsetEditLineOnRoute, getPageOnRoute, getPageListOnRoute,
                  removeEmptyLines, sendPage, adjustEditLineOnPageLines,
-                 updateTitle, logger ];
+                 logger ];
