@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types, react/no-danger */
-
 import React from "react";
 import {createStore} from "redux";
 import App from "../../client/app";
@@ -28,3 +26,9 @@ export default function IndexStaticHTML({user, app, state}){
   );
 
 }
+
+IndexStaticHTML.propTypes = {
+  user: React.PropTypes.object.isRequired,
+  app: React.PropTypes.object.isRequired,
+  state: React.PropTypes.object.isRequired
+};

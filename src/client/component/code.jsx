@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types, react/no-danger */
+/* eslint-disable react/no-danger */
 
 import React from "react";
 
@@ -28,3 +28,8 @@ export default function Code({lang, code}){
   }
   return <span className="codeblock" dangerouslySetInnerHTML={{__html}} />;
 }
+
+Code.propTypes = {
+  lang: React.PropTypes.string.isRequired,
+  code: React.PropTypes.string.isRequired
+};

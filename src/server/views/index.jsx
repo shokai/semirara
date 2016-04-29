@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types, react/no-danger */
+/* eslint-disable react/no-danger */
 
 import React from "react";
 
@@ -22,3 +22,8 @@ export default function IndexHTML({user, app}){
   );
 
 }
+
+IndexHTML.propTypes = {
+  user: React.PropTypes.object.isRequired,
+  app: React.PropTypes.object.isRequired
+};
