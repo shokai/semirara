@@ -54,7 +54,7 @@ export function createCompiler({action, state}){
   });
 
   const externalLinkWithImage = gyazz2jsx(
-      /\[{2}(https?:\/\/.+) (https?:\/\/.+)\.(jpe?g|gif|png)\]{2}/i
+      /\[{2}(https?:\/\/[^\s]+) (https?:\/\/[^\s]+)\.(jpe?g|gif|png)\]{2}/i
     , ([source, url, image, ext], attrs) => {
       return (
         <a href={url} target="_blank" {...attrs}>
@@ -65,19 +65,19 @@ export function createCompiler({action, state}){
   );
 
   const externalLinkWithDescription = gyazz2jsx(
-      /\[{2}(https?:\/\/.+) (.+)\]{2}/
+      /\[{2}(https?:\/\/[^\s]+) (.+)\]{2}/
       , ([source, url, description], attrs) => {
         return <a href={url} target="_blank" {...attrs}>{description}</a>;
       }
   );
 
   const externalLink = gyazz2jsx(
-      /\[{2}(https?:\/\/.+)\]{2}/, ([source, url], attrs) => {
+      /\[{2}(https?:\/\/[^\s]+)\]{2}/, ([source, url], attrs) => {
         return <a href={url} target="_blank" {...attrs}>{url}</a>;
       }
   );
 
-  const image = gyazz2jsx(/\[{2}(https?:\/\/.+)\.(jpe?g|gif|png)\]{2}/i, (m, attrs) => <img src={`${m[1]}.${m[2]}`} title={m[0]} {...attrs} />);
+  const image = gyazz2jsx(/\[{2}(https?:\/\/[^\s]+)\.(jpe?g|gif|png)\]{2}/i, (m, attrs) => <img src={`${m[1]}.${m[2]}`} title={m[0]} {...attrs} />);
 
   return (str) => {
     const methods = [strong, externalLinkWithImage, externalLinkWithDescription, image, externalLink, wikiTitleLink, wikiLink, titleLink];
