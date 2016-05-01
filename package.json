@@ -15,7 +15,7 @@
     "test": "npm run eslint && npm run mocha",
     "mocha": "mocha src/*/test/*.es6 --compilers js:babel-register",
     "eslint": "eslint src/*/{*,**/*}.{js,es6,jsx}",
-    "browserify": "browserify --verbose --extension=.jsx --extension=.es6 -t [ babelify ] -g uglifyify src/client/index.es6 -o public/dist/index.js",
+    "browserify": "browserify --verbose --extension=.jsx --extension=.es6 -t [ babelify ] -t [ browserify-shim ] -g uglifyify src/client/index.es6 -o public/dist/index.js",
     "watchify": "watchify --verbose --debug --extension=.jsx --extension=.es6 -t [ babelify ] src/client/index.es6 -o public/dist/index.js",
     "build": "npm run babel && npm run browserify && npm run stylus",
     "stylus": "stylus -I node_modules/nib/lib -I node_modules/highlight.js/styles --include-css src/client/styl/index.styl -o public/dist/index.css",
@@ -39,6 +39,7 @@
     "babel-regenerator-runtime": "^6.5.0",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12",
     "classnames": "^2.2.3",
     "clone": "^1.0.2",
     "cookie": "^0.2.3",
@@ -59,8 +60,8 @@
     "mongoose": "^4.4.5",
     "mongoose-auto-increment": "^5.0.1",
     "nib": "^1.1.0",
-    "react": "^15.0.1",
-    "react-dom": "^15.0.1",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2",
     "redux": "^3.4.0",
     "shortid": "^2.2.6",
     "socket.io": "^1.4.5",
@@ -81,6 +82,10 @@
     "node-dev": "^3.1.0",
     "parallelshell": "^2.0.0",
     "watchify": "^3.7.0"
+  },
+  "browserify-shim": {
+    "react": "global:React",
+    "react-dom": "global:ReactDOM"
   },
   "repository": {
     "type": "git",
