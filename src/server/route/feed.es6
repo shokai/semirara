@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 const Page = mongoose.model("Page");
 
 import {createCompiler} from "../../client/component/syntax/markup";
+import {buildTitle} from "../../share/title";
 
 router.get("/api/feed/:wiki", async (ctx, next) => {
   const {wiki} = ctx.params;
@@ -24,7 +25,7 @@ router.get("/api/feed/:wiki", async (ctx, next) => {
     updated: pages[0].updatedAt
   });
   for(let page of pages){
-    let title = page.wiki + "::" + page.title;
+    let title = buildTitle(page);
     let link = ctx.request.protocol+"://"+ctx.request.host+"/"+wiki+"/"+page.title;
     let description = page.lines
           .map(i =>
