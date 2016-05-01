@@ -91,6 +91,22 @@ pageSchema.methods.saveWithCache = function(){
   saveTimeouts[key] = setTimeout(this.save, 20000);
 };
 
+pageSchema.methods.rename = async function(newTitle){
+  const {wiki, title} = this;
+  if((await Page.count({wiki, title: newTitle})) > 0){
+    throw new Error("page exists");
+  }
+  const cache = await pageCache.get(`${wiki}::${title}`);
+  if(cache){
+    this.lines = cache.lines;
+  }
+  this.title = newTitle;
+
+  pageCache.set(`${wiki}::${title}`, null);
+  await this.save();
+  return {wiki, title: newTitle};
+};
+
 pageSchema.methods.toHash = function(){
   return {
     wiki: this.wiki,

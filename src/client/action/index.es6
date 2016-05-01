@@ -85,3 +85,19 @@ export function indentBlockDecrement(){
 export function insertMultiLines(lines){
   return {type: "insertMultiLines", value: lines};
 }
+
+export function startTitleEdit(){
+  return {type: "page:title:startEdit"};
+}
+
+export function changeTitle(value){
+  return {type: "page:title:change", value};
+}
+
+export function submitTitle(){
+  return {type: "page:title:submit"};
+}
+
+export function cancelTitleEdit(){
+  return {type: "page:title:cancelEdit"};
+}

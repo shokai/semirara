@@ -4,6 +4,7 @@ import SocketIO from "socket.io-client";
 import {defaultRoute, parseRoute} from "../../share/route";
 import page from "./page";
 import pagelist from "./pagelist";
+import title from "./title";
 
 export const io = SocketIO();
 
@@ -19,6 +20,7 @@ export default function use({store, action}){
 
   page({io, store, action});
   pagelist({io, store, action});
+  title({io, store, action});
 
   var popStateTimeout;
   window.addEventListener("popstate", (e) => {

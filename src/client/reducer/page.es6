@@ -154,6 +154,16 @@ export default function pageReducer(state = {}, action){
       getBlock(state.lines, state.editline, line => line.indent++);
     }
     break;
+    case "page:title:startEdit":
+      state.newTitle = state.title;
+      break;
+    case "page:title:change":
+      state.newTitle = action.value;
+      break;
+    case "page:title:cancelEdit":
+    case "page:title:submit":
+      state.newTitle = null;
+      break;
   }
   return state;
 }

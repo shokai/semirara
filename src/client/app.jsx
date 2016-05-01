@@ -11,11 +11,21 @@ export default class App extends StoreComponent{
     return {};
   }
 
+  constructor(){
+    super();
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(e){
+    this.action.unsetEditline();
+    this.action.cancelTitleEdit();
+  }
+
   render(){
     debug("render()");
     const {store} = this.props;
     return (
-      <div className="app" onClick={this.action.unsetEditline}>
+      <div className="app" onClick={this.onClick}>
         <Header store={store} />
         <Editor store={store} />
         <PageList store={store} />

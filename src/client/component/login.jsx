@@ -1,13 +1,8 @@
-import React from "react";
-import StoreComponent from "./store-component";
+import React, {Component} from "react";
 import UserIcon from "./usericon";
 import hasDom from "has-dom";
 
-export default class Login extends StoreComponent {
-
-  mapState(state){
-    return {page: state.page};
-  }
+export default class Login extends Component {
 
   static get propTypes(){
     return {

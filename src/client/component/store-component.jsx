@@ -45,12 +45,13 @@ export default class StoreComponent extends React.Component{
   componentWillMount(){
     this.debug("componentWillMount()");
     this.store = this.props.store;
-    this.state = this.mapState(this.store.getState());
+    this.setState(this.mapState(this.store.getState()));
     this.action = bindActionCreators(actions, this.store.dispatch);
   }
 
   constructor(){
     super();
+    this.state = {};
     this.debug = Debug("semirara:component:" + this.constructor.name.toLowerCase());
     this.debug("constructor()");
   }

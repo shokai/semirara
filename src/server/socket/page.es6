@@ -48,6 +48,23 @@ export default function use(app){
       ack({success: "ok"});
     });
 
+    ioreq(socket).response("page:title:change", async (req, res) => {
+      const {wiki, title, newTitle} = req;
+      let _res;
+      try{
+        const page = await Page.findOne({wiki, title});
+        if(!page){
+          return res("page not found");
+        }
+        _res = await page.rename(newTitle);
+      }
+      catch(err){
+        console.error(err.stack || err);
+        return res({error: err.message});
+      }
+      io.to(room.name).emit("page:title:change", {wiki, title: newTitle});
+      return res({success: _res});
+     });
+
 });
 }
-

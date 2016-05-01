@@ -1,23 +1,24 @@
-import React from "react";
-import StoreComponent from "./store-component";
+import React, {Component} from "react";
 
 import Login from "./login";
+import Title from "./title";
 
-export default class Header extends StoreComponent{
+export default class Header extends Component{
 
-  mapState(state){
-    const {title} = state.page;
-    return {title};
+  static get propTypes(){
+    return {
+      store: React.PropTypes.object.isRequired
+    };
   }
 
   render(){
     const {store} = this.props;
-    const {title} = this.state;
     return(
       <div className="header">
-        <Login store={store} />
-        <h1>{title}</h1>
+        <Login />
+        <Title store={store} />
       </div>
     );
   }
+
 }
