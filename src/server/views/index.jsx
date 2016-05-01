@@ -10,6 +10,7 @@ export default function IndexHTML({user, app}){
     <x-cdnjs>
       <script src="//cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react.min.js" />
       <script src="//cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react-dom.min.js" />
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js" />
     </x-cdnjs>
   );
 
