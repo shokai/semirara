@@ -37,5 +37,6 @@ router.get("/api/feed/:wiki", async (ctx, next) => {
     let date = page.updatedAt;
     feed.addItem({title, link, description, date});
   }
+  ctx.type = "application/rss+xml; charset=UTF-8";
   return ctx.body = feed.render("rss-2.0");
 });
