@@ -15,6 +15,7 @@ export default function IndexStaticHTML({user, app, state}){
         <meta name="viewport" content="width=640px" />
         <title>{buildTitle({wiki, title, lines})}</title>
         <link rel="stylesheet" href="/dist/index.css" />
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href={`/api/feed/${wiki}`}/>
         <TwitterCard state={state} />
       </head>
       <body>
