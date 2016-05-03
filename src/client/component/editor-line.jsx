@@ -45,7 +45,7 @@ export default class EditorLine extends Component{
       let {lang, start, filename, indent} = line.codeblock;
       if(start){
         return (
-          <li key={key} style={{marginLeft: indent*20}}>
+          <li key={key} style={{marginLeft: line.indent*20}}>
             <LongPress onLongPress={this.props.onStartEdit}>
               <span className="codeblock-start">{filename || getFullLanguage(lang) || lang}</span>
             </LongPress>
@@ -56,7 +56,7 @@ export default class EditorLine extends Component{
         return (
           <li key={key}>
             <LongPress onLongPress={this.props.onStartEdit}>
-              <span className="codeblock" style={{marginLeft: indent*20, paddingLeft: (line.indent-indent)*20}}>
+              <span className="codeblock" style={{marginLeft: indent*20-5, paddingLeft: (line.indent-indent)*20+5}}>
                 <Code lang={lang} code={line.value} />
               </span>
             </LongPress>

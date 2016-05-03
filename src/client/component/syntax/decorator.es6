@@ -46,7 +46,7 @@ function codeblock(lines){
   for(let i = 0; i < lines.length; i++){
     let {filename, lang} = detectCodeblockStart(lines[i].value);
     if(lang){
-      let indent = lines[i].indent;
+      let indent = lines[i].indent+1;
       let block = getBlock(lines, i, (line) => {
         line.codeblock = {lang, filename, indent, start: false};
       });
