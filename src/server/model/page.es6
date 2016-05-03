@@ -96,6 +96,7 @@ pageSchema.methods.rename = async function(newTitle){
   if((await Page.count({wiki, title: newTitle})) > 0){
     throw new Error("page exists");
   }
+  Page.emit("remove", this);
   const cache = await pageCache.get(`${wiki}::${title}`);
   if(cache){
     this.lines = cache.lines;
