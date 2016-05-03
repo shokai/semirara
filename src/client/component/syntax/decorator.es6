@@ -3,22 +3,6 @@
 
 import clone from "clone";
 
-export function getBlock(lines, start, func){
-  const indent = lines[start].indent;
-  const block = {
-    indent, start, end: start,
-    get length(){ return this.end - this.start + 1; }
-  };
-  if(typeof func === "function") func(lines[start]);
-  for(let i = start+1; i < lines.length; i++){
-    let line = lines[i];
-    if(indent >= line.indent) break;
-    if(typeof func === "function") func(line);
-    block.end = i;
-  }
-  return block;
-}
-
 export function decorateLines(lines){
   const _lines = clone(lines);
   codeblock(_lines);
@@ -62,8 +46,9 @@ function codeblock(lines){
   for(let i = 0; i < lines.length; i++){
     let {filename, lang} = detectCodeblockStart(lines[i].value);
     if(lang){
+      let indent = lines[i].indent;
       let block = getBlock(lines, i, (line) => {
-        line.codeblock = {lang, filename, start: false};
+        line.codeblock = {lang, filename, indent, start: false};
       });
       lines[i].codeblock.start = true;
       i = block.end;
@@ -91,3 +76,18 @@ function showUserIcon(lines){
   }
 }
 
+export function getBlock(lines, start, func){
+  const indent = lines[start].indent;
+  const block = {
+    indent, start, end: start,
+    get length(){ return this.end - this.start + 1; }
+  };
+  if(typeof func === "function") func(lines[start]);
+  for(let i = start+1; i < lines.length; i++){
+    let line = lines[i];
+    if(indent >= line.indent) break;
+    if(typeof func === "function") func(line);
+    block.end = i;
+  }
+  return block;
+}

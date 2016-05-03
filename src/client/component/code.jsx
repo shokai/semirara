@@ -24,9 +24,9 @@ export default function Code({lang, code}){
     __html = highlight(lang, code, true).value;
   }
   catch(err){
-    return <span className="codeblock">{code}</span>;
+    return <span>{code}</span>;
   }
-  return <span className="codeblock" dangerouslySetInnerHTML={{__html}} />;
+  return <span dangerouslySetInnerHTML={{__html}} />;
 }
 
 Code.propTypes = {

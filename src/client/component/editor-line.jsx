@@ -45,12 +45,26 @@ export default class EditorLine extends Component{
       const icon = line.showUserIcon ? <UserIcon id={line.user} size={20} /> : null;
       let elm;
       if(line.codeblock){
-        let {lang, start, filename} = line.codeblock;
+        let {lang, start, filename, indent} = line.codeblock;
         if(start){
-          elm = <span className="codeblock-start">{filename || getFullLanguage(lang) || lang}</span>;
+          return (
+            <li key={key} style={{marginLeft: indent*20}}>
+              <LongPress onLongPress={this.props.onStartEdit}>
+                <span className="codeblock-start">{filename || getFullLanguage(lang) || lang}</span>
+              </LongPress>
+            </li>
+          );
         }
         else{
-          elm = <Code lang={lang} code={line.value} />;
+          return (
+            <li key={key}>
+              <LongPress onLongPress={this.props.onStartEdit}>
+                <span className="codeblock" style={{marginLeft: indent*20, paddingLeft: (line.indent-indent)*20}}>
+                  <Code lang={lang} code={line.value} />
+                </span>
+              </LongPress>
+            </li>
+          );
         }
       }
       else if(line.cli){
