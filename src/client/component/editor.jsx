@@ -64,48 +64,48 @@ export default class Editor extends StoreComponent {
   onKeyDown(e){
     const {action} = this;
     switch(e.keyCode){
-    case 27: // escape
-      action.unsetEditline();
-      break;
-    case 13: // enter
-      action.insertNewLine();
-      break;
-    case 40: // down
-      if(e.ctrlKey) action.swapLineDown();
-      else if(e.shiftKey) action.swapBlockDown();
-      else action.editlineDown();
-      break;
-    case 38: // up
-      if(e.ctrlKey) action.swapLineUp();
-      else if(e.shiftKey) action.swapBlockUp();
-      else action.editlineUp();
-      break;
-    case 78: // ctrl + N
-      if(e.ctrlKey) action.editlineDown();
-      break;
-    case 80:// ctrl + P
-      if(e.ctrlKey) action.editlineUp();
-      break;
-    case 37: // left
-      if(e.ctrlKey) action.indentDecrement();
-      else if(e.shiftKey) action.indentBlockDecrement();
-      break;
-    case 39: // right
-      if(e.ctrlKey) action.indentIncrement();
-      else if(e.shiftKey) action.indentBlockIncrement();
-      break;
-    case 32: // space
-      if(e.target.selectionStart !== 0 ||
-         e.target.selectionEnd !== 0) break;
-      e.preventDefault();
-      action.indentIncrement();
-      break;
-    case 8: // backspace
-      if(e.target.selectionStart !== 0 ||
-         e.target.selectionEnd !== 0) break;
-      e.preventDefault();
-      action.indentDecrement();
-      break;
+      case 27: // escape
+        action.unsetEditline();
+        break;
+      case 13: // enter
+        action.insertNewLine();
+        break;
+      case 40: // down
+        if(e.ctrlKey) action.swapLineDown();
+        else if(e.shiftKey) action.swapBlockDown();
+        else action.editlineDown();
+        break;
+      case 38: // up
+        if(e.ctrlKey) action.swapLineUp();
+        else if(e.shiftKey) action.swapBlockUp();
+        else action.editlineUp();
+        break;
+      case 78: // ctrl + N
+        if(e.ctrlKey) action.editlineDown();
+        break;
+      case 80:// ctrl + P
+        if(e.ctrlKey) action.editlineUp();
+        break;
+      case 37: // left
+        if(e.ctrlKey) action.indentDecrement();
+        else if(e.shiftKey) action.indentBlockDecrement();
+        break;
+      case 39: // right
+        if(e.ctrlKey) action.indentIncrement();
+        else if(e.shiftKey) action.indentBlockIncrement();
+        break;
+      case 32: // space
+        if(e.target.selectionStart !== 0 ||
+           e.target.selectionEnd !== 0) break;
+        e.preventDefault();
+        action.indentIncrement();
+        break;
+      case 8: // backspace
+        if(e.target.selectionStart !== 0 ||
+           e.target.selectionEnd !== 0) break;
+        e.preventDefault();
+        action.indentDecrement();
+        break;
     }
   }
 
