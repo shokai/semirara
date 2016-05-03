@@ -20,22 +20,25 @@ export default class EditorLine extends Component{
       onStartEdit: React.PropTypes.func,
       onChange: React.PropTypes.func,
       onKeyDown: React.PropTypes.func,
-      onPaste: React.PropTypes.func
+      onPaste: React.PropTypes.func,
+      key: React.PropTypes.string.isRequired
     };
   }
 
   render(){
-    const {line, compiler} = this.props;
+    const {line, compiler, key} = this.props;
     if(this.props.edit){
       return (
-        <input
-           ref="input"
-           value={line.value}
-           onChange={e => this.props.onChange(e.target.value)}
-           onClick={e => e.stopPropagation()}
-           onKeyDown={this.props.onKeyDown}
-           onPasteCapture={this.props.onPaste}
-          />
+        <li key={key} style={{marginLeft: line.indent*20}}>
+          <input
+             ref="input"
+             value={line.value}
+             onChange={e => this.props.onChange(e.target.value)}
+             onClick={e => e.stopPropagation()}
+             onKeyDown={this.props.onKeyDown}
+             onPasteCapture={this.props.onPaste}
+            />
+        </li>
       );
     }
     else{
@@ -63,12 +66,14 @@ export default class EditorLine extends Component{
         elm = compiler(line.value);
       }
       return (
-        <span>
-          <LongPress onLongPress={this.props.onStartEdit}>
-            {elm}
-          </LongPress>
-          {icon}
-        </span>
+        <li key={key} style={{marginLeft: line.indent*20}}>
+          <span>
+            <LongPress onLongPress={this.props.onStartEdit}>
+              {elm}
+            </LongPress>
+            {icon}
+          </span>
+        </li>
       );
     }
   }

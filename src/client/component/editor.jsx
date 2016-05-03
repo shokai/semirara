@@ -27,9 +27,7 @@ export default class Editor extends StoreComponent {
     let lis;
     if(page.lines.length < 1 && !page.editline){
       lis = [(
-        <li key={0}>
-          <EditorLine compiler={compiler} line={{value: "(empty)"}} onStartEdit={() => this.action.setEditline(0)} />
-        </li>
+        <EditorLine key={0} compiler={compiler} line={{value: "(empty)"}} onStartEdit={() => this.action.setEditline(0)} />
       )];
     }
     else{
@@ -47,11 +45,7 @@ export default class Editor extends StoreComponent {
                 onKeyDown={this.onKeyDown}
                 onPaste={this.onPaste} />;
         if(line.blocktitle) editlineElm = <h3>{editlineElm}</h3>;
-        return (
-          <li key={line.id || i} style={{marginLeft: line.indent*20}}>
-            {editlineElm}
-          </li>
-        );
+        return editlineElm;
       });
     }
     return (
