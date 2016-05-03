@@ -41,55 +41,51 @@ export default class EditorLine extends Component{
         </li>
       );
     }
-    else{
-      const icon = line.showUserIcon ? <UserIcon id={line.user} size={20} /> : null;
-      let elm;
-      if(line.codeblock){
-        let {lang, start, filename, indent} = line.codeblock;
-        if(start){
-          return (
-            <li key={key} style={{marginLeft: indent*20}}>
-              <LongPress onLongPress={this.props.onStartEdit}>
-                <span className="codeblock-start">{filename || getFullLanguage(lang) || lang}</span>
-              </LongPress>
-            </li>
-          );
-        }
-        else{
-          return (
-            <li key={key}>
-              <LongPress onLongPress={this.props.onStartEdit}>
-                <span className="codeblock" style={{marginLeft: indent*20, paddingLeft: (line.indent-indent)*20}}>
-                  <Code lang={lang} code={line.value} />
-                </span>
-              </LongPress>
-            </li>
-          );
-        }
+    if(line.codeblock){
+      let {lang, start, filename, indent} = line.codeblock;
+      if(start){
+        return (
+          <li key={key} style={{marginLeft: indent*20}}>
+            <LongPress onLongPress={this.props.onStartEdit}>
+              <span className="codeblock-start">{filename || getFullLanguage(lang) || lang}</span>
+            </LongPress>
+          </li>
+        );
       }
-      else if(line.cli){
-        elm = (
+      else{
+        return (
+          <li key={key}>
+            <LongPress onLongPress={this.props.onStartEdit}>
+              <span className="codeblock" style={{marginLeft: indent*20, paddingLeft: (line.indent-indent)*20}}>
+                <Code lang={lang} code={line.value} />
+              </span>
+            </LongPress>
+          </li>
+        );
+      }
+    }
+    if(line.cli){
+      return (
+        <li key={key} style={{marginLeft: line.indent*20}}>
           <span className="cli">
             <span className="prefix">{line.cli.prefix}</span>
             {" "}
             <span>{line.cli.command}</span>
           </span>
-        );
-      }
-      else{ // normal line
-        elm = compiler(line.value);
-      }
-      return (
-        <li key={key} style={{marginLeft: line.indent*20}}>
-          <span>
-            <LongPress onLongPress={this.props.onStartEdit}>
-              {elm}
-            </LongPress>
-            {icon}
-          </span>
         </li>
       );
     }
+    const icon = line.showUserIcon ? <UserIcon id={line.user} size={20} /> : null;
+    return (
+      <li key={key} style={{marginLeft: line.indent*20}}>
+        <span>
+          <LongPress onLongPress={this.props.onStartEdit}>
+            {compiler(line.value)}
+          </LongPress>
+          {icon}
+        </span>
+      </li>
+    );
   }
 
   componentDidUpdate(){
