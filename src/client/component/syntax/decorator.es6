@@ -51,6 +51,7 @@ function codeblock(lines){
         line.codeblock = {lang, filename, indent, start: false};
       });
       lines[i].codeblock.start = true;
+      lines[block.end].codeblock.end = true;
       i = block.end;
     }
   }

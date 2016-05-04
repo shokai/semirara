@@ -4,6 +4,7 @@ import {findDOMNode} from "react-dom";
 import LongPress from "./longpress";
 import UserIcon from "./usericon";
 import Code, {getFullLanguage} from "./code";
+import classnames from "classnames";
 
 export default class EditorLine extends Component{
 
@@ -53,10 +54,14 @@ export default class EditorLine extends Component{
         );
       }
       else{
+        let className = classnames({
+          codeblock: !line.codeblock.end,
+          "codeblock-end": line.codeblock.end
+        });
         return (
           <li key={key}>
             <LongPress onLongPress={this.props.onStartEdit}>
-              <span className="codeblock" style={{marginLeft: indent*20-5, paddingLeft: (line.indent-indent)*20+5}}>
+              <span className={className} style={{marginLeft: indent*20-5, paddingLeft: (line.indent-indent)*20+5}}>
                 <Code lang={lang} code={line.value} />
               </span>
             </LongPress>
