@@ -35,7 +35,8 @@ router.get("/*", async (ctx, next) => {
     return ctx.render("index", renderParam);
   }
   else{
-    const route = parseRoute(ctx.path);
+    let queryStr = decodeURIComponent(ctx.querystring);
+    const route = parseRoute(!queryStr ? ctx.path : ctx.path + '?' + queryStr);
     const {wiki, title} = route;
     if(!wiki || !title){
       return ctx.redirect(buildPath(Object.assign({}, defaultRoute, route)));
