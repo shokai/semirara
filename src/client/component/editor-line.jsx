@@ -81,14 +81,18 @@ export default class EditorLine extends Component{
       );
     }
     const icon = line.showUserIcon ? <UserIcon id={line.user} size={20} /> : null;
+    let elm = (
+      <span>
+        <LongPress onLongPress={this.props.onStartEdit}>
+          {compiler(line.value)}
+        </LongPress>
+        {icon}
+      </span>
+    );
+    if(line.blocktitle) elm = <h3>{elm}</h3>;
     return (
       <li key={key} style={{marginLeft: line.indent*20}}>
-        <span>
-          <LongPress onLongPress={this.props.onStartEdit}>
-            {compiler(line.value)}
-          </LongPress>
-          {icon}
-        </span>
+        {elm}
       </li>
     );
   }
