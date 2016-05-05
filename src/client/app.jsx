@@ -29,6 +29,7 @@ export default class App extends StoreComponent{
         <Header store={store} />
         <Editor store={store} />
         <PageList store={store} />
+        <div className="footer" />
       </div>
     );
   }
