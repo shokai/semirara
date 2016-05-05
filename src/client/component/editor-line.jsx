@@ -81,10 +81,12 @@ export default class EditorLine extends Component{
       );
     }
     const icon = line.showUserIcon ? <UserIcon id={line.user} size={20} /> : null;
+    let value = line.value;
+    if(line.numberList) value = line.numberList.prefix + value;
     let elm = (
       <span>
         <LongPress onLongPress={this.props.onStartEdit}>
-          {compiler(line.value)}
+          {compiler(value)}
         </LongPress>
         {icon}
       </span>

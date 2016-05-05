@@ -9,7 +9,42 @@ export function decorateLines(lines){
   showUserIcon(_lines);
   cli(_lines);
   blocktitle(_lines);
+  numberList(_lines);
   return _lines;
+}
+
+function isNumberLine(line, number){
+  return new RegExp(`^${number}\\.\\s.+`).test(line.value);
+}
+
+function numberList(lines){
+  let number = 1;
+  let indent = null;
+  for(let line of lines){
+    if(indent > line.indent ||
+       (number === 2 && indent === line.indent && !isNumberLine(line, number))){
+      number = 1;
+      indent = null;
+    }
+    switch(number){
+      case 1:
+        if(!isNumberLine(line, number)) break;
+        indent = line.indent;
+        line.numberList = {number, prefix: ""};
+        number += 1;
+        break;
+      case 2:
+        if(line.indent !== indent || !isNumberLine(line, number)) break;
+        line.numberList = {number, prefix: ""};
+        number += 1;
+        break;
+      default: // 3+
+        if(line.indent !== indent) break;
+        line.numberList = {number, prefix: `${number}. `};
+        number += 1;
+        break;
+    }
+  }
 }
 
 function blocktitle(lines){
