@@ -7,7 +7,7 @@ export function buildPath({wiki, title}){
 }
 
 export function parseRoute(path){
-  if(!path && hasDom()) path = location.pathname+location.search;
+  if(!path && hasDom()) path = location.href.replace(new RegExp("^"+location.origin), "");
   path = decodeURIComponent(path);
   const route = {};
   const m = path.match(/^\/([^\/]+)\/?$/) || path.match(/^\/([^\/]+)\/(.+)/);
