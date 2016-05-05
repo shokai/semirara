@@ -51,17 +51,25 @@ div.app
   @media (max-width: window.width)
     width: 100%
 
-div.login
-  font-size: 12pt
-  float: right
-  li
+div.header
+  .login
+    font-size: 12pt
+    float: right
+    li
+      display: inline-block
+      margin-right: 5px
+      span
+        padding: 10px 4px 2px 4px
+        background-color: white
+    img.usericon
+      margin: 0px 3px 0px 0px
+
+  h1
     display: inline-block
-    margin-right: 5px
-    span
-      padding: 10px 4px 2px 4px
-      background-color: white
-  img.usericon
-    margin: 0px 3px 0px 0px
+  .page-date
+    font-size: 0.8em
+    display: inline-block
+    margin-left: 0.5em
 
 div.editor
   float: left
