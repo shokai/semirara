@@ -9,5 +9,10 @@ export async function setUserContext(ctx, next){
   if(!session) return next();
   ctx.user = await User.findBySession(session);
   if(ctx.user) debug(`ctx.user="${ctx.user.github.login}"`);
-  next();
+  await next();
+}
+
+export async function ignoreFavicon(ctx, next){
+  if(ctx.path === "/favicon.ico") return ctx.status = 404;
+  await next();
 }

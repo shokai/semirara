@@ -3,13 +3,15 @@ import Router from "koa-66";
 const router = new Router();
 export default router;
 
+import {setUserContext, ignoreFavicon} from "../lib/middleware";
+router.use(ignoreFavicon);
+
 import authRouter from "./auth";
 router.mount("/auth", authRouter);
 
 import feedRouter from "./feed";
 router.mount("/", feedRouter);
 
-import {setUserContext} from "../lib/middleware";
 router.use(setUserContext);
 
 import mongoose from "mongoose";
