@@ -1,8 +1,8 @@
 import React from "react";
 import {buildTitle} from "../../share/title";
 
-export default function TwitterCard({state}){
-  const {wiki, title, lines} = state.page;
+export default function TwitterCard({page}){
+  const {wiki, title, lines} = page;
   const description = lines.map(i => i.value)
           .join('')
           .replace(/https?:\/\/[^\s]+/g, "")
@@ -18,5 +18,5 @@ export default function TwitterCard({state}){
 }
 
 TwitterCard.propTypes = {
-  state: React.PropTypes.object.isRequired
+  page: React.PropTypes.object.isRequired
 };
