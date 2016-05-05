@@ -72,11 +72,13 @@ export default class EditorLine extends Component{
     if(line.cli){
       return (
         <li key={key} style={{marginLeft: line.indent*20}}>
-          <span className="cli">
-            <span className="prefix">{line.cli.prefix}</span>
-            {" "}
-            <span>{line.cli.command}</span>
-          </span>
+          <LongPress onLongPress={this.props.onStartEdit}>
+            <span className="cli">
+              <span className="prefix">{line.cli.prefix}</span>
+              {" "}
+              <span>{line.cli.command}</span>
+            </span>
+          </LongPress>
         </li>
       );
     }
