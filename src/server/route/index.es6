@@ -47,7 +47,7 @@ router.get("/*", async (ctx, next) => {
     }
     const pages = await Page.findPagesByWiki(wiki);
     renderParam.state = {
-      page: page,
+      page: typeof page.toHash === "function" ? page.toHash() : page,
       pagelist: pages.map(i => i.title)
     };
     return ctx.render("index-static", renderParam);

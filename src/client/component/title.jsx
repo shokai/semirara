@@ -16,7 +16,6 @@ export default class Title extends StoreComponent{
   }
 
   render(){
-    this.debug(this.state);
     const {title, newTitle} = this.state;
     if(typeof newTitle !== "string"){
       return (
