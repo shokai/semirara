@@ -41,15 +41,17 @@ input
   font: 1em "Lucida Grande", Helvetica, Arial, sans-serif
 
 div#app
-  height: 100%
-  padding: 5px
+  height: 100% auto
 
 div.app
-  margin: 0 auto
-  height: 100%
-  max-width: window.width
-  @media (max-width: window.width)
-    width: 100%
+  height: 100% auto
+  padding: 5px
+  div.main
+    margin: 0 auto
+    height: 100% auto
+    max-width: window.width
+    @media (max-width: window.width)
+      width: 100%
 
 div.header
   .login

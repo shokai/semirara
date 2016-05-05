@@ -26,10 +26,12 @@ export default class App extends StoreComponent{
     const {store} = this.props;
     return (
       <div className="app" onClick={this.onClick}>
-        <Header store={store} />
-        <Editor store={store} />
-        <PageList store={store} />
-        <div className="footer" />
+        <div className="main">
+          <Header store={store} />
+          <Editor store={store} />
+          <PageList store={store} />
+          <div className="footer" />
+        </div>
       </div>
     );
   }
