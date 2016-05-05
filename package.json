@@ -85,6 +85,7 @@
     "watchify": "^3.7.0"
   },
   "browserify-shim": {
+    "socket.io-client": "global:io",
     "react": "global:React",
     "react-dom": "global:ReactDOM",
     "highlight.js": "global:hljs"
