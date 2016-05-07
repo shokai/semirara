@@ -7,7 +7,7 @@ import {stopEditOnSocketDisconnect} from "./socket-connection";
 import {updateTitle} from "./document";
 
 export default [ validateOnRoute, pushStateOnRoute, updateTitle, unsetEditLineOnRoute, getPageOnRoute, getPageListOnRoute,
+                 stopEditOnSocketDisconnect,
                  removeEmptyLines, sendPage, adjustEditLineOnPageLines,
                  onPageTitleSubmit, cancelTitleEditOnRoute,
-                 stopEditOnSocketDisconnect,
                  logger ];
