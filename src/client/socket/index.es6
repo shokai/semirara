@@ -8,15 +8,15 @@ import title from "./title";
 
 export const io = SocketIO();
 
-io.on("connect", () => {
-  debug("connect");
-});
-
-io.on("disconnect", () => {
-  debug("disconnect");
-});
-
 export default function use({store, action}){
+
+  io.on("connect", () => {
+    store.dispatch({type: "socket:connect"});
+  });
+
+  io.on("disconnect", () => {
+    store.dispatch({type: "socket:disconnect"});
+  });
 
   page({io, store, action});
   pagelist({io, store, action});

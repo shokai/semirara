@@ -16,7 +16,10 @@ const store = createStore(
       lines: [ new Line ],
       editline: null
     },
-    pagelist: [ ]
+    pagelist: [ ],
+    socket: {
+      connecting: false
+    }
   },
   applyMiddleware(...middlewares)
 );
