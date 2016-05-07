@@ -11,6 +11,7 @@ for(let key of ["GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET"]){
 
 import mongoose from "mongoose";
 const User = mongoose.model("User");
+import {deleteSession} from "../model/user";
 import querystring from "querystring";
 import axios from "axios";
 import md5 from "md5";
@@ -23,6 +24,8 @@ const router = new Router();
 export default router;
 
 router.get("/logout", async (ctx, next) => {
+  const session = ctx.cookies.get("session");
+  deleteSession(session);
   ctx.cookies.set("session", null);
   ctx.redirect(ctx.headers.referer || "/");
 });

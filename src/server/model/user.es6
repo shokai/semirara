@@ -62,3 +62,9 @@ userSchema.statics.findBySession = async function(session){
 
 const User = mongoose.model('User', userSchema);
 
+export function deleteSession(session){
+  if(!session || typeof session !== "string"){
+    return Promise.reject("invalid session");
+  }
+  return sessionCache.delete(session);
+}
