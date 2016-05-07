@@ -39,4 +39,15 @@ export default class Cache{
     });
   }
 
+  delete(key){
+    return new Promise((resolve, reject) => {
+      const _key = this.key(key);
+      debug(`delete ${_key}`);
+      client.delete(_key, (err, success) => {
+        if(err) return reject(err);
+        resolve(success);
+      });
+    });
+  }
+
 }

@@ -103,7 +103,7 @@ pageSchema.methods.rename = async function(newTitle){
   }
   this.title = newTitle;
 
-  pageCache.set(`${wiki}::${title}`, null);
+  pageCache.delete(`${wiki}::${title}`);
   await this.save();
   return {wiki, title: newTitle};
 };

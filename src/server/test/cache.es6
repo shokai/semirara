@@ -35,4 +35,15 @@ describe("Cache", function(){
     });
 
   });
+
+  describe('delete', function(){
+    this.timeout(1000);
+
+    it("should delete value", async function(){
+      await cache.set("name", "shokai");
+      await cache.delete("name");
+      const name = await cache.get("name");
+      assert.equal(name, null);
+    });
+  });
 });
