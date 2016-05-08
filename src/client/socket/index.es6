@@ -1,5 +1,3 @@
-const debug = require("debug")("semirara:socket");
-
 import SocketIO from "socket.io-client";
 import {defaultRoute, parseRoute} from "../../share/route";
 import page from "./page";

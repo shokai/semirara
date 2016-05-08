@@ -4,6 +4,8 @@ import StoreComponent from "./component/store-component";
 import Header from "./component/header";
 import Editor from "./component/editor";
 import PageList from "./component/pagelist";
+import SocketStatus from "./component/socket-status";
+import hasDom from "has-dom";
 
 export default class App extends StoreComponent{
 
@@ -24,12 +26,14 @@ export default class App extends StoreComponent{
   render(){
     debug("render()");
     const {store} = this.props;
+    const socketStatus = hasDom() ? <SocketStatus store={store} /> : null;
     return (
       <div className="app" onClick={this.onClick}>
         <div className="main">
           <Header store={store} />
           <Editor store={store} />
           <PageList store={store} />
+          {socketStatus}
           <div className="footer" />
         </div>
       </div>
