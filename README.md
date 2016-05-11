@@ -1,7 +1,7 @@
 # semirara
 
 - https://github.com/shokai/semirara
-- http://semirara.herokuapp.com
+- http://wiki.shokai.org
 
 [![Circle CI](https://circleci.com/gh/shokai/semirara.svg?style=svg)](https://circleci.com/gh/shokai/semirara)
 
