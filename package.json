@@ -9,7 +9,7 @@
     "npm": "3.x"
   },
   "scripts": {
-    "prestart": "npm run build",
+    "postinstall": "npm run build",
     "start": "node run-server.js",
     "start:dev": "DEBUG=semirara*,koa* node-dev run-server.js",
     "test": "npm run eslint && npm run mocha",
