@@ -1,5 +1,5 @@
 import logger from "./logger";
-import {validateOnRoute, pushStateOnRoute} from "./route";
+import {validateOnRoute, pushStateOnRoute, scrollTopOnRoute} from "./route";
 import {getPageOnRoute, sendPage, unsetEditLineOnRoute, removeEmptyLines, adjustEditLineOnPageLines} from "./page";
 import {getPageListOnRoute} from "./pagelist";
 import {onPageTitleSubmit, cancelTitleEditOnRoute} from "./title";
@@ -10,4 +10,5 @@ export default [ validateOnRoute, pushStateOnRoute, updateTitle, unsetEditLineOn
                  stopEditOnSocketDisconnect,
                  removeEmptyLines, sendPage, adjustEditLineOnPageLines,
                  onPageTitleSubmit, cancelTitleEditOnRoute,
+                 scrollTopOnRoute,
                  logger ];

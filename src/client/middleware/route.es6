@@ -38,3 +38,10 @@ export const pushStateOnRoute = store => next => action => {
   }
   return result;
 };
+
+export const scrollTopOnRoute = store => next => action => {
+  if(action.type !== "route") return next(action);
+  const result = next(action);
+  window.scrollTo(0, 0);
+  return result;
+};
