@@ -16,6 +16,7 @@ export async function setUserContext(socket, next){
   }
   catch(err){
     debug(err.stack || err);
+    socket.disconnect();
   }
   return next();
 }
