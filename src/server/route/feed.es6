@@ -29,6 +29,7 @@ router.get("/api/feed/:wiki", async (ctx, next) => {
     let link = ctx.request.protocol+"://"+ctx.request.host+"/"+wiki+"/"+page.title;
     let description = page.lines
           .map(i =>
+               "&nbsp;".repeat(i.indent*2) +
                compiler(i.value)
                .map(elm => typeof elm === "string" ? elm : renderToStaticMarkup(elm))
                .join("")
