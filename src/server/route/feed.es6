@@ -10,6 +10,7 @@ const Page = mongoose.model("Page");
 
 import {createCompiler} from "../../client/component/syntax/markup";
 import {buildTitle} from "../../share/title";
+import {escape} from "lodash";
 
 router.get("/api/feed/:wiki", async (ctx, next) => {
   const {wiki} = ctx.params;
@@ -31,7 +32,7 @@ router.get("/api/feed/:wiki", async (ctx, next) => {
           .map(i =>
                "&nbsp;".repeat(i.indent*2) +
                compiler(i.value)
-               .map(elm => typeof elm === "string" ? elm : renderToStaticMarkup(elm))
+               .map(elm => typeof elm === "string" ? escape(elm) : renderToStaticMarkup(elm))
                .join("")
               )
           .join("<br />");
