@@ -92,6 +92,17 @@ describe("Parser - wiki syntax parser", function(){
       });
     });
 
+    describe("external-link-with-image-reverse", function(){
+      it("should parse [[http://example.com/image.jpg http://example.com]]", function(){
+        const nodes = Parser.externalLinkWithImageReverse(toNodes("hello [[https://gyazo.com/0ceeecc3c7d42e94a080e21f6a23f190.gif http://shokai.org]] world"));
+        assert.deepEqual(nodes, [
+          {type: "text", value: "hello "},
+          {type: "external-link-with-image", link: "http://shokai.org", image: "https://gyazo.com/0ceeecc3c7d42e94a080e21f6a23f190.gif", source: "[[https://gyazo.com/0ceeecc3c7d42e94a080e21f6a23f190.gif http://shokai.org]]"},
+          {type: "text", value: " world"}
+        ]);
+      });
+    });
+
     describe("external-link-with-description", function(){
       it("should parse [[http://example.com example site]]", function(){
         const nodes = Parser.externalLinkWithDescription(toNodes("hello [[http://example.com example site]] world"));
