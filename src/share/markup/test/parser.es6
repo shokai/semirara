@@ -48,6 +48,17 @@ describe("Parser - wiki syntax parser", function(){
       });
     });
 
+    describe("title-link-hash", function(){
+      it("should parse #title", function(){
+        const nodes = Parser.titleLinkHash(toNodes("hello #shokai world"));
+        assert.deepEqual(nodes, [
+          {type: "text", value: "hello"},
+          {type: "title-link-hash", title: "shokai", source: " #shokai "},
+          {type: "text", value: "world"}
+        ]);
+      });
+    });
+
     describe("wiki-title-link", function(){
       it("should parse [[wiki::title]]", function(){
         const nodes = Parser.wikiTitleLink(toNodes("hello [[shokai::test]] world"));

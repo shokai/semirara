@@ -23,6 +23,22 @@ export function createCompiler({action, state}){
           };
           return <a href={`/${wiki}/${node.title}`} onClick={onClick}>{node.title}</a>;
         }
+        case "title-link-hash": {
+          let {title} = node;
+          if(validateTitle(title).invalid) return <span>{node.source}</span>;
+          let onClick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            action.route({title});
+          };
+          return (
+            <span>
+              {" "}
+              <a href={`/${wiki}/${node.title}`} onClick={onClick}>{`#${node.title}`}</a>
+              {" "}
+            </span>
+          );
+        }
         case "wiki-link": {
           let {wiki} = node;
           if(validateWiki(wiki).invalid) return <span>{node.source}</span>;

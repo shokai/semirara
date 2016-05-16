@@ -115,3 +115,9 @@ Parser.addReplacer(createReplacer(
   /\[{2}([^\]]+)\]{2}/,
   title => ({title})
 ));
+
+Parser.addReplacer(createReplacer(
+  "title-link-hash",
+  /(?:^|\s)\#([^\[\]\s]+)(?:$|\s)/,
+  title => ({title})
+));
