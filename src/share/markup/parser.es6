@@ -93,6 +93,12 @@ Parser.addReplacer(createReplacer(
 ));
 
 Parser.addReplacer(createReplacer(
+  "external-link-with-description-reverse",
+  /\[{2}([^\]]+) (https?:\/\/[^\s\]]+)\]{2}/,
+  (description, link) => ({link, description, type: 'external-link-with-description'})
+));
+
+Parser.addReplacer(createReplacer(
   "image",
   /\[{2}(https?:\/\/[^\s\]]+\.(?:jpe?g|gif|png))\]{2}/i,
   image => ({image})

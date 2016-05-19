@@ -114,6 +114,17 @@ describe("Parser - wiki syntax parser", function(){
       });
     });
 
+    describe("external-link-with-description-reverse", function(){
+      it("should parse [[example site http://example.com]]", function(){
+        const nodes = Parser.externalLinkWithDescriptionReverse(toNodes("hello [[example site http://example.com]] world"));
+        assert.deepEqual(nodes, [
+          {type: "text", value: "hello "},
+          {type: "external-link-with-description", link: "http://example.com", description: "example site", source: "[[example site http://example.com]]"},
+          {type: "text", value: " world"}
+        ]);
+      });
+    });
+
     describe("external-link", function(){
       it("should parse [[http://example.com]]", function(){
         const nodes = Parser.externalLink(toNodes("hello [[http://shokai.org]] world"));
