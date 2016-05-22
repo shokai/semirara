@@ -20,7 +20,7 @@
     "build": "npm run babel && npm run browserify && npm run stylus",
     "stylus": "stylus -I node_modules/nib/lib -I node_modules/highlight.js/styles --include-css src/client/styl/index.styl -o public/dist/index.css",
     "babel": "babel src/ --out-dir dist/ --source-maps inline",
-    "watch": "parallelshell 'chokidar \"*/**.{es6,jsx}\" -c \"npm run test\"' 'npm run babel -- --watch' 'npm run watchify' 'npm run stylus -- --watch'",
+    "watch": "parallelshell 'chokidar \"src/**.{es6,jsx}\" -c \"npm run test\"' 'npm run babel -- --watch' 'npm run watchify' 'npm run stylus -- --watch'",
     "clean": "rm -rf 'dist/*' 'public/dist/*'"
   },
   "keywords": [
