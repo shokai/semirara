@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 
-const debug = require("debug")("semirara:lib:github");
+const debug = require("../../share/debug")(__filename);
 
 import axios from "axios";
 

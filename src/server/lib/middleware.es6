@@ -1,4 +1,4 @@
-const debug = require("debug")("semirara:lib:middleware");
+const debug = require("../../share/debug")(__filename);
 
 import mongoose from "mongoose";
 const User = mongoose.model("User");

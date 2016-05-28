@@ -1,7 +1,7 @@
 // socket.io room
 // each socket has one room - leave cunrrent room when join to other room, or disconnected.
 
-const debug = require("debug")("semirara:socket:room");
+const debug = require("../../share/debug")(__filename)
 
 export default class Room{
   constructor(socket){

@@ -1,4 +1,4 @@
-const debug = require("debug")("semirara:lib:cache");
+const debug = require("../../share/debug")(__filename);
 
 import memjs from "memjs";
 

@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 
-const debug = require("debug")("semirara:route:auth");
+const debug = require("../../share/debug")(__filename);
 require("dotenv").config({path: ".env"});
 
 for(let key of ["GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET"]){

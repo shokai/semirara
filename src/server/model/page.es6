@@ -1,4 +1,4 @@
-const debug = require("debug")("semirara:model:page");
+const debug = require("../../share/debug")(__filename);
 
 import {validateTitle, validateWiki, validateRoute} from "../../share/route";
 

@@ -1,4 +1,4 @@
-const debug = require("debug")("semirara:middleware:logger");
+const debug = require("../../share/debug")(__filename);
 
 export default store => next => action => {
   debug(`TYPE "${action.type}"`, "VALUE", action.value);

@@ -1,4 +1,4 @@
-const debug = require("debug")("semirara:app");
+const debug = require("../share/debug")(__filename);
 import React from "react";
 import StoreComponent from "./component/store-component";
 import Header from "./component/header";

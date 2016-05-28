@@ -1,4 +1,4 @@
-const debug = require("debug")("semirara:model:user");
+const debug = require("../../share/debug")(__filename);
 
 import GitHub from "../lib/github";
 import Cache from "../lib/cache";

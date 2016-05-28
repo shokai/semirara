@@ -1,4 +1,4 @@
-const debug = require("debug")("semirara:socket:pagelist");
+const debug = require("../../share/debug")(__filename)
 
 import ioreq from "socket.io-request";
 import Room from "./room";

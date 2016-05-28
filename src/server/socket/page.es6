@@ -1,4 +1,4 @@
-const debug = require("debug")("semirara:socket:page");
+const debug = require("../../share/debug")(__filename);
 
 import {ambiguous} from "../model/";
 import ioreq from "socket.io-request";

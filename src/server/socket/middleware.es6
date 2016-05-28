@@ -1,4 +1,4 @@
-const debug = require("debug")("semirara:socket:middleware");
+const debug = require("../../share/debug")(__filename);
 import Cookie from "cookie";
 
 import mongoose from "mongoose";
