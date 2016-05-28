@@ -29,18 +29,18 @@ export default class EditorLine extends Component{
   render(){
     const {line, compiler, key} = this.props
     if(this.props.edit){
-      return (
-        <li key={key} style={{marginLeft: line.indent*20}}>
-          <input
-             ref="input"
-             value={line.value}
-             onChange={e => this.props.onChange(e.target.value)}
-             onClick={e => e.stopPropagation()}
-             onKeyDown={this.props.onKeyDown}
-             onPasteCapture={this.props.onPaste}
-            />
-        </li>
+      let input = (
+        <input
+           ref="input"
+           value={line.value}
+           onChange={e => this.props.onChange(e.target.value)}
+           onClick={e => e.stopPropagation()}
+           onKeyDown={this.props.onKeyDown}
+           onPasteCapture={this.props.onPaste}
+          />
       )
+      if(line.blocktitle && !line.codeblock && !line.cli) input = <h3>{input}</h3>
+      return <li key={key} style={{marginLeft: line.indent*20}}>{input}</li>
     }
     if(line.codeblock){
       let {lang, start, filename, indent} = line.codeblock
