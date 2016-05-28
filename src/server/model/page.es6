@@ -1,17 +1,17 @@
-const debug = require("../../share/debug")(__filename);
+const debug = require("../../share/debug")(__filename)
 
-import {validateTitle, validateWiki, validateRoute} from "../../share/route";
+import {validateTitle, validateWiki, validateRoute} from "../../share/route"
 
-import {ambiguous} from "./";
-import Cache from "../lib/cache";
+import {ambiguous} from "./"
+import Cache from "../lib/cache"
 const pageCache = new Cache({
   prefix: "page",
   expire: 60*60 // 60min
-});
+})
 
-import mongoose from "mongoose";
-import autoIncrement from "mongoose-auto-increment";
-autoIncrement.initialize(mongoose.connection);
+import mongoose from "mongoose"
+import autoIncrement from "mongoose-auto-increment"
+autoIncrement.initialize(mongoose.connection)
 
 const pageSchema = new mongoose.Schema({
   title: {
@@ -37,76 +37,76 @@ const pageSchema = new mongoose.Schema({
     type: Date,
     default: () => Date.now()
   }
-});
+})
 
 pageSchema.pre("save", function(next){
-  this.updatedAt = Date.now();
+  this.updatedAt = Date.now()
   this.lines = this.lines
     .map(line => {
-      line.value = line.value.trim();
-      return line;
+      line.value = line.value.trim()
+      return line
     })
-    .filter(line => line.value.length > 0);
-  next();
-});
+    .filter(line => line.value.length > 0)
+  next()
+})
 
 pageSchema.plugin(autoIncrement.plugin, {
   model: "Page",
   field: "number",
   startAt: 1
-});
+})
 
 pageSchema.post("save", function(page){
-  debug(`save!  ${page.wiki}::${page.title}`);
-  pageCache.set(`${this.wiki}::${this.title}`, this.toHash());
+  debug(`save!  ${page.wiki}::${page.title}`)
+  pageCache.set(`${this.wiki}::${this.title}`, this.toHash())
   if(page.lines.length < 1){
-    Page.emit("remove", page);
+    Page.emit("remove", page)
   }
   else{
-    Page.emit("update", page);
+    Page.emit("update", page)
   }
-});
+})
 
 pageSchema.statics.findNotEmpty = function(...args){
-  args[0].lines = {$ne: []};
-  return this.find(...args);
-};
+  args[0].lines = {$ne: []}
+  return this.find(...args)
+}
 
 pageSchema.statics.findPagesByWiki = function(wiki){
-  return Page.findNotEmpty({wiki}, 'title', {sort: {updatedAt: -1}});
-};
+  return Page.findNotEmpty({wiki}, 'title', {sort: {updatedAt: -1}})
+}
 
 pageSchema.statics.findOneByWikiTitle = async function(query){
-  const {wiki, title} = query;
-  return await pageCache.get(`${wiki}::${title}`) || this.findOne(ambiguous(query));
-};
+  const {wiki, title} = query
+  return await pageCache.get(`${wiki}::${title}`) || this.findOne(ambiguous(query))
+}
 
-const saveTimeouts = {};
+const saveTimeouts = {}
 pageSchema.methods.saveWithCache = function(){
-  const validationResult = validateRoute(this);
-  if(validationResult.invalid) throw new Error(validationResult.errors);
-  const key = `${this.wiki}::${this.title}`;
-  clearTimeout(saveTimeouts[key]);
-  pageCache.set(key, this.toHash());
-  saveTimeouts[key] = setTimeout(this.save, 20000);
-};
+  const validationResult = validateRoute(this)
+  if(validationResult.invalid) throw new Error(validationResult.errors)
+  const key = `${this.wiki}::${this.title}`
+  clearTimeout(saveTimeouts[key])
+  pageCache.set(key, this.toHash())
+  saveTimeouts[key] = setTimeout(this.save, 20000)
+}
 
 pageSchema.methods.rename = async function(newTitle){
-  const {wiki, title} = this;
+  const {wiki, title} = this
   if((await Page.count({wiki, title: newTitle})) > 0){
-    throw new Error("page exists");
+    throw new Error("page exists")
   }
-  Page.emit("remove", this);
-  const cache = await pageCache.get(`${wiki}::${title}`);
+  Page.emit("remove", this)
+  const cache = await pageCache.get(`${wiki}::${title}`)
   if(cache){
-    this.lines = cache.lines;
+    this.lines = cache.lines
   }
-  this.title = newTitle;
+  this.title = newTitle
 
-  pageCache.delete(`${wiki}::${title}`);
-  await this.save();
-  return {wiki, title: newTitle};
-};
+  pageCache.delete(`${wiki}::${title}`)
+  await this.save()
+  return {wiki, title: newTitle}
+}
 
 pageSchema.methods.toHash = function(){
   return {
@@ -117,7 +117,7 @@ pageSchema.methods.toHash = function(){
     indent: this.indent,
     updatedAt: this.updatedAt,
     createdAt: this.createdAt
-  };
-};
+  }
+}
 
-const Page = mongoose.model("Page", pageSchema);
+const Page = mongoose.model("Page", pageSchema)

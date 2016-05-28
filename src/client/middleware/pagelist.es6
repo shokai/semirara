@@ -1,19 +1,19 @@
-import {io} from "../socket";
-import ioreq from "socket.io-request";
+import {io} from "../socket"
+import ioreq from "socket.io-request"
 
 export const getPageListOnRoute = store => next => async (action) => {
-  if(action.type !== "route") return next(action);
-  const _wiki = store.getState().page.wiki;
-  const result = next(action);
-  const {wiki} = store.getState().page;
+  if(action.type !== "route") return next(action)
+  const _wiki = store.getState().page.wiki
+  const result = next(action)
+  const {wiki} = store.getState().page
   if(wiki !== _wiki){
     try{
-      const pagelist = await ioreq(io).request("getpagelist", {wiki});
-      store.dispatch({type: "pagelist", value: pagelist});
+      const pagelist = await ioreq(io).request("getpagelist", {wiki})
+      store.dispatch({type: "pagelist", value: pagelist})
     }
     catch(err){
-      console.error(err.stack || err);
+      console.error(err.stack || err)
     }
   }
-  return result;
-};
+  return result
+}

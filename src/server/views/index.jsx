@@ -1,10 +1,10 @@
 /* eslint-disable react/no-danger */
 
-import React from "react";
+import React from "react"
 
 export default function IndexHTML({user, app}){
 
-  const script = `window.user = ${JSON.stringify(user)}; window.app = ${JSON.stringify(app)};`;
+  const script = `window.user = ${JSON.stringify(user)}; window.app = ${JSON.stringify(app)};`
 
   const cdnjs = (
     <x-cdnjs>
@@ -13,7 +13,7 @@ export default function IndexHTML({user, app}){
       <script src="//cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react-dom.min.js" />
       <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js" />
     </x-cdnjs>
-  );
+  )
 
   return (
     <html>
@@ -29,11 +29,11 @@ export default function IndexHTML({user, app}){
         <script src="/dist/index.js" />
       </body>
     </html>
-  );
+  )
 
 }
 
 IndexHTML.propTypes = {
   user: React.PropTypes.object.isRequired,
   app: React.PropTypes.object.isRequired
-};
+}

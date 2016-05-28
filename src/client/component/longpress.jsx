@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component} from "react"
 
 export default class LongPress extends Component{
 
@@ -7,20 +7,20 @@ export default class LongPress extends Component{
       children: React.PropTypes.node.isRequired,
       threshold: React.PropTypes.number,
       onLongPress: React.PropTypes.func.isRequired
-    };
+    }
   }
 
   static get defaultProps(){
     return {
       threshold: 500
-    };
+    }
   }
 
   constructor(){
-    super();
-    this.start = this.start.bind(this);
-    this.stop = this.stop.bind(this);
-    this.timeout = null;
+    super()
+    this.start = this.start.bind(this)
+    this.stop = this.stop.bind(this)
+    this.timeout = null
   }
 
   render(){
@@ -31,18 +31,18 @@ export default class LongPress extends Component{
          onMouseOut={this.stop}>
         {this.props.children}
       </span>
-    );
+    )
   }
 
   start(e){
-    this.stop();
-    this.timeout = setTimeout(this.props.onLongPress, this.props.threshold);
+    this.stop()
+    this.timeout = setTimeout(this.props.onLongPress, this.props.threshold)
   }
 
   stop(e){
-    if(!this.timeout) return;
-    clearTimeout(this.timeout);
-    this.timeout = null;
+    if(!this.timeout) return
+    clearTimeout(this.timeout)
+    this.timeout = null
   }
 
 }

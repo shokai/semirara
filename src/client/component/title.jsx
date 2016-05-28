@@ -1,26 +1,26 @@
-import React from "react";
-import {findDOMNode} from "react-dom";
+import React from "react"
+import {findDOMNode} from "react-dom"
 
-import StoreComponent from "./store-component";
-import LongPress from "./longpress";
+import StoreComponent from "./store-component"
+import LongPress from "./longpress"
 
 export default class Title extends StoreComponent{
 
   mapState(state){
-    return state.page;
+    return state.page
   }
 
   constructor(){
-    super();
-    this.onKeyDown = this.onKeyDown.bind(this);
+    super()
+    this.onKeyDown = this.onKeyDown.bind(this)
   }
 
   render(){
-    const {title, newTitle} = this.state;
+    const {title, newTitle} = this.state
     if(typeof newTitle !== "string"){
       return (
         <LongPress onLongPress={this.action.startTitleEdit}><h1>{title}</h1></LongPress>
-      );
+      )
     }
     else{
       return (
@@ -33,17 +33,17 @@ export default class Title extends StoreComponent{
             onClick={e => e.stopPropagation()}
             />
         </h1>
-      );
+      )
     }
   }
 
   onKeyDown(e){
-    if(e.keyCode === 13) this.action.submitTitle();
+    if(e.keyCode === 13) this.action.submitTitle()
   }
 
   componentDidUpdate(){
-    if(!this.state.newTitle) return;
-    findDOMNode(this.refs.input).focus();
+    if(!this.state.newTitle) return
+    findDOMNode(this.refs.input).focus()
   }
 
 }

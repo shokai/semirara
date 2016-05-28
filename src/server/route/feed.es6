@@ -1,33 +1,33 @@
-import Feed from "feed";
-import {renderToStaticMarkup} from "react-dom/server";
+import Feed from "feed"
+import {renderToStaticMarkup} from "react-dom/server"
 
-import Router from "koa-66";
-const router = new Router();
-export default router;
+import Router from "koa-66"
+const router = new Router()
+export default router
 
-import mongoose from "mongoose";
-const Page = mongoose.model("Page");
+import mongoose from "mongoose"
+const Page = mongoose.model("Page")
 
-import {createCompiler} from "../../client/component/syntax/markup";
-import {buildTitle} from "../../share/title";
-import {escape} from "lodash";
+import {createCompiler} from "../../client/component/syntax/markup"
+import {buildTitle} from "../../share/title"
+import {escape} from "lodash"
 
 router.get("/api/feed/:wiki", async (ctx, next) => {
-  const {wiki} = ctx.params;
-  const pages = await Page.findNotEmpty({wiki}, null, {sort: {updatedAt: -1}}).limit(30);
-  if(pages.length < 1) return ctx.status = 404;
+  const {wiki} = ctx.params
+  const pages = await Page.findNotEmpty({wiki}, null, {sort: {updatedAt: -1}}).limit(30)
+  if(pages.length < 1) return ctx.status = 404
   const compiler = createCompiler({state: {
     page: {wiki}
-  }});
+  }})
   const feed = new Feed({
     title: wiki,
     link: ctx.request.protocol+"://"+ctx.request.host+"/"+wiki,
     description: wiki,
     updated: pages[0].updatedAt
-  });
+  })
   for(let page of pages){
-    let title = buildTitle(page);
-    let link = ctx.request.protocol+"://"+ctx.request.host+"/"+wiki+"/"+page.title;
+    let title = buildTitle(page)
+    let link = ctx.request.protocol+"://"+ctx.request.host+"/"+wiki+"/"+page.title
     let description = page.lines
           .map(i =>
                "&nbsp;".repeat(i.indent*2) +
@@ -35,10 +35,10 @@ router.get("/api/feed/:wiki", async (ctx, next) => {
                .map(elm => typeof elm === "string" ? escape(elm) : renderToStaticMarkup(elm))
                .join("")
               )
-          .join("<br />");
-    let date = page.updatedAt;
-    feed.addItem({title, link, description, date});
+          .join("<br />")
+    let date = page.updatedAt
+    feed.addItem({title, link, description, date})
   }
-  ctx.type = "application/rss+xml; charset=UTF-8";
-  return ctx.body = feed.render("rss-2.0");
-});
+  ctx.type = "application/rss+xml; charset=UTF-8"
+  return ctx.body = feed.render("rss-2.0")
+})

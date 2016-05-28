@@ -1,32 +1,32 @@
 /* eslint no-console: 0 */
 
-const debug = require("../../share/debug")(__filename);
+const debug = require("../../share/debug")(__filename)
 
-import axios from "axios";
+import axios from "axios"
 
 export default class GitHub{
 
   constructor(token){
-    this.token = token;
-    this.baseUrl = "https://api.github.com";
+    this.token = token
+    this.baseUrl = "https://api.github.com"
   }
 
   async get(path, params = {}){
-    debug("get " + path);
+    debug("get " + path)
     try{
-      params.access_token = this.token;
-      const url = this.baseUrl + path;
-      const res = await axios.get(url, {params: params});
-      debug(res);
-      return res.data;
+      params.access_token = this.token
+      const url = this.baseUrl + path
+      const res = await axios.get(url, {params: params})
+      debug(res)
+      return res.data
     }
     catch(err){
-      console.error(err);
-      throw err;
+      console.error(err)
+      throw err
     }
   }
 
   getUser(){
-    return this.get("/user");
+    return this.get("/user")
   }
 }

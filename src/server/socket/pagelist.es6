@@ -1,41 +1,41 @@
 const debug = require("../../share/debug")(__filename)
 
-import ioreq from "socket.io-request";
-import Room from "./room";
-import mongoose from "mongoose";
-const Page = mongoose.model("Page");
+import ioreq from "socket.io-request"
+import Room from "./room"
+import mongoose from "mongoose"
+const Page = mongoose.model("Page")
 
 export default function use(app){
 
-  const io = app.context.io;
+  const io = app.context.io
 
   io.on("connection", (socket) => {
 
-    const room = new Room(socket);
+    const room = new Room(socket)
 
     ioreq(socket).response("getpagelist", async (req, res) => {
-      const {wiki} = req;
-      room.join(wiki);
+      const {wiki} = req
+      room.join(wiki)
       try{
-        const pages = await Page.findPagesByWiki(wiki);
-        res(pages.map(i => i.title));
+        const pages = await Page.findPagesByWiki(wiki)
+        res(pages.map(i => i.title))
       }
       catch(err){
-        console.error(err.stack || err);
+        console.error(err.stack || err)
       }
-    });
+    })
 
-  });
+  })
 
   Page.on("update", (page) => {
-    const {wiki, title} = page;
-    debug(`update ${wiki}::${title}`);
-    io.to(wiki).emit("pagelist:update", title);
-  });
+    const {wiki, title} = page
+    debug(`update ${wiki}::${title}`)
+    io.to(wiki).emit("pagelist:update", title)
+  })
 
   Page.on("remove", (page) => {
-    const {wiki, title} = page;
-    debug(`remove ${wiki}::${title}`);
-    io.to(wiki).emit("pagelist:remove", title);
-  });
+    const {wiki, title} = page
+    debug(`remove ${wiki}::${title}`)
+    io.to(wiki).emit("pagelist:remove", title)
+  })
 }

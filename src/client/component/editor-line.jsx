@@ -1,16 +1,16 @@
-import React, {Component} from "react";
-import {findDOMNode} from "react-dom";
+import React, {Component} from "react"
+import {findDOMNode} from "react-dom"
 
-import LongPress from "./longpress";
-import UserIcon from "./usericon";
-import Code, {getFullLanguage} from "./code";
-import classnames from "classnames";
+import LongPress from "./longpress"
+import UserIcon from "./usericon"
+import Code, {getFullLanguage} from "./code"
+import classnames from "classnames"
 
 export default class EditorLine extends Component{
 
   constructor(){
-    super();
-    this.focusInput = this.focusInput.bind(this);
+    super()
+    this.focusInput = this.focusInput.bind(this)
   }
 
   static get propTypes(){
@@ -23,11 +23,11 @@ export default class EditorLine extends Component{
       onKeyDown: React.PropTypes.func,
       onPaste: React.PropTypes.func,
       key: React.PropTypes.string.isRequired
-    };
+    }
   }
 
   render(){
-    const {line, compiler, key} = this.props;
+    const {line, compiler, key} = this.props
     if(this.props.edit){
       return (
         <li key={key} style={{marginLeft: line.indent*20}}>
@@ -40,10 +40,10 @@ export default class EditorLine extends Component{
              onPasteCapture={this.props.onPaste}
             />
         </li>
-      );
+      )
     }
     if(line.codeblock){
-      let {lang, start, filename, indent} = line.codeblock;
+      let {lang, start, filename, indent} = line.codeblock
       if(start){
         return (
           <li key={key} style={{marginLeft: line.indent*20}}>
@@ -51,13 +51,13 @@ export default class EditorLine extends Component{
               <span className="codeblock-start">{filename || getFullLanguage(lang) || lang}</span>
             </LongPress>
           </li>
-        );
+        )
       }
       else{
         let className = classnames({
           codeblock: !line.codeblock.end,
           "codeblock-end": line.codeblock.end
-        });
+        })
         return (
           <li key={key}>
             <LongPress onLongPress={this.props.onStartEdit}>
@@ -66,7 +66,7 @@ export default class EditorLine extends Component{
               </span>
             </LongPress>
           </li>
-        );
+        )
       }
     }
     if(line.cli){
@@ -80,11 +80,11 @@ export default class EditorLine extends Component{
             </span>
           </LongPress>
         </li>
-      );
+      )
     }
-    const icon = line.showUserIcon ? <UserIcon id={line.user} size={20} /> : null;
-    let value = line.value;
-    if(line.numberList) value = line.numberList.prefix + value;
+    const icon = line.showUserIcon ? <UserIcon id={line.user} size={20} /> : null
+    let value = line.value
+    if(line.numberList) value = line.numberList.prefix + value
     let elm = (
       <span>
         <LongPress onLongPress={this.props.onStartEdit}>
@@ -92,26 +92,26 @@ export default class EditorLine extends Component{
         </LongPress>
         {icon}
       </span>
-    );
-    if(line.blocktitle) elm = <h3>{elm}</h3>;
+    )
+    if(line.blocktitle) elm = <h3>{elm}</h3>
     return (
       <li key={key} style={{marginLeft: line.indent*20}}>
         {elm}
       </li>
-    );
+    )
   }
 
   componentDidUpdate(){
-    this.focusInput();
+    this.focusInput()
   }
 
   componentDidMount(){
-    this.focusInput();
+    this.focusInput()
   }
 
   focusInput(){
-    if(!this.props.edit) return;
-    findDOMNode(this.refs.input).focus();
+    if(!this.props.edit) return
+    findDOMNode(this.refs.input).focus()
   }
 
 }

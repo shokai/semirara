@@ -1,13 +1,13 @@
-import React from "react";
-import {createStore} from "redux";
-import App from "../../client/app";
-import TwitterCard from "./twitter-card";
-import {buildTitle} from "../../share/title";
+import React from "react"
+import {createStore} from "redux"
+import App from "../../client/app"
+import TwitterCard from "./twitter-card"
+import {buildTitle} from "../../share/title"
 
 export default function IndexStaticHTML({user, app, state}){
 
-  const store = createStore((state) => state, state);
-  const {wiki, title, lines} = state.page;
+  const store = createStore((state) => state, state)
+  const {wiki, title, lines} = state.page
 
   return (
     <html>
@@ -24,7 +24,7 @@ export default function IndexStaticHTML({user, app, state}){
         </div>
       </body>
     </html>
-  );
+  )
 
 }
 
@@ -32,4 +32,4 @@ IndexStaticHTML.propTypes = {
   user: React.PropTypes.object.isRequired,
   app: React.PropTypes.object.isRequired,
   state: React.PropTypes.object.isRequired
-};
+}
