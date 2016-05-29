@@ -3,7 +3,7 @@ import Router from "koa-66"
 const router = new Router()
 export default router
 
-import {setUserContext, ignoreFavicon} from "../lib/middleware"
+import {setUserContext, ignoreFavicon} from "./middleware"
 router.use(ignoreFavicon)
 
 import authRouter from "./auth"
