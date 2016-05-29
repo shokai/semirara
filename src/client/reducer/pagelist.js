@@ -9,9 +9,11 @@ export default function pageListReducer(state = [], action){
       state.unshift(action.value)
       state = uniq(state)
       break
-    case "pagelist:remove":
-      state = state.filter(x => x !== action.value)
+    case "pagelist:remove": {
+      let {title} = action.value
+      state = state.filter(page => page.title !== title)
       break
+    }
   }
   return state
 }

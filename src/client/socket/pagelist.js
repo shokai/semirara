@@ -15,12 +15,12 @@ export default function use({io, store, action}){
     })
   })
 
-  io.on("pagelist:update", (title) => {
-    action.pagelistUpdate(title)
+  io.on("pagelist:update", ({title, image}) => {
+    action.pagelistUpdate({title, image})
   })
 
-  io.on("pagelist:remove", (title) => {
-    action.pagelistRemove(title)
+  io.on("pagelist:remove", ({title}) => {
+    action.pagelistRemove({title})
   })
 
 }

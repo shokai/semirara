@@ -15,11 +15,18 @@ export default class PageList extends StoreComponent {
 
   render(){
     const {wiki} = this.state.page
-    const list = this.state.pagelist.map((title) => {
+    const list = this.state.pagelist.map(({title, image}) => {
+      const style = image ? {
+        backgroundImage: `url("${image}"`
+      } : {}
+      const classNames = classnames({
+        image,
+        selected: title === this.state.page.title
+      })
       return (
-        <li key={title} className={classnames({selected: title === this.state.page.title})}>
+        <li key={title} className={classNames} style={style}>
           <a href={`/${wiki}/${title}`} onClick={e => {e.preventDefault(); this.onItemClick(title)}}>
-            {title}
+            <span>{title}</span>
           </a>
         </li>
       )

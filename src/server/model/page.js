@@ -1,6 +1,7 @@
 const debug = require("../../share/debug")(__filename)
 
 import {validateTitle, validateWiki, validateRoute} from "../../share/route"
+import {Parser} from '../../share/markup/parser'
 
 import {ambiguous} from "./"
 import Cache from "../lib/cache"
@@ -23,6 +24,10 @@ const pageSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: (wiki) => validateWiki(wiki).valid
+  },
+  image: {
+    type: String,
+    validate: (url) => /^https?:\/\/.+/.test(url)
   },
   lines: {
     type: Array,
@@ -50,6 +55,19 @@ pageSchema.pre("save", function(next){
   next()
 })
 
+pageSchema.pre("save", function(next){
+  this.image = (() => {
+    for(let line of this.lines){
+      for(let node of Parser.parse(line.value)){
+        if(/image/.test(node.type)){
+          return node.image
+        }
+      }
+    }
+  })()
+  next()
+})
+
 pageSchema.plugin(autoIncrement.plugin, {
   model: "Page",
   field: "number",
@@ -73,7 +91,7 @@ pageSchema.statics.findNotEmpty = function(...args){
 }
 
 pageSchema.statics.findPagesByWiki = function(wiki){
-  return Page.findNotEmpty({wiki}, 'title', {sort: {updatedAt: -1}})
+  return Page.findNotEmpty({wiki}, 'title image', {sort: {updatedAt: -1}})
 }
 
 pageSchema.statics.findOneByWikiTitle = async function(query){
@@ -112,6 +130,7 @@ pageSchema.methods.toHash = function(){
   return {
     wiki: this.wiki,
     title: this.title,
+    image: this.image,
     number: this.number,
     lines: this.lines,
     indent: this.indent,

@@ -131,26 +131,39 @@ div.pagelist
     width: 100%
     margin: 0 auto
     li
+      background-size: contain
+      background-position: center center
+      background-repeat: no-repeat
       display: inline-block
       width: 6em
       height: 6em
       overflow: hidden
       font-size: 1.2em
+    li.image
+      span
+        background-color: #777
   width: 200px
   float: left
   li
+    background-size: contain
+    background-position: right center
+    background-repeat: no-repeat
     min-height: 1.5em
     padding: 3px
     margin: 1px
     background-color: color.bg.base
     &:hover, &.selected
       background-color: color.bg.select
+      span
+        background-color: color.bg.select
     a
       text-decoration: none
       color: #FFF
       display: block
       width: 100%
       height: 100%
+    span
+      background-color: color.bg.base
 
 div.socket-status
   font-size: 0.9em
