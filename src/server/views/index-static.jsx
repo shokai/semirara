@@ -7,13 +7,13 @@ import {buildTitle} from "../../share/title"
 export default function IndexStaticHTML({user, app, state}){
 
   const store = createStore((state) => state, state)
-  const {wiki, title, lines} = state.page
+  const {wiki, title, lines, image} = state.page
 
   return (
     <html>
       <head>
         <meta name="viewport" content="width=640px" />
-        <title>{buildTitle({wiki, title, lines})}</title>
+        <title>{buildTitle({wiki, title, lines, image})}</title>
         <link rel="stylesheet" href="/dist/index.css" />
         <link rel="alternate" type="application/rss+xml" title="RSS Feed" href={`/api/feed/${wiki}`} />
         <TwitterCard page={state.page} />
