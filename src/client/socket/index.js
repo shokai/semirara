@@ -16,6 +16,10 @@ export default function use({store, action}){
     store.dispatch({type: "socket:disconnect"})
   })
 
+  io.on("reconnect", () => {
+    location.reload()
+  })
+
   page({io, store, action})
   pagelist({io, store, action})
   title({io, store, action})
