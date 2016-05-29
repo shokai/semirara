@@ -1,4 +1,4 @@
-/* global describe it */
+/* eslint-env mocha */
 
 import {renderToJSX} from "../render"
 import {assert} from "chai"

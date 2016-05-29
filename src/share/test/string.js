@@ -1,4 +1,4 @@
-/* global describe it */
+/* eslint-env mocha */
 
 import {camelize} from "../string"
 import {assert} from "chai"

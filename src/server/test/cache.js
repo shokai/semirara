@@ -1,4 +1,4 @@
-/* global describe it */
+/* eslint-env mocha */
 
 import {delay} from "./test_helper"
 import {assert} from "chai"
