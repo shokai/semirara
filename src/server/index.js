@@ -38,7 +38,4 @@ react(app, {
   internals: false
 })
 
-module.exports = {
-  app: app,
-  server: server
-}
+module.exports = { app, server }
