@@ -1,5 +1,7 @@
 import "babel-regenerator-runtime"
 
+import '../share/print-all-errors'
+
 import React from "react"
 import {render} from "react-dom"
 import {createStore, applyMiddleware, bindActionCreators} from "redux"

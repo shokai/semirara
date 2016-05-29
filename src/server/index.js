@@ -1,5 +1,7 @@
 /* eslint no-console: 0 */
 
+import '../share/print-all-errors'
+
 import model from "./model"
 model.connect().catch(console.error)
 
