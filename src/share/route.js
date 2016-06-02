@@ -3,7 +3,9 @@ import hasDom from "has-dom"
 export const defaultRoute = {wiki: "general", title: "hello"}
 
 export function buildPath({wiki, title}){
-  return `/${wiki}/${title}`
+  if (wiki && title) return `/${wiki}/${title}`
+  if (wiki) return `/${wiki}`
+  throw new Error(`invalid route /${wiki}/${title}`)
 }
 
 export function parseRoute(path){

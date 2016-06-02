@@ -2,6 +2,7 @@ import React from "react"
 import {validateTitle, validateWiki, validateRoute} from "../../../share/route"
 import {renderToJSX} from "../../../share/markup/render"
 import {Parser} from "../../../share/markup/parser"
+import RouteLink from "../route-link"
 
 export function removeMarkup(str){
   return str.replace(/\[{2,3}([^\]]+)\]{2,3}/gi, (_, inside) => inside)
@@ -16,25 +17,15 @@ export function createCompiler({action, state}){
         case "title-link": {
           let {title} = node
           if(validateTitle(title).invalid) return <span>{node.source}</span>
-          let onClick = (e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            action.route({title})
-          }
-          return <a href={`/${wiki}/${node.title}`} onClick={onClick}>{node.title}</a>
+          return <RouteLink action={action} route={{wiki, title}}>{title}</RouteLink>
         }
         case "title-link-hash": {
           let {title} = node
           if(validateTitle(title).invalid) return <span>{node.source}</span>
-          let onClick = (e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            action.route({title})
-          }
           return (
             <span>
               {" "}
-              <a href={`/${wiki}/${node.title}`} onClick={onClick}>{`#${node.title}`}</a>
+              <RouteLink action={action} route={{wiki, title}}>{`#${title}`}</RouteLink>
               {" "}
             </span>
           )
@@ -42,22 +33,12 @@ export function createCompiler({action, state}){
         case "wiki-link": {
           let {wiki} = node
           if(validateWiki(wiki).invalid) return <span>{node.source}</span>
-          let onClick = (e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            action.route({wiki})
-          }
-          return <a href={`/${wiki}`} onClick={onClick}>{node.wiki}::</a>
+          return <RouteLink action={action} route={{wiki}}>{wiki}::</RouteLink>
         }
         case "wiki-title-link": {
           let {wiki, title} = node
           if(validateRoute({wiki, title}).invalid) return <span>{node.source}</span>
-          let onClick = (e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            action.route({wiki, title})
-          }
-          return <a href={`/${wiki}/${title}`} onClick={onClick}>{`${wiki}::${title}`}</a>
+          return <RouteLink action={action} route={{wiki, title}}>{`${wiki}::${title}`}</RouteLink>
         }
         default:
           return renderToJSX(node)

@@ -1,5 +1,6 @@
 import React from "react"
 import StoreComponent from "./store-component"
+import RouteLink from './route-link'
 import classnames from "classnames"
 
 export default class PageList extends StoreComponent {
@@ -25,9 +26,7 @@ export default class PageList extends StoreComponent {
       })
       return (
         <li key={title} className={classNames} style={style}>
-          <a href={`/${wiki}/${title}`} onClick={e => {e.preventDefault(); this.onItemClick(title)}}>
-            <span>{title}</span>
-          </a>
+          <RouteLink action={this.action} route={{wiki, title}}><span>{title}</span></RouteLink>
         </li>
       )
     })
