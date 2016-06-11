@@ -47,8 +47,10 @@ export default class EditorLine extends Component{
         onPasteCapture={this.props.onPaste}
         />
     )
-    if(line.blocktitle && !line.codeblock && !line.cli) input = <h3>{input}</h3>
-      return <li key={key} style={{marginLeft: line.indent*20}}>{input}</li>
+    if(line.blocktitle && !line.codeblock && !line.cli){
+      input = <h3>{input}</h3>
+    }
+    return <li key={key} style={{marginLeft: line.indent*20}}>{input}</li>
   }
 
   renderCodeBlock(){
