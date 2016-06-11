@@ -147,6 +147,17 @@ describe("Parser - wiki syntax parser", function(){
       })
     })
 
+    describe("image-naked", function () {
+      it("should parse http://example.com/image.gif", function(){
+        const nodes = Parser.imageNaked(toNodes("hello http://example.com/image.gif world"))
+        assert.deepEqual(nodes, [
+          {type: "text", value: "hello"},
+          {type: "image", image: "http://example.com/image.gif", source: " http://example.com/image.gif "},
+          {type: "text", value: "world"}
+        ])
+      })
+    })
+
     describe("strong", function(){
       it("should parse [[text message]]", function(){
         const nodes = Parser.strong(toNodes("hello [[strong shokai]] world"))

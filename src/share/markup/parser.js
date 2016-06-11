@@ -105,6 +105,12 @@ Parser.addReplacer(createReplacer(
 ))
 
 Parser.addReplacer(createReplacer(
+  "image-naked",
+    /(?:^|\s)(https?:\/\/[^\s\]]+\.(?:jpe?g|gif|png))(?:$|\s)/i,
+  image => ({image, type: 'image'})
+))
+
+Parser.addReplacer(createReplacer(
   "external-link",
   /\[(https?:\/\/[^\s\]]+)\]/,
   link => ({link})
