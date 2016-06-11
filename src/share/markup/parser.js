@@ -69,6 +69,12 @@ function createReplacer(type, regexp, toNode){
 }
 
 Parser.addReplacer(createReplacer(
+  "inline-code",
+  /`([^`]+)`/,
+  (value) => ({value})
+))
+
+Parser.addReplacer(createReplacer(
   "strong",
   /\[{2}(.+)\]{2}/,
   (value) => ({value})

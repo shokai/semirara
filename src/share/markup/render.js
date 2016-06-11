@@ -18,6 +18,8 @@ export function renderToJSX(node){
       return <a href={`/${node.wiki}`}>{node.wiki}::</a>
     case "wiki-title-link":
       return <a href={`/${node.wiki}/${node.title}`}>{`${node.wiki}::${node.title}`}</a>
+    case "inline-code":
+      return <span className="inline-code">{node.value}</span>
     case "title-link":
       // require store state
       break
