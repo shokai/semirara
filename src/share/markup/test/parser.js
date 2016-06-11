@@ -136,6 +136,17 @@ describe("Parser - wiki syntax parser", function(){
       })
     })
 
+    describe("external-link-naked", function(){
+      it("should parse http://example.com", function(){
+        const nodes = Parser.externalLinkNaked(toNodes("hello http://shokai.org world"))
+        assert.deepEqual(nodes, [
+          {type: "text", value: "hello"},
+          {type: "external-link", link: "http://shokai.org", source: " http://shokai.org "},
+          {type: "text", value: "world"}
+        ])
+      })
+    })
+
     describe("image", function(){
       it("should parse [http://example.com/image.gif]", function(){
         const nodes = Parser.image(toNodes("hello [http://example.com/image.gif] world"))

@@ -117,6 +117,12 @@ Parser.addReplacer(createReplacer(
 ))
 
 Parser.addReplacer(createReplacer(
+  "external-link-naked",
+  /(?:^|\s)(https?:\/\/[^\s\]]+)(?:$|\s)/,
+  link => ({link, type: 'external-link'})
+))
+
+Parser.addReplacer(createReplacer(
   "wiki-link",
   /\[([^\]]+)::\]/,
   wiki => ({wiki})
