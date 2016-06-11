@@ -70,61 +70,61 @@ function createReplacer(type, regexp, toNode){
 
 Parser.addReplacer(createReplacer(
   "strong",
-  /\[{3}(.+)\]{3}/,
+  /\[{2}(.+)\]{2}/,
   (value) => ({value})
 ))
 
 Parser.addReplacer(createReplacer(
   "external-link-with-image",
-  /\[{2}(https?:\/\/[^\s\]]+) (https?:\/\/[^\s\]]+\.(?:jpe?g|gif|png))\]{2}/i,
+  /\[(https?:\/\/[^\s\]]+) (https?:\/\/[^\s\]]+\.(?:jpe?g|gif|png))\]/i,
   (link, image) => ({image, link})
 ))
 
 Parser.addReplacer(createReplacer(
   "external-link-with-image-reverse",
-  /\[{2}(https?:\/\/[^\s\]]+\.(?:jpe?g|gif|png)) (https?:\/\/[^\s\]]+)\]{2}/i,
+  /\[(https?:\/\/[^\s\]]+\.(?:jpe?g|gif|png)) (https?:\/\/[^\s\]]+)\]/i,
   (image, link) => ({image, link, type: "external-link-with-image"})
 ))
 
 Parser.addReplacer(createReplacer(
   "external-link-with-description",
-  /\[{2}(https?:\/\/[^\s\]]+) ([^\]]+)\]{2}/,
+  /\[(https?:\/\/[^\s\]]+) ([^\]]+)\]/,
   (link, description) => ({link, description})
 ))
 
 Parser.addReplacer(createReplacer(
   "external-link-with-description-reverse",
-  /\[{2}([^\]]+) (https?:\/\/[^\s\]]+)\]{2}/,
+  /\[([^\]]+) (https?:\/\/[^\s\]]+)\]/,
   (description, link) => ({link, description, type: 'external-link-with-description'})
 ))
 
 Parser.addReplacer(createReplacer(
   "image",
-  /\[{2}(https?:\/\/[^\s\]]+\.(?:jpe?g|gif|png))\]{2}/i,
+  /\[(https?:\/\/[^\s\]]+\.(?:jpe?g|gif|png))\]/i,
   image => ({image})
 ))
 
 Parser.addReplacer(createReplacer(
   "external-link",
-  /\[{2}(https?:\/\/[^\s\]]+)\]{2}/,
+  /\[(https?:\/\/[^\s\]]+)\]/,
   link => ({link})
 ))
 
 Parser.addReplacer(createReplacer(
   "wiki-link",
-  /\[{2}([^\]]+)::\]{2}/,
+  /\[([^\]]+)::\]/,
   wiki => ({wiki})
 ))
 
 Parser.addReplacer(createReplacer(
   "wiki-title-link",
-  /\[{2}([^\]]+)::([^\]]*)\]{2}/,
+  /\[([^\]]+)::([^\]]*)\]/,
   (wiki, title) => ({wiki, title})
 ))
 
 Parser.addReplacer(createReplacer(
   "title-link",
-  /\[{2}([^\]]+)\]{2}/,
+  /\[([^\]]+)\]/,
   title => ({title})
 ))
 
