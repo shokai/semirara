@@ -189,6 +189,16 @@ describe("Parser - wiki syntax parser", function(){
           {type: "text", value: " world"}
         ])
       })
+
+      it("allow backquote in `inline code`", function(){
+        const nodes = Parser.inlineCode(toNodes("hello `inline \\`code\\`` world"))
+        assert.deepEqual(nodes, [
+          {type: "text", value: "hello "},
+          {type: "inline-code", value: "inline `code`", source: "`inline \\`code\\``"},
+          {type: "text", value: " world"}
+        ])
+      })
+
     })
 
   })

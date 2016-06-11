@@ -70,8 +70,8 @@ function createReplacer(type, regexp, toNode){
 
 Parser.addReplacer(createReplacer(
   "inline-code",
-  /`([^`]+)`/,
-  (value) => ({value})
+  /`((?:\\`|[^`])+)`/,
+  (value) => ({value: value.replace(/\\`/g, '`')})
 ))
 
 Parser.addReplacer(createReplacer(
