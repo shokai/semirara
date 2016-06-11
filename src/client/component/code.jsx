@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import hljs, {highlight} from "highlight.js"
+import hljs, {highlight, highlightAuto} from "highlight.js"
 
 const reverseAliases = {}
 for(let lang of hljs.listLanguages()){
@@ -21,15 +21,16 @@ export function getFullLanguage(lang){
 export default function Code({lang, code}){
   let __html
   try{
-    __html = highlight(lang, code, true).value
+    __html = lang ? highlight(lang, code, true).value : highlightAuto(code).value
   }
   catch(err){
+    console.error(err.stack || err)
     return <span>{code}</span>
   }
   return <span dangerouslySetInnerHTML={{__html}} />
 }
 
 Code.propTypes = {
-  lang: React.PropTypes.string.isRequired,
+  lang: React.PropTypes.string,
   code: React.PropTypes.string.isRequired
 }

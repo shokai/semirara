@@ -3,6 +3,7 @@ import {validateTitle, validateWiki, validateRoute} from "../../../share/route"
 import {renderToJSX} from "../../../share/markup/render"
 import {Parser} from "../../../share/markup/parser"
 import RouteLink from "../route-link"
+import Code from "../code"
 
 export function removeMarkup(str){
   return str.replace(/\[{2,3}([^\]]+)\]{2,3}/gi, (_, inside) => inside)
@@ -40,6 +41,8 @@ export function createCompiler({action, state}){
           if(validateRoute({wiki, title}).invalid) return <span>{node.source}</span>
           return <RouteLink action={action} route={{wiki, title}}>{`${wiki}::${title}`}</RouteLink>
         }
+        case "inline-code":
+          return <span className="inline-code"><Code code={node.value} /></span>
         default:
           return renderToJSX(node)
       }
