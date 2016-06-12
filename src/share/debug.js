@@ -10,7 +10,7 @@ const PATH_HEADS = [
   path.resolve('src/server'),
   path.resolve('dist/server'),
   path.resolve('src/share'),
-  path.resolve('dist/share'),
+  path.resolve('dist/share')
 ]
 
 function fileToName (filename) {
