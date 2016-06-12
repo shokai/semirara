@@ -74,7 +74,7 @@ export default class EditorLine extends Component{
         <li key={key}>
           <LongPress onLongPress={this.props.onStartEdit}>
             <span className={className} style={{marginLeft: indent*20-5, paddingLeft: (line.indent-indent)*20+5}}>
-              <Code lang={lang} code={line.value} />
+              <Code lang={lang}>{line.value}</Code>
             </span>
           </LongPress>
         </li>

@@ -40,7 +40,7 @@ export function createCompiler({action, state}){
         case "inline-code":
           let code = node.value
           if(!(/^\-/.test(node.value))){
-            code = <Code code={node.value} />
+            code = <Code>{node.value}</Code>
           }
           return <span className="inline-code">{code}</span>
         default:

@@ -18,19 +18,19 @@ export function getFullLanguage(lang){
   return reverseAliases[lang]
 }
 
-export default function Code({lang, code}){
+export default function Code({lang, children}){
   let __html
   try{
-    __html = lang ? highlight(lang, code, true).value : highlightAuto(code).value
+    __html = lang ? highlight(lang, children, true).value : highlightAuto(children).value
   }
   catch(err){
     console.error(err.stack || err)
-    return <span>{code}</span>
+    return <span>{children}</span>
   }
   return <span dangerouslySetInnerHTML={{__html}} />
 }
 
 Code.propTypes = {
   lang: React.PropTypes.string,
-  code: React.PropTypes.string.isRequired
+  children: React.PropTypes.string.isRequired
 }
