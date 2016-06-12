@@ -1,12 +1,17 @@
-import {removeMarkup} from "../client/component/syntax/markup"
+import {Parser} from './markup/parser'
+
+function renderToPlainText(node){
+  return node.value || node.description || node.title
+}
 
 export function buildTitle({wiki, title, lines}){
   let subtitle
   if(lines && lines.length > 0){
     for(let line of lines){
       if(!(/https?:\/\//.test(line.value))){
-        subtitle = removeMarkup(line.value.trim())
-        break
+        let nodes = Parser.parse(line.value.trim())
+        subtitle = nodes.map(renderToPlainText).join('')
+        if(subtitle) break
       }
     }
   }

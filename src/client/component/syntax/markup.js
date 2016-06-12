@@ -5,10 +5,6 @@ import {Parser} from "../../../share/markup/parser"
 import RouteLink from "../route-link"
 import Code from "../code"
 
-export function removeMarkup(str){
-  return str.replace(/\[{2,3}([^\]]+)\]{2,3}/gi, (_, inside) => inside)
-}
-
 export function createCompiler({action, state}){
   const {wiki} = state.page
   const compiler = function(str){
