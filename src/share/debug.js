@@ -6,8 +6,11 @@ import pkg from '../../package.json'
 
 const PATH_HEADS = [
   '/src/client',
+  '/src/share',
   path.resolve('src/server'),
-  path.resolve('dist/server')
+  path.resolve('dist/server'),
+  path.resolve('src/share'),
+  path.resolve('dist/share'),
 ]
 
 function fileToName (filename) {
