@@ -32,7 +32,7 @@ class ValidationResult{
   }
 }
 
-const blacklist = ["auth", "login", "logout", "config", "api"]
+const blacklist = ["auth", "login", "logout", "config", "api", "slide"]
 
 // common rules for wiki & title
 export function validateName(name){
