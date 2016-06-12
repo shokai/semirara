@@ -37,12 +37,13 @@ export function createCompiler({action, state}){
           if(validateRoute({wiki, title}).invalid) return <span>{node.source}</span>
           return <RouteLink action={action} route={{wiki, title}}>{`${wiki}::${title}`}</RouteLink>
         }
-        case "inline-code":
+        case "inline-code": {
           let code = node.value
           if(!(/^\-/.test(node.value))){
             code = <Code>{node.value}</Code>
           }
           return <span className="inline-code">{code}</span>
+        }
         default:
           return renderToJSX(node)
       }
