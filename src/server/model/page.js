@@ -34,6 +34,10 @@ const pageSchema = new mongoose.Schema({
     default: [ ],
     required: true
   },
+  innerLinks: {
+    type: Array,
+    default: [ ]
+  },
   updatedAt: {
     type: Date,
     default: () => Date.now()
