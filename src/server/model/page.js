@@ -114,7 +114,7 @@ pageSchema.methods.saveLater = function(){
   if(validationResult.invalid) throw new Error(validationResult.errors)
   const key = `${this.wiki}::${this.title}`
   clearTimeout(saveTimeouts[key])
-  saveTimeouts[key] = setTimeout(this.save, 20000)
+  saveTimeouts[key] = setTimeout(this.save, 5000)
 }
 
 pageSchema.methods.rename = async function(newTitle){
