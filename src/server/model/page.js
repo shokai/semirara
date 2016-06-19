@@ -1,5 +1,6 @@
 const debug = require("../../share/debug")(__filename)
 
+import {uniq} from "lodash"
 import {validateTitle, validateWiki, validateRoute} from "../../share/route"
 import {Parser} from '../../share/markup/parser'
 
@@ -60,15 +61,21 @@ pageSchema.pre("save", function(next){
 })
 
 pageSchema.pre("save", function(next){
-  this.image = (() => {
-    for(let line of this.lines){
-      for(let node of Parser.parse(line.value)){
-        if(/image/.test(node.type)){
-          return node.image
-        }
+  this.image = null
+  this.innerLinks = []
+  for(let line of this.lines){
+    for(let node of Parser.parse(line.value)){
+      if(!this.image && /image/.test(node.type)){
+        debug("found image", node.image)
+        this.image = node.image
+        break
+      }
+      if(/^title\-link/.test(node.type)){
+        this.innerLinks.push(node.title)
       }
     }
-  })()
+  }
+  this.innerLinks = uniq(this.innerLinks)
   next()
 })
 
