@@ -3,6 +3,7 @@ import StoreComponent from "./store-component"
 import EditorLine from "./editor-line"
 import {createCompiler} from "./syntax/markup"
 import {decorateLines} from "./syntax/decorator"
+import {range} from 'lodash'
 
 export default class Editor extends StoreComponent {
 
@@ -32,8 +33,7 @@ export default class Editor extends StoreComponent {
     }
     else{
       const lines = decorateLines(page.lines)
-      lis = Object.keys(lines).map(i => {
-        i = parseInt(i)
+      lis = range(0, lines.length).map(i => {
         let line = lines[i]
         return (
           <EditorLine
