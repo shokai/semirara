@@ -21,6 +21,8 @@ export default function use(app){
       try{
         room.join(`${wiki}::${title}`)
         const page = await Page.findOneByWikiTitle({wiki, title}) || new Page({wiki, title})
+        const reverseLinkedPages = await page.findReverseLinkedPages()
+        debug(reverseLinkedPages)
         res(page)
       }
       catch(err){
