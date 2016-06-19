@@ -5,11 +5,6 @@ import {validateTitle, validateWiki, validateRoute} from "../../share/route"
 import {Parser} from '../../share/markup/parser'
 
 import {ambiguous} from "./"
-import Cache from "../lib/cache"
-const pageCache = new Cache({
-  prefix: "page",
-  expire: 60*60 // 60min
-})
 
 import mongoose from "mongoose"
 import autoIncrement from "mongoose-auto-increment"
@@ -87,7 +82,6 @@ pageSchema.plugin(autoIncrement.plugin, {
 
 pageSchema.post("save", function(page){
   debug(`save!  ${page.wiki}::${page.title}`)
-  pageCache.set(`${this.wiki}::${this.title}`, this.toHash())
   if(page.lines.length < 1){
     Page.emit("remove", page)
   }
@@ -105,18 +99,21 @@ pageSchema.statics.findPagesByWiki = function(wiki){
   return Page.findNotEmpty({wiki}, 'title image', {sort: {updatedAt: -1}})
 }
 
-pageSchema.statics.findOneByWikiTitle = async function(query){
+pageSchema.statics.findOneByWikiTitle = function(query){
   const {wiki, title} = query
-  return await pageCache.get(`${wiki}::${title}`) || this.findOne(ambiguous(query))
+  return this.findOne(ambiguous(query))
+}
+
+pageSchema.methods.findReverseLinkedPages = function(selector = "title image"){
+  return Page.find({innerLinks: {$in: [this.title]}}, selector)
 }
 
 const saveTimeouts = {}
-pageSchema.methods.saveWithCache = function(){
+pageSchema.methods.saveLater = function(){
   const validationResult = validateRoute(this)
   if(validationResult.invalid) throw new Error(validationResult.errors)
   const key = `${this.wiki}::${this.title}`
   clearTimeout(saveTimeouts[key])
-  pageCache.set(key, this.toHash())
   saveTimeouts[key] = setTimeout(this.save, 20000)
 }
 
@@ -126,13 +123,7 @@ pageSchema.methods.rename = async function(newTitle){
     throw new Error("page exists")
   }
   Page.emit("remove", this)
-  const cache = await pageCache.get(`${wiki}::${title}`)
-  if(cache){
-    this.lines = cache.lines
-  }
   this.title = newTitle
-
-  pageCache.delete(`${wiki}::${title}`)
   await this.save()
   return {wiki, title: newTitle}
 }
