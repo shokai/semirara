@@ -58,7 +58,7 @@
     "lodash.uniq": "^4.2.1",
     "md5": "^2.0.0",
     "memjs": "^0.10.0",
-    "mongoose": "^4.4.5",
+    "mongoose": "^4.5.1",
     "mongoose-auto-increment": "^5.0.1",
     "nib": "^1.1.0",
     "react": "^15.0.2",
