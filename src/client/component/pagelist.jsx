@@ -1,9 +1,18 @@
-import React from "react"
-import StoreComponent from "./store-component"
+// const debug = require('../../share/debug')(__filename)
+
+import React, {Component, PropTypes} from "react"
 import RouteLink from './route-link'
 import classnames from "classnames"
 
-export default class PageList extends StoreComponent {
+export default class PageList extends Component {
+
+  static get propTypes () {
+    return {
+      wiki: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      pagelist: PropTypes.object.isRequired
+    }
+  }
 
   constructor(){
     super()
@@ -15,24 +24,27 @@ export default class PageList extends StoreComponent {
   }
 
   render(){
-    const {wiki} = this.state.page
-    const list = this.state.pagelist.map(({title, image}) => {
+    const list = this.props.pagelist.map(({title, image}) => {
       const style = image ? {
         backgroundImage: `url("${image}")`
       } : {}
       const classNames = classnames({
         image,
-        selected: title === this.state.page.title
+        selected: title === this.props.title
       })
       return (
         <li key={title} className={classNames} style={style}>
-          <RouteLink action={this.action} route={{wiki, title}}><span>{title}</span></RouteLink>
+          <RouteLink
+             action={this.action}
+             route={{wiki: this.props.wiki, title}}>
+            <span>{title}</span>
+          </RouteLink>
         </li>
       )
     })
     return (
       <div className="pagelist">
-        <h2>{wiki}({list.length})</h2>
+        <h2>{this.props.wiki}({list.length})</h2>
         <ul>
           {list}
         </ul>

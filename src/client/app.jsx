@@ -3,7 +3,7 @@ import React from "react"
 import StoreComponent from "./component/store-component"
 import Header from "./component/header"
 import Editor from "./component/editor"
-import PageList from "./component/pagelist"
+import PageListContainer from "./container/pagelist"
 import SocketStatus from "./component/socket-status"
 import hasDom from "has-dom"
 
@@ -32,7 +32,7 @@ export default class App extends StoreComponent{
         <div className="main">
           <Header store={store} />
           <Editor store={store} />
-          <PageList store={store} />
+          <PageListContainer store={store} />
           {socketStatus}
           <div className="footer" />
         </div>
