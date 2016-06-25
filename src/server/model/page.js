@@ -1,14 +1,10 @@
 const debug = require("../../share/debug")(__filename)
 
+import {uniq, uniqBy} from "lodash"
 import {validateTitle, validateWiki, validateRoute} from "../../share/route"
 import {Parser} from '../../share/markup/parser'
 
 import {ambiguous} from "./"
-import Cache from "../lib/cache"
-const pageCache = new Cache({
-  prefix: "page",
-  expire: 60*60 // 60min
-})
 
 import mongoose from "mongoose"
 import autoIncrement from "mongoose-auto-increment"
@@ -27,12 +23,16 @@ const pageSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    validate: (url) => /^https?:\/\/.+/.test(url)
+    validate: (url) => (url === null || /^https?:\/\/.+/.test(url))
   },
   lines: {
     type: Array,
     default: [ ],
     required: true
+  },
+  innerLinks: {
+    type: Array,
+    default: [ ]
   },
   updatedAt: {
     type: Date,
@@ -56,15 +56,21 @@ pageSchema.pre("save", function(next){
 })
 
 pageSchema.pre("save", function(next){
-  this.image = (() => {
-    for(let line of this.lines){
-      for(let node of Parser.parse(line.value)){
-        if(/image/.test(node.type)){
-          return node.image
-        }
+  this.image = null
+  this.innerLinks = []
+  for(let line of this.lines){
+    for(let node of Parser.parse(line.value)){
+      if(!this.image && /image/.test(node.type)){
+        debug("found image", node.image)
+        this.image = node.image
+        break
+      }
+      if(/^title\-link/.test(node.type)){
+        this.innerLinks.push(node.title)
       }
     }
-  })()
+  }
+  this.innerLinks = uniq(this.innerLinks)
   next()
 })
 
@@ -76,7 +82,6 @@ pageSchema.plugin(autoIncrement.plugin, {
 
 pageSchema.post("save", function(page){
   debug(`save!  ${page.wiki}::${page.title}`)
-  pageCache.set(`${this.wiki}::${this.title}`, this.toHash())
   if(page.lines.length < 1){
     Page.emit("remove", page)
   }
@@ -94,34 +99,43 @@ pageSchema.statics.findPagesByWiki = function(wiki){
   return Page.findNotEmpty({wiki}, 'title image', {sort: {updatedAt: -1}})
 }
 
-pageSchema.statics.findOneByWikiTitle = async function(query){
-  const {wiki, title} = query
-  return await pageCache.get(`${wiki}::${title}`) || this.findOne(ambiguous(query))
+pageSchema.statics.findOneByWikiTitle = function(query){
+  return this.findOne(ambiguous(query))
+}
+
+pageSchema.methods.findReverseLinkedPages = function(selector = "title image"){
+  return Page.find({innerLinks: {$in: [this.title]}}, selector)
+}
+
+pageSchema.methods.findInnerLinkedPages = async function(selector = "title image"){
+  const wiki = this.wiki
+  const pages = await Promise.all(
+    this.innerLinks.map(title => Page.findOne({wiki, title}, selector))
+  )
+  return pages.filter(page => !!page)
+}
+
+pageSchema.methods.findRelatedPages = async function(){
+  const [relateds, innerLinks] = await Promise.all([this.findReverseLinkedPages(), this.findInnerLinkedPages()])
+  return uniqBy(relateds.concat(innerLinks), (page) => page.title)
 }
 
 const saveTimeouts = {}
-pageSchema.methods.saveWithCache = function(){
+pageSchema.methods.saveLater = function(){
   const validationResult = validateRoute(this)
   if(validationResult.invalid) throw new Error(validationResult.errors)
   const key = `${this.wiki}::${this.title}`
   clearTimeout(saveTimeouts[key])
-  pageCache.set(key, this.toHash())
-  saveTimeouts[key] = setTimeout(this.save, 20000)
+  saveTimeouts[key] = setTimeout(this.save, 5000)
 }
 
 pageSchema.methods.rename = async function(newTitle){
-  const {wiki, title} = this
+  const {wiki} = this
   if((await Page.count({wiki, title: newTitle})) > 0){
     throw new Error("page exists")
   }
   Page.emit("remove", this)
-  const cache = await pageCache.get(`${wiki}::${title}`)
-  if(cache){
-    this.lines = cache.lines
-  }
   this.title = newTitle
-
-  pageCache.delete(`${wiki}::${title}`)
   await this.save()
   return {wiki, title: newTitle}
 }

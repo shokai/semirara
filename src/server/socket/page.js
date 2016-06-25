@@ -21,6 +21,8 @@ export default function use(app){
       try{
         room.join(`${wiki}::${title}`)
         const page = await Page.findOneByWikiTitle({wiki, title}) || new Page({wiki, title})
+        const reverseLinkedPages = await page.findReverseLinkedPages()
+        debug(reverseLinkedPages)
         res(page)
       }
       catch(err){
@@ -40,7 +42,7 @@ export default function use(app){
         socket.broadcast.to(room.name).emit("page:lines", {wiki, title, lines})
         const page = await Page.findOne(ambiguous({wiki, title})) || new Page({wiki, title})
         page.lines = lines
-        page.saveWithCache()
+        page.saveLater()
       }
       catch(err){
         console.error(err.stack || err)
