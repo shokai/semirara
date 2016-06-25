@@ -23,7 +23,7 @@ const pageSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    validate: (url) => /^https?:\/\/.+/.test(url)
+    validate: (url) => (url === null || /^https?:\/\/.+/.test(url))
   },
   lines: {
     type: Array,
