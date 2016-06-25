@@ -1,6 +1,6 @@
 const debug = require("../../share/debug")(__filename)
 
-import {uniq} from "lodash"
+import {uniq, uniqBy} from "lodash"
 import {validateTitle, validateWiki, validateRoute} from "../../share/route"
 import {Parser} from '../../share/markup/parser'
 
@@ -106,6 +106,19 @@ pageSchema.statics.findOneByWikiTitle = function(query){
 
 pageSchema.methods.findReverseLinkedPages = function(selector = "title image"){
   return Page.find({innerLinks: {$in: [this.title]}}, selector)
+}
+
+pageSchema.methods.findInnerLinkedPages = async function(selector = "title image"){
+  const wiki = this.wiki
+  const pages = await Promise.all(
+    this.innerLinks.map(title => Page.findOne({wiki, title}, selector))
+  )
+  return pages.filter(page => !!page)
+}
+
+pageSchema.methods.findRelatedPages = async function(){
+  const [relateds, innerLinks] = await Promise.all([this.findReverseLinkedPages(), this.findInnerLinkedPages()])
+  return uniqBy(relateds.concat(innerLinks), (page) => page.title)
 }
 
 const saveTimeouts = {}

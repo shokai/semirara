@@ -15,7 +15,8 @@ export default function use(app){
       debug(req)
       try{
         const page = await Page.findOneByWikiTitle({wiki, title})
-        const pages = await page.findReverseLinkedPages()
+        const pages = await page.findRelatedPages()
+        debug(pages)
         res(pages.map(({title, image}) => ({title, image})))
       }
       catch(err){
