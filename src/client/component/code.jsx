@@ -24,7 +24,9 @@ export default function Code({lang, children}){
     __html = lang ? highlight(lang, children, true).value : highlightAuto(children).value
   }
   catch(err){
-    console.error(err.stack || err)
+    if (!(/Unknown language/.test(err.message))) {
+      console.error(err.stack || err)
+    }
     return <span>{children}</span>
   }
   return <span dangerouslySetInnerHTML={{__html}} />
