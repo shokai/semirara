@@ -100,7 +100,6 @@ pageSchema.statics.findPagesByWiki = function(wiki){
 }
 
 pageSchema.statics.findOneByWikiTitle = function(query){
-  const {wiki, title} = query
   return this.findOne(ambiguous(query))
 }
 
@@ -131,7 +130,7 @@ pageSchema.methods.saveLater = function(){
 }
 
 pageSchema.methods.rename = async function(newTitle){
-  const {wiki, title} = this
+  const {wiki} = this
   if((await Page.count({wiki, title: newTitle})) > 0){
     throw new Error("page exists")
   }
