@@ -19,6 +19,7 @@ const store = createStore(
       editline: null
     },
     pagelist: [ ],
+    relatedPagelist: [],
     socket: {
       connecting: false
     }

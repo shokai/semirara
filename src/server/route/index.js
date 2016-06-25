@@ -44,11 +44,9 @@ router.get("/*", async (ctx, next) => {
     if(page.title !== title || page.wiki !== wiki){
       return ctx.redirect(buildPath({wiki: page.wiki, title: page.title}))
     }
-    const pages = await Page.findPagesByWiki(wiki)
-    renderParam.state = {
-      page: typeof page.toHash === "function" ? page.toHash() : page,
-      pagelist: pages.map(page => page.toHash === 'function' ? page.toHash() : page)
-    }
+    const pagelist = (await Page.findPagesByWiki(wiki)).map(page => page.toHash())
+    const relatedPagelist = (await page.findReverseLinkedPages()).map(page => page.toHash())
+    renderParam.state = {page: page.toHash(), pagelist, relatedPagelist}
     return ctx.render("index-static", renderParam)
   }
 })

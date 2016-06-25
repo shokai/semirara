@@ -4,16 +4,34 @@ import PageList from '../component/pagelist'
 
 export default class PageListContainer extends StoreComponent {
   render () {
-    this.debug(this.state)
     const {wiki, title} = this.state.page
-    const {pagelist} = this.state
+    const {pagelist, relatedPagelist} = this.state
     if (!wiki || !title) return null
+    let related
+    if (relatedPagelist && relatedPagelist.length > 0) {
+      related = (
+        <PageList
+           name='Related'
+           wiki={wiki}
+           title={title}
+           pagelist={relatedPagelist}
+           action={this.action}
+           />
+      )
+    }
+
+
     return (
-      <PageList
-         wiki={wiki}
-         title={title}
-         pagelist={pagelist}
-         />
+      <div>
+        {related}
+        <PageList
+           name={wiki}
+           wiki={wiki}
+           title={title}
+           pagelist={pagelist}
+           action={this.action}
+           />
+      </div>
     )
   }
 }

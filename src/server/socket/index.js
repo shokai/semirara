@@ -2,6 +2,7 @@ import {setUserContext} from "./middleware"
 
 import page from "./page"
 import list from "./pagelist"
+import relatedPagelist from "./related-pagelist"
 
 export function use(app){
 
@@ -9,5 +10,6 @@ export function use(app){
 
   page(app)
   list(app)
+  relatedPagelist(app)
 
 }

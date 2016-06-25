@@ -9,18 +9,11 @@ export default class PageList extends Component {
   static get propTypes () {
     return {
       wiki: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      pagelist: PropTypes.object.isRequired
+      pagelist: PropTypes.object.isRequired,
+      action: PropTypes.object.isRequired
     }
-  }
-
-  constructor(){
-    super()
-    this.onItemClick = this.onItemClick.bind(this)
-  }
-
-  onItemClick(title){
-    this.action.route({title})
   }
 
   render(){
@@ -35,7 +28,7 @@ export default class PageList extends Component {
       return (
         <li key={title} className={classNames} style={style}>
           <RouteLink
-             action={this.action}
+             action={this.props.action}
              route={{wiki: this.props.wiki, title}}>
             <span>{title}</span>
           </RouteLink>
@@ -44,7 +37,7 @@ export default class PageList extends Component {
     })
     return (
       <div className="pagelist">
-        <h2>{this.props.wiki}({list.length})</h2>
+        <h2>{this.props.name}({list.length})</h2>
         <ul>
           {list}
         </ul>
