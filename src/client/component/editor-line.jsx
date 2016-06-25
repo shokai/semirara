@@ -1,3 +1,5 @@
+// const debug = require("../../share/debug")(__filename)
+
 import React, {Component} from "react"
 import {findDOMNode} from "react-dom"
 
@@ -24,6 +26,24 @@ export default class EditorLine extends Component{
       onPaste: React.PropTypes.func,
       key: React.PropTypes.string.isRequired
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    if(Object.keys(nextProps || {}).length !== Object.keys(this.props || {}).length ||
+       Object.keys(nextState || {}).length !== Object.keys(this.state || {}).length) return true
+    for(let k in nextState){
+      if(typeof nextState[k] !== "object" && typeof nextState[k] !== "function" &&
+         this.state[k] !== nextState[k]) return true
+    }
+    for(let k in nextProps){
+      if(typeof nextProps[k] !== "object" && typeof nextProps[k] !== "function" &&
+         this.props[k] !== nextProps[k]) return true
+    }
+    if (nextProps.line.value !== this.props.line.value) return true
+    if (nextProps.line.indent !== this.props.line.indent) return true
+    if (!!nextProps.line.codeblock !== !!this.props.line.codeblock) return true
+    if (nextProps.line.codeblock && nextProps.line.codeblock.lang !== this.props.line.codeblock.lang) return true
+    return false
   }
 
   render(){
