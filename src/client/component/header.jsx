@@ -1,5 +1,6 @@
 import React, {Component} from "react"
 
+import EditTool from './edit-tool'
 import Login from "./login"
 import Title from "./title"
 import PageDate from "./page-date"
@@ -16,7 +17,11 @@ export default class Header extends Component{
     const {store} = this.props
     return(
       <div className="header">
-        <Login />
+        <div className='toolbar'>
+          <EditTool store={store} />
+          <Login />
+          <div className='clear' />
+        </div>
         <Title store={store} />
         <PageDate store={store} />
       </div>

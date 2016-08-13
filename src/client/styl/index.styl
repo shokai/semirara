@@ -54,17 +54,31 @@ div.app
       width: 100%
 
 div.header
-  .login
+
+  .toolbar
     font-size: 12pt
-    float: right
+    color: #333333
     li
       display: inline-block
-      margin-right: 5px
+      margin: auto 5px
       span
         padding: 10px 4px 2px 4px
         background-color: white
-    img.usericon
-      margin: 0px 3px 0px 0px
+    .button
+      text-decoration: underline
+      cursor: pointer
+
+    .login
+      float: right
+      img.usericon
+        margin: 0px 3px 0px 0px
+
+    .edit-tool
+      float: left
+      display: inline-block
+
+    .clear
+      clear: both
 
   h1
     display: inline-block
