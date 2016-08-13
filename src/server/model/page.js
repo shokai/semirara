@@ -104,7 +104,10 @@ pageSchema.statics.findOneByWikiTitle = function(query){
 }
 
 pageSchema.methods.findReverseLinkedPages = function(selector = "title image"){
-  return Page.find({innerLinks: {$in: [this.title]}}, selector)
+  return Page.find({
+    wiki: this.wiki,
+    innerLinks: {$in: [this.title]}
+  }, selector)
 }
 
 pageSchema.methods.findInnerLinkedPages = async function(selector = "title image"){
