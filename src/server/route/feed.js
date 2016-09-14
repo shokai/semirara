@@ -12,7 +12,7 @@ import {createCompiler} from "../../client/component/syntax/markup"
 import {buildTitle} from "../../share/title"
 import {escape} from "lodash"
 
-router.get("/api/feed/:wiki", async (ctx, next) => {
+router.get("/feed/:wiki", async (ctx, next) => {
   const {wiki} = ctx.params
   const pages = await Page.findNotEmpty({wiki}, null, {sort: {updatedAt: -1}}).limit(30)
   if(pages.length < 1) return ctx.status = 404

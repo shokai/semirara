@@ -10,7 +10,7 @@ import authRouter from "./auth"
 router.mount("/auth", authRouter)
 
 import feedRouter from "./feed"
-router.mount("/", feedRouter)
+router.mount("/api", feedRouter)
 
 router.use(setUserContext)
 
