@@ -12,6 +12,9 @@ router.mount("/auth", authRouter)
 import feedRouter from "./feed"
 router.mount("/api", feedRouter)
 
+import textRouter from "./text"
+router.mount("/api", textRouter)
+
 router.use(setUserContext)
 
 import mongoose from "mongoose"

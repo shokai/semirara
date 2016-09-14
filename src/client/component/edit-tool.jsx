@@ -18,12 +18,19 @@ export default class EditTool extends StoreComponent {
 
   render () {
     if (!hasDom()) return null
-
+    const {wiki, title} = this.state.page
     return (
       <div className='edit-tool'>
         <ul>
           <li>
             <span onClick={this.createNewPage} className='button'>new page</span>
+          </li>
+          <li>
+            <span className='button'>
+              <a href={`/api/text/${wiki}/${title}`}>
+                text
+              </a>
+            </span>
           </li>
         </ul>
       </div>
