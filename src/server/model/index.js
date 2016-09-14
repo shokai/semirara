@@ -1,8 +1,11 @@
 import mongoose from "mongoose"
+mongoose.Promise = Promise
+
 import "./user"
 import "./page"
 
 const url =
+        process.env.MONGODB_URL ||
         process.env.MONGOLAB_URI ||
         process.env.MONGOHQ_URL ||
         'mongodb://localhost/semirara'
