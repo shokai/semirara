@@ -5,9 +5,7 @@ import "./user"
 import "./page"
 
 const url =
-        process.env.MONGODB_URL ||
-        process.env.MONGOLAB_URI ||
-        process.env.MONGOHQ_URL ||
+        process.env.MONGODB_URI ||
         'mongodb://localhost/semirara'
 
 export default {
