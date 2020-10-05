@@ -1,7 +1,11 @@
 *~
 *#*
 .DS_Store
+
 node_modules/
+.npm/
+mongo/
+
 *.log
 *.log.*
 tmp/

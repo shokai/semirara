@@ -6,7 +6,7 @@ import "./page"
 
 const url =
         process.env.MONGODB_URI ||
-        'mongodb://localhost/semirara'
+        'mongodb://mongo/semirara'
 
 export default {
   connect: function(){

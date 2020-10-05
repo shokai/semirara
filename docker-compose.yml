@@ -1,0 +1,30 @@
+# for development
+version: '2.1'
+services:
+  app:
+    build: ./containers/node
+    environment:
+      NODE_ENV: 'development'
+      DEBUG: 'semirara*'
+      MEMCACHIER_SERVERS: 'memcached:11211'
+    env_file: .env
+    ports:
+      - "${PORT:-3000}:80"
+    depends_on:
+      - mongo
+      - memcached
+    volumes:
+      - ./:/usr/src/app
+      - ./.npm:/root/.npm
+    command: npm run start:dev
+    tty: true
+  mongo:
+    image: mongo:4.2.10
+    volumes:
+      - ./mongo/data/db:/data/db
+    restart: unless-stopped
+    tty: true
+  memcached:
+    image: memcached:alpine
+    restart: unless-stopped
+    tty: true
