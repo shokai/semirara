@@ -16,7 +16,7 @@ services:
     volumes:
       - ./:/usr/src/app
       - ./.npm:/root/.npm
-    command: npm run start:dev
+    command: npm run start
     tty: true
   mongo:
     image: mongo:4.2.10

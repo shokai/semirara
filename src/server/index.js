@@ -34,7 +34,7 @@ import path from "path"
 
 react(app, {
   views: path.join(__dirname, "views"),
-  extname: process.env.NODE_ENV === "production" ? ".js" : ".jsx",
+  extname: '.js',
   internals: false
 })
 

@@ -1,5 +1,3 @@
-import "babel-regenerator-runtime"
-
 import '../share/print-all-errors'
 
 import React from "react"
